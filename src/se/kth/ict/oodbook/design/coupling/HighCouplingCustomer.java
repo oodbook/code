@@ -1,5 +1,5 @@
 package se.kth.ict.oodbook.design.coupling;
 
-class HighCouplingCustomer {
+public class HighCouplingCustomer {
     private HighCouplingShippingAddress shippingAddress;
 }
