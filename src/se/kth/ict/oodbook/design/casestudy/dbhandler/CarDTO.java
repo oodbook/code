@@ -35,14 +35,13 @@ package se.kth.ict.oodbook.design.casestudy.dbhandler;
 /**
  * Contains information about one particular car.
  */
-public class CarDTO {
-
-    private int price;
-    private String size;
-    private boolean AC;
-    private boolean fourWD;
-    private String color;
-    private String regNo;
+public final class CarDTO {
+    private final int price;
+    private final String size;
+    private final boolean AC;
+    private final boolean fourWD;
+    private final String color;
+    private final String regNo;
 
     /**
      * Creates a new instance representing a particular car.
