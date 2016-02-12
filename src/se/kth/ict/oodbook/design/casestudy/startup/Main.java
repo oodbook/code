@@ -33,6 +33,7 @@ package se.kth.ict.oodbook.design.casestudy.startup;
 
 import se.kth.ict.oodbook.design.casestudy.controller.Controller;
 import se.kth.ict.oodbook.design.casestudy.dbhandler.CarRegistry;
+import se.kth.ict.oodbook.design.casestudy.dbhandler.RentalRegistry;
 import se.kth.ict.oodbook.design.casestudy.view.View;
 
 /**
@@ -47,7 +48,8 @@ public class Main {
      */
     public static void main(String[] args) {
         CarRegistry carRegistry = new CarRegistry();
-        Controller contr = new Controller(carRegistry);
+        RentalRegistry rentalRegistry = new RentalRegistry();
+        Controller contr = new Controller(carRegistry, rentalRegistry);
         new View(contr).sampleExecution();
     }
 }

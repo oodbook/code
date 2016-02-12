@@ -65,7 +65,9 @@ public class View {
                 "982193721937213");
         CustomerDTO customer = new CustomerDTO("Stina", address, drivingLicense);
         contr.registerCustomer(customer);
-        System.out.println("Customer is rgeistered");
+        System.out.println("Customer is registered");
+        contr.bookCar(foundCar);
+        System.out.println("Car is booked");
     }
 
 }

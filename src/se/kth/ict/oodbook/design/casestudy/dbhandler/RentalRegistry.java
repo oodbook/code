@@ -26,34 +26,19 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.design.casestudy.model;
+package se.kth.ict.oodbook.design.casestudy.dbhandler;
 
-import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
+import se.kth.ict.oodbook.design.casestudy.model.Rental;
 
 /**
- * Represents one particular rental transaction, where one particular car is
- * rented by one particular customer.
+ * Contains all calls to the data store with performed rentals.
  */
-public class Rental {
-    private CustomerDTO customer;
-    private CarDTO rentedCar;
-
+public class RentalRegistry {
     /**
-     * Creates a new instance, representing a rental made by the specified
-     * customer.
+     * Saves the specified rental permanently.
      *
-     * @param customer The renting customer.
+     * @param rental The rental that will be saved.
      */
-    public Rental(CustomerDTO customer) {
-        this.customer = customer;
-    }
-
-    /**
-     * Specifies the car that was rented.
-     *
-     * @param rentedCar The car that was rented.
-     */
-    public void setRentedCar(CarDTO rentedCar) {
-        this.rentedCar = rentedCar;
+    public void saveRental(Rental rental) {
     }
 }

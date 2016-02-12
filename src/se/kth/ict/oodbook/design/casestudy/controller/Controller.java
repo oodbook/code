@@ -33,6 +33,7 @@ package se.kth.ict.oodbook.design.casestudy.controller;
 
 import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
 import se.kth.ict.oodbook.design.casestudy.dbhandler.CarRegistry;
+import se.kth.ict.oodbook.design.casestudy.dbhandler.RentalRegistry;
 import se.kth.ict.oodbook.design.casestudy.model.CustomerDTO;
 import se.kth.ict.oodbook.design.casestudy.model.Rental;
 
@@ -42,6 +43,7 @@ import se.kth.ict.oodbook.design.casestudy.model.Rental;
  */
 public class Controller {
     private CarRegistry carRegistry;
+    private RentalRegistry rentalRegistry;
     private Rental rental;
 
     /**
@@ -49,8 +51,9 @@ public class Controller {
      *
      * @param carRegistry Used to access the car data store.
      */
-    public Controller(CarRegistry carRegistry) {
+    public Controller(CarRegistry carRegistry, RentalRegistry rentalRegistry) {
         this.carRegistry = carRegistry;
+        this.rentalRegistry = rentalRegistry;
     }
 
     /**
@@ -72,5 +75,10 @@ public class Controller {
      */
     public void registerCustomer(CustomerDTO customer) {
         rental = new Rental(customer);
+    }
+    
+    public void bookCar(CarDTO car) {
+        rental.setRentedCar(car);
+        rentalRegistry.saveRental(rental);
     }
 }
