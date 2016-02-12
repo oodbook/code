@@ -33,6 +33,7 @@ package se.kth.ict.oodbook.design.casestudy.controller;
 
 import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
 import se.kth.ict.oodbook.design.casestudy.dbhandler.CarRegistry;
+import se.kth.ict.oodbook.design.casestudy.dbhandler.RegistryCreator;
 import se.kth.ict.oodbook.design.casestudy.dbhandler.RentalRegistry;
 import se.kth.ict.oodbook.design.casestudy.model.CustomerDTO;
 import se.kth.ict.oodbook.design.casestudy.model.Rental;
@@ -49,11 +50,11 @@ public class Controller {
     /**
      * Creates a new instance.
      *
-     * @param carRegistry Used to access the car data store.
+     * @param regCreator Used to get all classes that handle database calls.
      */
-    public Controller(CarRegistry carRegistry, RentalRegistry rentalRegistry) {
-        this.carRegistry = carRegistry;
-        this.rentalRegistry = rentalRegistry;
+    public Controller(RegistryCreator regCreator) {
+        this.carRegistry = regCreator.getCarRegistry();
+        this.rentalRegistry = regCreator.getRentalRegistry();
     }
 
     /**

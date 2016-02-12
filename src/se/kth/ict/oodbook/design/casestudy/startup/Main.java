@@ -32,8 +32,7 @@
 package se.kth.ict.oodbook.design.casestudy.startup;
 
 import se.kth.ict.oodbook.design.casestudy.controller.Controller;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.CarRegistry;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.RentalRegistry;
+import se.kth.ict.oodbook.design.casestudy.dbhandler.RegistryCreator;
 import se.kth.ict.oodbook.design.casestudy.view.View;
 
 /**
@@ -47,9 +46,8 @@ public class Main {
      * @param args The application does not take any command line parameters.
      */
     public static void main(String[] args) {
-        CarRegistry carRegistry = new CarRegistry();
-        RentalRegistry rentalRegistry = new RentalRegistry();
-        Controller contr = new Controller(carRegistry, rentalRegistry);
+        RegistryCreator creator = new RegistryCreator();
+        Controller contr = new Controller(creator);
         new View(contr).sampleExecution();
     }
 }
