@@ -68,7 +68,7 @@ public class Controller {
     /**
      * Registers a new customer. Only registered customers can rent cars.
      *
-     * @param customer
+     * @param customer The customer that will be registered.
      */
     public void registerCustomer(CustomerDTO customer) {
         rental = new Rental(customer);

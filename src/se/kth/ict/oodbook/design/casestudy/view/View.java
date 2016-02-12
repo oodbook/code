@@ -60,11 +60,11 @@ public class View {
         CarDTO searchedCar = new CarDTO(1000, "medium", true, true, "red", null);
         CarDTO foundCar = contr.searchMatchingCar(searchedCar);
         System.out.println(foundCar);
-        contr.registerCustomer(new CustomerDTO("Stina", new AddressDTO(
-                                               "Storgatan 2",
-                                               "12345", "Hemorten"),
-                                               new DrivingLicenseDTO(
-                                                       "982193721937213")));
+        AddressDTO address = new AddressDTO("Storgatan 2", "12345", "Hemorten");
+        DrivingLicenseDTO drivingLicense = new DrivingLicenseDTO(
+                "982193721937213");
+        CustomerDTO customer = new CustomerDTO("Stina", address, drivingLicense);
+        contr.registerCustomer(customer);
         System.out.println("Customer is rgeistered");
     }
 
