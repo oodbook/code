@@ -46,4 +46,13 @@ public class CarRegistry {
     public CarDTO findCar(CarDTO searchedCar) {
         return null;
     }
+    
+    /**
+     * Books the specified car. After calling this method, the car can not be
+     * booked by any other customer.
+     *
+     * @param car The car that will be booked.
+     */
+    public void bookCar(CarDTO car) { 
+    }
 }

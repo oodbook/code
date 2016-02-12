@@ -74,9 +74,16 @@ public class Controller {
      * @param customer The customer that will be registered.
      */
     public void registerCustomer(CustomerDTO customer) {
-        rental = new Rental(customer);
+        rental = new Rental(customer, carRegistry);
     }
-    
+
+    /**
+     * Books the specified car. After calling this method, the car can not be
+     * booked by any other customer. This method also permanently saves
+     * information about the current rental.
+     *
+     * @param car The car that will be booked.
+     */
     public void bookCar(CarDTO car) {
         rental.setRentedCar(car);
         rentalRegistry.saveRental(rental);

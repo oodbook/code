@@ -29,6 +29,7 @@
 package se.kth.ict.oodbook.design.casestudy.model;
 
 import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
+import se.kth.ict.oodbook.design.casestudy.dbhandler.CarRegistry;
 
 /**
  * Represents one particular rental transaction, where one particular car is
@@ -37,15 +38,18 @@ import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
 public class Rental {
     private CustomerDTO customer;
     private CarDTO rentedCar;
+    private CarRegistry carRegistry; 
 
     /**
      * Creates a new instance, representing a rental made by the specified
      * customer.
      *
      * @param customer The renting customer.
+     * @param carRegistry The data store with information about available cars.
      */
-    public Rental(CustomerDTO customer) {
+    public Rental(CustomerDTO customer, CarRegistry carRegistry) {
         this.customer = customer;
+        this.carRegistry = carRegistry;
     }
 
     /**
@@ -55,5 +59,6 @@ public class Rental {
      */
     public void setRentedCar(CarDTO rentedCar) {
         this.rentedCar = rentedCar;
+        carRegistry.bookCar(rentedCar);
     }
 }
