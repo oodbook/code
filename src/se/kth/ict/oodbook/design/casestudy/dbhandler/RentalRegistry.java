@@ -34,10 +34,9 @@ import se.kth.ict.oodbook.design.casestudy.model.Rental;
  * Contains all calls to the data store with performed rentals.
  */
 public class RentalRegistry {
-    
     RentalRegistry() {
     }
-    
+
     /**
      * Saves the specified rental permanently.
      *
