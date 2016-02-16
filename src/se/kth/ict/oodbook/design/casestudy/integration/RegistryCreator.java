@@ -26,22 +26,30 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.design.casestudy.dbhandler;
-
-import se.kth.ict.oodbook.design.casestudy.model.Rental;
+package se.kth.ict.oodbook.design.casestudy.integration;
 
 /**
- * Contains all calls to the data store with performed rentals.
+ * This class is responsible for instantiating all registries.
  */
-public class RentalRegistry {
-    RentalRegistry() {
+public class RegistryCreator {
+    private CarRegistry carRegistry = new CarRegistry();
+    private RentalRegistry rentalRegistry = new RentalRegistry();
+
+    /**
+     * Get the value of rentalRegistry
+     *
+     * @return the value of rentalRegistry
+     */
+    public RentalRegistry getRentalRegistry() {
+        return rentalRegistry;
     }
 
     /**
-     * Saves the specified rental permanently.
+     * Get the value of carRegistry
      *
-     * @param rental The rental that will be saved.
+     * @return the value of carRegistry
      */
-    public void saveRental(Rental rental) {
+    public CarRegistry getCarRegistry() {
+        return carRegistry;
     }
 }

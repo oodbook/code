@@ -32,8 +32,9 @@
 package se.kth.ict.oodbook.design.casestudy.view;
 
 import se.kth.ict.oodbook.design.casestudy.controller.Controller;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
+import se.kth.ict.oodbook.design.casestudy.integration.CarDTO;
 import se.kth.ict.oodbook.design.casestudy.model.AddressDTO;
+import se.kth.ict.oodbook.design.casestudy.model.Amount;
 import se.kth.ict.oodbook.design.casestudy.model.CustomerDTO;
 import se.kth.ict.oodbook.design.casestudy.model.DrivingLicenseDTO;
 
@@ -68,6 +69,9 @@ public class View {
         System.out.println("Customer is registered");
         contr.bookCar(foundCar);
         System.out.println("Car is booked");
+        Amount paidAmount = new Amount(100);
+        contr.pay(paidAmount);
+        System.out.println("Rental is paid");
     }
 
 }

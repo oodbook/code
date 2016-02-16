@@ -32,7 +32,8 @@
 package se.kth.ict.oodbook.design.casestudy.startup;
 
 import se.kth.ict.oodbook.design.casestudy.controller.Controller;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.RegistryCreator;
+import se.kth.ict.oodbook.design.casestudy.integration.Printer;
+import se.kth.ict.oodbook.design.casestudy.integration.RegistryCreator;
 import se.kth.ict.oodbook.design.casestudy.view.View;
 
 /**
@@ -47,7 +48,8 @@ public class Main {
      */
     public static void main(String[] args) {
         RegistryCreator creator = new RegistryCreator();
-        Controller contr = new Controller(creator);
+        Printer printer = new Printer();
+        Controller contr = new Controller(creator, printer);
         new View(contr).sampleExecution();
     }
 }

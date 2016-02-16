@@ -28,53 +28,29 @@
  */
 package se.kth.ict.oodbook.design.casestudy.model;
 
-import se.kth.ict.oodbook.design.casestudy.integration.CarDTO;
-import se.kth.ict.oodbook.design.casestudy.integration.CarRegistry;
-
 /**
- * Represents one particular rental transaction, where one particular car is
- * rented by one particular customer.
+ * Represents one specific payment for one specific rental. The rental is payed
+ * with cash.
  */
-public class Rental {
-    private CustomerDTO customer;
-    private CarDTO rentedCar;
-    private CarRegistry carRegistry; 
+public class CashPayment {
+    private Amount paidAmt;
 
     /**
-     * Creates a new instance, representing a rental made by the specified
-     * customer.
+     * Creates a new instance. The customer handed over the specified amount.
      *
-     * @param customer The renting customer.
-     * @param carRegistry The data store with information about available cars.
+     * @param paidAmt The amount of cash that was handed over by the
+     *                   customer.
      */
-    public Rental(CustomerDTO customer, CarRegistry carRegistry) {
-        this.customer = customer;
-        this.carRegistry = carRegistry;
-    }
-
-    /**
-     * Specifies the car that was rented.
-     *
-     * @param rentedCar The car that was rented.
-     */
-    public void setRentedCar(CarDTO rentedCar) {
-        this.rentedCar = rentedCar;
-        carRegistry.bookCar(rentedCar);
+    public CashPayment(Amount paidAmt) {
+        this.paidAmt = paidAmt;
     }
     
     /**
-     * This rental is paid using the specified payment.
+     * Calculates the total cost of the specified rental.
      * 
-     * @param payment The payment used to pay this rental.
+     * @param paidRental The rental for which the customer is paying.
      */
-    public void pay(CashPayment payment) {
-        payment.calculateTotalCost(this);
-    }
-    
-    /**
-     * Returns a receipt for the current rental.
-     */
-    public Receipt getReceipt() {
-        return new Receipt(this);
+    void calculateTotalCost(Rental paidRental) {
+        
     }
 }

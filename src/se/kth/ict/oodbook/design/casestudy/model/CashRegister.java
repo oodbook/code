@@ -28,53 +28,12 @@
  */
 package se.kth.ict.oodbook.design.casestudy.model;
 
-import se.kth.ict.oodbook.design.casestudy.integration.CarDTO;
-import se.kth.ict.oodbook.design.casestudy.integration.CarRegistry;
-
 /**
- * Represents one particular rental transaction, where one particular car is
- * rented by one particular customer.
+ * Represents a cash register. There shall be one instance of this class for
+ * each register.
  */
-public class Rental {
-    private CustomerDTO customer;
-    private CarDTO rentedCar;
-    private CarRegistry carRegistry; 
+public class CashRegister {
+    public void addPayment(CashPayment payment) {
 
-    /**
-     * Creates a new instance, representing a rental made by the specified
-     * customer.
-     *
-     * @param customer The renting customer.
-     * @param carRegistry The data store with information about available cars.
-     */
-    public Rental(CustomerDTO customer, CarRegistry carRegistry) {
-        this.customer = customer;
-        this.carRegistry = carRegistry;
-    }
-
-    /**
-     * Specifies the car that was rented.
-     *
-     * @param rentedCar The car that was rented.
-     */
-    public void setRentedCar(CarDTO rentedCar) {
-        this.rentedCar = rentedCar;
-        carRegistry.bookCar(rentedCar);
-    }
-    
-    /**
-     * This rental is paid using the specified payment.
-     * 
-     * @param payment The payment used to pay this rental.
-     */
-    public void pay(CashPayment payment) {
-        payment.calculateTotalCost(this);
-    }
-    
-    /**
-     * Returns a receipt for the current rental.
-     */
-    public Receipt getReceipt() {
-        return new Receipt(this);
     }
 }

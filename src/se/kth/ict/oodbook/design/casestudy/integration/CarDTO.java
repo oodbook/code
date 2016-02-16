@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package se.kth.ict.oodbook.design.casestudy.dbhandler;
+package se.kth.ict.oodbook.design.casestudy.integration;
 
 /**
  * Contains information about one particular car.

@@ -31,12 +31,17 @@
  */
 package se.kth.ict.oodbook.design.casestudy.controller;
 
-import se.kth.ict.oodbook.design.casestudy.dbhandler.CarDTO;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.CarRegistry;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.RegistryCreator;
-import se.kth.ict.oodbook.design.casestudy.dbhandler.RentalRegistry;
+import se.kth.ict.oodbook.design.casestudy.model.Amount;
+import se.kth.ict.oodbook.design.casestudy.integration.CarDTO;
+import se.kth.ict.oodbook.design.casestudy.integration.CarRegistry;
+import se.kth.ict.oodbook.design.casestudy.integration.Printer;
+import se.kth.ict.oodbook.design.casestudy.integration.RegistryCreator;
+import se.kth.ict.oodbook.design.casestudy.integration.RentalRegistry;
+import se.kth.ict.oodbook.design.casestudy.model.CashPayment;
+import se.kth.ict.oodbook.design.casestudy.model.CashRegister;
 import se.kth.ict.oodbook.design.casestudy.model.CustomerDTO;
 import se.kth.ict.oodbook.design.casestudy.model.Rental;
+import se.kth.ict.oodbook.design.casestudy.model.Receipt;
 
 /**
  * This is the application's only controller class. All calls to the model pass
@@ -46,15 +51,20 @@ public class Controller {
     private CarRegistry carRegistry;
     private RentalRegistry rentalRegistry;
     private Rental rental;
+    private CashRegister cashRegister;
+    private Printer printer;
 
     /**
      * Creates a new instance.
      *
      * @param regCreator Used to get all classes that handle database calls.
+     * @param printer    Interface to printer.
      */
-    public Controller(RegistryCreator regCreator) {
+    public Controller(RegistryCreator regCreator, Printer printer) {
         this.carRegistry = regCreator.getCarRegistry();
         this.rentalRegistry = regCreator.getRentalRegistry();
+        this.printer = printer;
+        this.cashRegister = new CashRegister();
     }
 
     /**
@@ -88,5 +98,19 @@ public class Controller {
     public void bookCar(CarDTO car) {
         rental.setRentedCar(car);
         rentalRegistry.saveRental(rental);
+    }
+
+    /**
+     * Handles rental payment. Updates the balance of the cash register where
+     * the payment was performed. Calculates change. Prints the receipt.
+     *
+     * @param paidAmt The paid amount.
+     */
+    public void pay(Amount paidAmt) {
+        CashPayment payment = new CashPayment(paidAmt);
+        rental.pay(payment);
+        cashRegister.addPayment(payment);
+        Receipt receipt = rental.getReceipt();
+        printer.printReceipt(receipt);
     }
 }
