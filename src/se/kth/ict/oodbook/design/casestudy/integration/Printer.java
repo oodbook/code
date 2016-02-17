@@ -36,6 +36,5 @@ import se.kth.ict.oodbook.design.casestudy.model.Receipt;
  */
 public class Printer {
     public void printReceipt(Receipt receipt) {
-        
     }
 }

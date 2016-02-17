@@ -30,6 +30,7 @@ package se.kth.ict.oodbook.design.casestudy.model;
 
 import se.kth.ict.oodbook.design.casestudy.integration.CarDTO;
 import se.kth.ict.oodbook.design.casestudy.integration.CarRegistry;
+import se.kth.ict.oodbook.design.casestudy.integration.Printer;
 
 /**
  * Represents one particular rental transaction, where one particular car is
@@ -72,9 +73,10 @@ public class Rental {
     }
     
     /**
-     * Returns a receipt for the current rental.
+     * Prints a receipt for the current rental on the specified printer.
      */
-    public Receipt getReceipt() {
-        return new Receipt(this);
+    public void printReceipt(Printer printer) {
+        Receipt receipt = new Receipt(this);
+        printer.printReceipt(receipt);
     }
 }

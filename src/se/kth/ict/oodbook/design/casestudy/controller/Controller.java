@@ -41,7 +41,6 @@ import se.kth.ict.oodbook.design.casestudy.model.CashPayment;
 import se.kth.ict.oodbook.design.casestudy.model.CashRegister;
 import se.kth.ict.oodbook.design.casestudy.model.CustomerDTO;
 import se.kth.ict.oodbook.design.casestudy.model.Rental;
-import se.kth.ict.oodbook.design.casestudy.model.Receipt;
 
 /**
  * This is the application's only controller class. All calls to the model pass
@@ -110,7 +109,6 @@ public class Controller {
         CashPayment payment = new CashPayment(paidAmt);
         rental.pay(payment);
         cashRegister.addPayment(payment);
-        Receipt receipt = rental.getReceipt();
-        printer.printReceipt(receipt);
+        rental.printReceipt(printer);
     }
 }

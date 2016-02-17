@@ -34,6 +34,5 @@ package se.kth.ict.oodbook.design.casestudy.model;
  */
 public class CashRegister {
     public void addPayment(CashPayment payment) {
-
     }
 }
