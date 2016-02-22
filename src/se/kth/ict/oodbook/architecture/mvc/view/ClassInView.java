@@ -41,5 +41,5 @@ public class ClassInView {
     private Controller contr;
 
     //Somewhere in some method.
-    contr.systemOperation1();
+    //contr.systemOperation1();
 }
