@@ -29,11 +29,10 @@
 package se.kth.ict.oodbook.prog.smell;
 
 /**
- * This class has bad smell since it contains duplicated code. The duplicated
- * code is <code>sequence[1]</code> to access the first element in the
- * <code>sequence</code> array.
+ * This class does not contain duplicated code. The previously duplicated code
+ * has been extracted to the method <code>firstElement</code>
  */
-public class ClassWithUnobviousDuplicatedCode {
+public class ClassWithoutUnobviousDuplicatedCode {
     private int[] sequence = {2, 5, 2, 4, 6, 4};
 
     /**
@@ -41,19 +40,23 @@ public class ClassWithUnobviousDuplicatedCode {
      * first element in the sequence.
      */
     public boolean startsWith(int value) {
-        return sequence[1] == value;
+        return firstElement() == value;
     }
 
     /**
      * @return The first element in the sequence array.
      */
     public int getFirstElement() {
-        return sequence[1];
+        return firstElement();
+    }
+
+    private int firstElement() {
+        return sequence[0];
     }
 
     public static void main(String[] args) {
-        ClassWithUnobviousDuplicatedCode cwudc
-                = new ClassWithUnobviousDuplicatedCode();
+        ClassWithoutUnobviousDuplicatedCode cwudc
+                = new ClassWithoutUnobviousDuplicatedCode();
         System.out.println("startsWith(5): " + cwudc.startsWith(5));
         System.out.println("getFirstElement: " + cwudc.getFirstElement());
     }

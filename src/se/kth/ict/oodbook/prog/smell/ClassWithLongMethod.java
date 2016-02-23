@@ -29,32 +29,33 @@
 package se.kth.ict.oodbook.prog.smell;
 
 /**
- * This class has bad smell since it contains duplicated code. The duplicated
- * code is <code>sequence[1]</code> to access the first element in the
- * <code>sequence</code> array.
+ * This class has a method who's body is not completely easy to understand.
  */
-public class ClassWithUnobviousDuplicatedCode {
-    private int[] sequence = {2, 5, 2, 4, 6, 4};
+public class ClassWithLongMethod {
 
     /**
-     * @return <code>true</code> if the the specified value is equal to the
-     * first element in the sequence.
+     * Counts the number of upper case letters in the specified string.
+     *
+     * @param source The string in which uppercase letters are counted.
+     * @return The number of uppercase letters in the specified string.
      */
-    public boolean startsWith(int value) {
-        return sequence[1] == value;
-    }
-
-    /**
-     * @return The first element in the sequence array.
-     */
-    public int getFirstElement() {
-        return sequence[1];
+    public int countUpperCaseLetters(String source) {
+        int noOfUpperCaseLetters = 0;
+        for (char letter : source.toCharArray()) {
+            if (letter >= 65 && letter <= 90) {
+                noOfUpperCaseLetters++;
+            }
+        }
+        return noOfUpperCaseLetters;
     }
 
     public static void main(String[] args) {
-        ClassWithUnobviousDuplicatedCode cwudc
-                = new ClassWithUnobviousDuplicatedCode();
-        System.out.println("startsWith(5): " + cwudc.startsWith(5));
-        System.out.println("getFirstElement: " + cwudc.getFirstElement());
+        String strWithUCLetters = "dAknhsdZkjsdK";
+        int uCLetterCount = new ClassWithLongMethod().countUpperCaseLetters(
+                strWithUCLetters);
+        System.out.println(
+                "There were " + uCLetterCount + " upper case letters in '"
+                + strWithUCLetters + "'");
     }
+
 }
