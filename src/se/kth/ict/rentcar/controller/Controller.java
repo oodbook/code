@@ -34,6 +34,8 @@ package se.kth.ict.rentcar.controller;
 import se.kth.ict.rentcar.integration.CarRegistry;
 import se.kth.ict.rentcar.integration.CarDTO;
 import se.kth.ict.rentcar.integration.RegistryCreator;
+import se.kth.ict.rentcar.model.CustomerDTO;
+import se.kth.ict.rentcar.model.Rental;
 
 /**
  * This is the application's only controller class. All calls to the model pass
@@ -42,7 +44,7 @@ import se.kth.ict.rentcar.integration.RegistryCreator;
 public class Controller {
     private CarRegistry carRegistry;
 //    private RentalRegistry rentalRegistry;
-//    private Rental rental;
+    private Rental rental;
 //    private CashRegister cashRegister;
 //    private Printer printer;
 
@@ -71,15 +73,15 @@ public class Controller {
         return carRegistry.findCar(searchedCar);
     }
 
-//    /**
-//     * Registers a new customer. Only registered customers can rent cars.
-//     *
-//     * @param customer The customer that will be registered.
-//     */
-//    public void registerCustomer(CustomerDTO customer) {
-//        rental = new Rental(customer, carRegistry);
-//    }
-//
+    /**
+     * Registers a new customer. Only registered customers can rent cars.
+     *
+     * @param customer The customer that will be registered.
+     */
+    public void registerCustomer(CustomerDTO customer) {
+        rental = new Rental(customer/*, carRegistry*/);
+    }
+
 //    /**
 //     * Books the specified car. After calling this method, the car can not be
 //     * booked by any other customer. This method also permanently saves

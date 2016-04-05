@@ -33,6 +33,9 @@ package se.kth.ict.rentcar.view;
 
 import se.kth.ict.rentcar.controller.Controller;
 import se.kth.ict.rentcar.integration.CarDTO;
+import se.kth.ict.rentcar.model.AddressDTO;
+import se.kth.ict.rentcar.model.CustomerDTO;
+import se.kth.ict.rentcar.model.DrivingLicenseDTO;
 
 /**
  * This program has no view, instead, this class is a placeholder for the entire
@@ -62,12 +65,13 @@ public class View {
         foundCar = contr.searchMatchingCar(availableCar);
         System.out.println("Result of searching for available car: " + foundCar);
 
-//        AddressDTO address = new AddressDTO("Storgatan 2", "12345", "Hemorten");
-//        DrivingLicenseDTO drivingLicense = new DrivingLicenseDTO(
-//                "982193721937213");
-//        CustomerDTO customer = new CustomerDTO("Stina", address, drivingLicense);
-//        contr.registerCustomer(customer);
-//        System.out.println("Customer is registered");
+        AddressDTO address = new AddressDTO("Storgatan 2", "12345", "Hemorten");
+        DrivingLicenseDTO drivingLicense = new DrivingLicenseDTO(
+                "982193721937213");
+        CustomerDTO customer = new CustomerDTO("Stina", address, drivingLicense);
+        contr.registerCustomer(customer);
+        System.out.println("Customer is registered");
+
 //        contr.bookCar(foundCar);
 //        System.out.println("Car is booked");
 //        Amount paidAmount = new Amount(100);
