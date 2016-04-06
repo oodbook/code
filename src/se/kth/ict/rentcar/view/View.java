@@ -57,11 +57,13 @@ public class View {
      * Simulates a user input that generates calls to all system operations.
      */
     public void sampleExecution() {
-        CarDTO unavailableCar = new CarDTO(1000, "nonExistingSize", true, true, "red", null);
-        CarDTO availableCar = new CarDTO(1000, "medium", true, true, "red", null);
+        CarDTO unavailableCar = new CarDTO(null, 1000, "nonExistingSize", true,
+                                           true, "red");
+        CarDTO availableCar = new CarDTO(null, 1000, "medium", true, true, "red");
 
         CarDTO foundCar = contr.searchMatchingCar(unavailableCar);
-        System.out.println("Result of searching for unavailable car: " + foundCar);
+        System.out.println(
+                "Result of searching for unavailable car: " + foundCar);
         foundCar = contr.searchMatchingCar(availableCar);
         System.out.println("Result of searching for available car: " + foundCar);
 
@@ -72,8 +74,12 @@ public class View {
         contr.registerCustomer(customer);
         System.out.println("Customer is registered");
 
-//        contr.bookCar(foundCar);
-//        System.out.println("Car is booked");
+        contr.bookCar(foundCar);
+        System.out.println("Car is booked");
+        foundCar = contr.searchMatchingCar(availableCar);
+        System.out.println(
+                "Result of searching for available, but booked, car: " + foundCar);
+
 //        Amount paidAmount = new Amount(100);
 //        contr.pay(paidAmount);
 //        System.out.println("Rental is paid");

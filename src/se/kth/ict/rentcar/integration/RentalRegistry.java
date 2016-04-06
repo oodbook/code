@@ -28,28 +28,25 @@
  */
 package se.kth.ict.rentcar.integration;
 
-/**
- * This class is responsible for instantiating all registries.
- */
-public class RegistryCreator {
-    private CarRegistry carRegistry = new CarRegistry();
-    private RentalRegistry rentalRegistry = new RentalRegistry();
+import java.util.ArrayList;
+import java.util.List;
+import se.kth.ict.rentcar.model.Rental;
 
-    /**
-     * Get the value of rentalRegistry
-     *
-     * @return the value of rentalRegistry
-     */
-    public RentalRegistry getRentalRegistry() {
-        return rentalRegistry;
+/**
+ * Contains all calls to the data store with performed rentals.
+ */
+public class RentalRegistry {
+    private List<Rental> rentals = new ArrayList<>();
+    
+    RentalRegistry() {
     }
 
     /**
-     * Get the value of carRegistry
+     * Saves the specified rental permanently.
      *
-     * @return the value of carRegistry
+     * @param rental The rental that will be saved.
      */
-    public CarRegistry getCarRegistry() {
-        return carRegistry;
+    public void saveRental(Rental rental) {
+        rentals.add(rental);
     }
 }

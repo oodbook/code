@@ -38,7 +38,7 @@ import java.util.List;
  * Contains all calls to the data store with cars that may be rented.
  */
 public class CarRegistry {
-    private List<CarDTO> cars = new ArrayList<>();
+    private List<CarData> cars = new ArrayList<>();
 
     CarRegistry() {
         addCars();
@@ -54,10 +54,10 @@ public class CarRegistry {
      *         <code>searchedCar</code> was found, <code>false</code> if no such
      *         car was found.
      */
-    public CarDTO findCar(CarDTO searchedCar) {
-        for (CarDTO car : cars) {
-            if (car.matches(searchedCar)) {
-                return car;
+    public CarDTO findAvailableCar(CarDTO searchedCar) {
+        for (CarData car : cars) {
+            if (matches(car, searchedCar) && !car.booked) {
+                return new CarDTO(car.regNo, car.price, car.size, car.AC, car.fourWD, car.color);
             }
         }
         return null;
@@ -70,11 +70,63 @@ public class CarRegistry {
      * @param car The car that will be booked.
      */
     public void bookCar(CarDTO car) {
+        CarData carToBook = findCarByRegNo(car);
+        carToBook.booked = true;
     }
 
     private void addCars() {
-        cars.add(new CarDTO(1000, "medium", true, true, "red", "abc123"));
-        cars.add(new CarDTO(2000, "large", false, true, "blue", "abc124"));
-        cars.add(new CarDTO(500, "medium", false, false, "red", "abc125"));
+        cars.add(new CarData("abc123", 1000, "medium", true, true, "red"));
+        cars.add(new CarData("abc124", 2000, "large", false, true, "blue"));
+        cars.add(new CarData("abc125", 500, "medium", false, false, "red"));
+    }
+
+    private boolean matches(CarData found, CarDTO searched) {
+        if (searched.getPrice() != 0 && searched.getPrice() != found.price) {
+            return false;
+        }
+        if (searched.getSize() != null && !searched.getSize().equals(found.size)) {
+            return false;
+        }
+        if (searched.getColor() != null && !searched.getColor().equals(
+                found.color)) {
+            return false;
+        }
+        if (searched.isAC() != found.AC) {
+            return false;
+        }
+        if (searched.isFourWD() != found.fourWD) {
+            return false;
+        }
+        return true;
+    }
+
+    private CarData findCarByRegNo(CarDTO searchedCar) {
+        for (CarData car : cars) {
+            if (car.regNo.equals(searchedCar.getRegNo())) {
+                return car;
+            }
+        }
+        return null;        
+    }
+
+    private static class CarData {
+        private String regNo;
+        private int price;
+        private String size;
+        private boolean AC;
+        private boolean fourWD;
+        private String color;
+        private boolean booked;
+
+        public CarData(String regNo, int price, String size, boolean AC,
+                       boolean fourWD, String color) {
+            this.regNo = regNo;
+            this.price = price;
+            this.size = size;
+            this.AC = AC;
+            this.fourWD = fourWD;
+            this.color = color;
+            this.booked = false;
+        }
     }
 }

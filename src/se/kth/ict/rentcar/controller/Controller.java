@@ -34,6 +34,7 @@ package se.kth.ict.rentcar.controller;
 import se.kth.ict.rentcar.integration.CarRegistry;
 import se.kth.ict.rentcar.integration.CarDTO;
 import se.kth.ict.rentcar.integration.RegistryCreator;
+import se.kth.ict.rentcar.integration.RentalRegistry;
 import se.kth.ict.rentcar.model.CustomerDTO;
 import se.kth.ict.rentcar.model.Rental;
 
@@ -43,7 +44,7 @@ import se.kth.ict.rentcar.model.Rental;
  */
 public class Controller {
     private CarRegistry carRegistry;
-//    private RentalRegistry rentalRegistry;
+    private RentalRegistry rentalRegistry;
     private Rental rental;
 //    private CashRegister cashRegister;
 //    private Printer printer;
@@ -56,7 +57,7 @@ public class Controller {
      */
     public Controller(RegistryCreator regCreator/*, Printer printer*/) {
         this.carRegistry = regCreator.getCarRegistry();
-//        this.rentalRegistry = regCreator.getRentalRegistry();
+        this.rentalRegistry = regCreator.getRentalRegistry();
 //        this.printer = printer;
 //        this.cashRegister = new CashRegister();
     }
@@ -70,7 +71,7 @@ public class Controller {
      * @return The best match of the search criteria.
      */
     public CarDTO searchMatchingCar(CarDTO searchedCar) {
-        return carRegistry.findCar(searchedCar);
+        return carRegistry.findAvailableCar(searchedCar);
     }
 
     /**
@@ -79,21 +80,21 @@ public class Controller {
      * @param customer The customer that will be registered.
      */
     public void registerCustomer(CustomerDTO customer) {
-        rental = new Rental(customer/*, carRegistry*/);
+        rental = new Rental(customer, carRegistry);
     }
 
-//    /**
-//     * Books the specified car. After calling this method, the car can not be
-//     * booked by any other customer. This method also permanently saves
-//     * information about the current rental.
-//     *
-//     * @param car The car that will be booked.
-//     */
-//    public void bookCar(CarDTO car) {
-//        rental.setRentedCar(car);
-//        rentalRegistry.saveRental(rental);
-//    }
-//
+    /**
+     * Books the specified car. After calling this method, the car can not be
+     * booked by any other customer. This method also permanently saves
+     * information about the current rental.
+     *
+     * @param car The car that will be booked.
+     */
+    public void bookCar(CarDTO car) {
+        rental.setRentedCar(car);
+        rentalRegistry.saveRental(rental);
+    }
+
 //    /**
 //     * Handles rental payment. Updates the balance of the cash register where
 //     * the payment was performed. Calculates change. Prints the receipt.

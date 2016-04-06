@@ -35,25 +35,25 @@ package se.kth.ict.rentcar.integration;
  * Contains information about one particular car.
  */
 public final class CarDTO {
+    private final String regNo;
     private final int price;
     private final String size;
     private final boolean AC;
     private final boolean fourWD;
     private final String color;
-    private final String regNo;
 
     /**
      * Creates a new instance representing a particular car.
      *
+     * @param regNo  The car's registration number.
      * @param price  The price paid to rent the car.
      * @param size   The size of the car, e.g., <code>medium hatchback</code>.
      * @param AC     <code>true</code> if the car has air condition.
      * @param fourWD <code>true</code> if the car has four wheel drive.
      * @param color  The color of the car.
-     * @param regNo  The car's registration number.
      */
-    public CarDTO(int price, String size, boolean AC, boolean fourWD,
-                  String color, String regNo) {
+    public CarDTO(String regNo, int price, String size, boolean AC, boolean fourWD,
+                  String color) {
         this.price = price;
         this.size = size;
         this.AC = AC;
@@ -62,35 +62,6 @@ public final class CarDTO {
         this.regNo = regNo;
     }
 
-    /**
-     * Checks if the specified car has the same features as this car. Fields
-     * that are set to <code>null</code> or <code>0</code> are ignored. Note
-     * that the check is for matching features, not for identity. Therefore,
-     * registration number is ignored.
-     *
-     * @param searched Contains search criteria.
-     * @return <code>true</code> if this object has the same features as
-     *         <code>searched</code>, <code>false</code> if it has not.
-     */
-    boolean matches(CarDTO searched) {
-        if (searched.getPrice() != 0 && searched.getPrice() != price) {
-            return false;
-        }
-        if (searched.getSize() != null && !searched.getSize().equals(size)) {
-            return false;
-        }
-        if (searched.getColor() != null && !searched.getColor().equals(color)) {
-            return false;
-        }
-        if (searched.isAC() != AC) {
-            return false;
-        }
-        if (searched.isFourWD() != fourWD) {
-            return false;
-        }
-        return true;
-    }
-    
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

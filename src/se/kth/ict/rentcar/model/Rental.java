@@ -28,14 +28,17 @@
  */
 package se.kth.ict.rentcar.model;
 
+import se.kth.ict.rentcar.integration.CarDTO;
+import se.kth.ict.rentcar.integration.CarRegistry;
+
 /**
  * Represents one particular rental transaction, where one particular car is
  * rented by one particular customer.
  */
 public class Rental {
     private CustomerDTO customer;
-//    private CarDTO rentedCar;
-//    private CarRegistry carRegistry; 
+    private CarDTO rentedCar;
+    private CarRegistry carRegistry; 
 
     /**
      * Creates a new instance, representing a rental made by the specified
@@ -44,21 +47,21 @@ public class Rental {
      * @param customer The renting customer.
 //     * @param carRegistry The data store with information about available cars.
      */
-    public Rental(CustomerDTO customer/*, CarRegistry carRegistry*/) {
+    public Rental(CustomerDTO customer, CarRegistry carRegistry) {
         this.customer = customer;
-//        this.carRegistry = carRegistry;
+        this.carRegistry = carRegistry;
     }
 
-//    /**
-//     * Specifies the car that was rented.
-//     *
-//     * @param rentedCar The car that was rented.
-//     */
-//    public void setRentedCar(CarDTO rentedCar) {
-//        this.rentedCar = rentedCar;
-//        carRegistry.bookCar(rentedCar);
-//    }
-//    
+    /**
+     * Specifies the car that was rented.
+     *
+     * @param rentedCar The car that was rented.
+     */
+    public void setRentedCar(CarDTO rentedCar) {
+        this.rentedCar = rentedCar;
+        carRegistry.bookCar(rentedCar);
+    }
+    
 //    /**
 //     * This rental is paid using the specified payment.
 //     * 
