@@ -31,12 +31,14 @@
  */
 package se.kth.ict.rentcar.integration;
 
+import se.kth.ict.rentcar.model.Amount;
+
 /**
  * Contains information about one particular car.
  */
 public final class CarDTO {
     private final String regNo;
-    private final int price;
+    private final Amount price;
     private final String size;
     private final boolean AC;
     private final boolean fourWD;
@@ -52,7 +54,7 @@ public final class CarDTO {
      * @param fourWD <code>true</code> if the car has four wheel drive.
      * @param color  The color of the car.
      */
-    public CarDTO(String regNo, int price, String size, boolean AC, boolean fourWD,
+    public CarDTO(String regNo, Amount price, String size, boolean AC, boolean fourWD,
                   String color) {
         this.price = price;
         this.size = size;
@@ -124,7 +126,7 @@ public final class CarDTO {
      *
      * @return the value of price
      */
-    public int getPrice() {
+    public Amount getPrice() {
         return price;
     }
 

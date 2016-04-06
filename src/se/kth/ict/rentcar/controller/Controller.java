@@ -33,8 +33,12 @@ package se.kth.ict.rentcar.controller;
 
 import se.kth.ict.rentcar.integration.CarRegistry;
 import se.kth.ict.rentcar.integration.CarDTO;
+import se.kth.ict.rentcar.integration.Printer;
 import se.kth.ict.rentcar.integration.RegistryCreator;
 import se.kth.ict.rentcar.integration.RentalRegistry;
+import se.kth.ict.rentcar.model.Amount;
+import se.kth.ict.rentcar.model.CashPayment;
+import se.kth.ict.rentcar.model.CashRegister;
 import se.kth.ict.rentcar.model.CustomerDTO;
 import se.kth.ict.rentcar.model.Rental;
 
@@ -46,20 +50,20 @@ public class Controller {
     private CarRegistry carRegistry;
     private RentalRegistry rentalRegistry;
     private Rental rental;
-//    private CashRegister cashRegister;
-//    private Printer printer;
+    private CashRegister cashRegister;
+    private Printer printer;
 
     /**
      * Creates a new instance.
      *
      * @param regCreator Used to get all classes that handle database calls.
-//     * @param printer    Interface to printer.
+     * @param printer    Interface to printer.
      */
-    public Controller(RegistryCreator regCreator/*, Printer printer*/) {
+    public Controller(RegistryCreator regCreator, Printer printer) {
         this.carRegistry = regCreator.getCarRegistry();
         this.rentalRegistry = regCreator.getRentalRegistry();
-//        this.printer = printer;
-//        this.cashRegister = new CashRegister();
+        this.printer = printer;
+        this.cashRegister = new CashRegister();
     }
 
     /**
@@ -95,16 +99,16 @@ public class Controller {
         rentalRegistry.saveRental(rental);
     }
 
-//    /**
-//     * Handles rental payment. Updates the balance of the cash register where
-//     * the payment was performed. Calculates change. Prints the receipt.
-//     *
-//     * @param paidAmt The paid amount.
-//     */
-//    public void pay(Amount paidAmt) {
-//        CashPayment payment = new CashPayment(paidAmt);
-//        rental.pay(payment);
-//        cashRegister.addPayment(payment);
-//        rental.printReceipt(printer);
-//    }
+    /**
+     * Handles rental payment. Updates the balance of the cash register where
+     * the payment was performed. Calculates change. Prints the receipt.
+     *
+     * @param paidAmt The paid amount.
+     */
+    public void pay(Amount paidAmt) {
+        CashPayment payment = new CashPayment(paidAmt);
+        rental.pay(payment);
+        cashRegister.addPayment(payment);
+        rental.printReceipt(printer);
+    }
 }

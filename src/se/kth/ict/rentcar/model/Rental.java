@@ -30,6 +30,7 @@ package se.kth.ict.rentcar.model;
 
 import se.kth.ict.rentcar.integration.CarDTO;
 import se.kth.ict.rentcar.integration.CarRegistry;
+import se.kth.ict.rentcar.integration.Printer;
 
 /**
  * Represents one particular rental transaction, where one particular car is
@@ -39,6 +40,7 @@ public class Rental {
     private CustomerDTO customer;
     private CarDTO rentedCar;
     private CarRegistry carRegistry; 
+    private CashPayment payment;
 
     /**
      * Creates a new instance, representing a rental made by the specified
@@ -62,20 +64,41 @@ public class Rental {
         carRegistry.bookCar(rentedCar);
     }
     
-//    /**
-//     * This rental is paid using the specified payment.
-//     * 
-//     * @param payment The payment used to pay this rental.
-//     */
-//    public void pay(CashPayment payment) {
-//        payment.calculateTotalCost(this);
-//    }
-//    
-//    /**
-//     * Prints a receipt for the current rental on the specified printer.
-//     */
-//    public void printReceipt(Printer printer) {
-//        Receipt receipt = new Receipt(this);
-//        printer.printReceipt(receipt);
-//    }
+    /**
+     * @return The registration number of the rented car.
+     */
+    public String getRegNoOfRentedCar() {
+        return rentedCar.getRegNo();
+    }
+    
+    /**
+     * @return The payment info for this rental.
+     */
+    public CashPayment getPayment() {
+        return payment;
+    }
+    
+    /**
+     * This rental is paid using the specified payment.
+     * 
+     * @param payment The payment used to pay this rental.
+     */
+    public void pay(CashPayment payment) {
+        payment.calculateTotalCost(this);
+        this.payment = payment;
+    }
+    
+    /**
+     * Prints a receipt for the current rental on the specified printer.
+     * 
+     * @param printer The printer where the receipt is printed.
+     */
+    public void printReceipt(Printer printer) {
+        Receipt receipt = new Receipt(this);
+        printer.printReceipt(receipt);
+    }
+
+    Amount getCost() {
+        return rentedCar.getPrice();
+    }
 }

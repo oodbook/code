@@ -33,6 +33,7 @@ package se.kth.ict.rentcar.integration;
 
 import java.util.ArrayList;
 import java.util.List;
+import se.kth.ict.rentcar.model.Amount;
 
 /**
  * Contains all calls to the data store with cars that may be rented.
@@ -57,7 +58,8 @@ public class CarRegistry {
     public CarDTO findAvailableCar(CarDTO searchedCar) {
         for (CarData car : cars) {
             if (matches(car, searchedCar) && !car.booked) {
-                return new CarDTO(car.regNo, car.price, car.size, car.AC, car.fourWD, car.color);
+                return new CarDTO(car.regNo, new Amount(car.price), car.size,
+                                  car.AC, car.fourWD, car.color);
             }
         }
         return null;
@@ -81,7 +83,8 @@ public class CarRegistry {
     }
 
     private boolean matches(CarData found, CarDTO searched) {
-        if (searched.getPrice() != 0 && searched.getPrice() != found.price) {
+        if (!searched.getPrice().equals(new Amount()) && !searched.getPrice().equals(
+                new Amount(found.price))) {
             return false;
         }
         if (searched.getSize() != null && !searched.getSize().equals(found.size)) {
@@ -106,7 +109,7 @@ public class CarRegistry {
                 return car;
             }
         }
-        return null;        
+        return null;
     }
 
     private static class CarData {

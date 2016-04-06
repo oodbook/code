@@ -32,6 +32,7 @@
 package se.kth.ict.rentcar.startup;
 
 import se.kth.ict.rentcar.controller.Controller;
+import se.kth.ict.rentcar.integration.Printer;
 import se.kth.ict.rentcar.integration.RegistryCreator;
 import se.kth.ict.rentcar.view.View;
 
@@ -47,8 +48,8 @@ public class Main {
      */
     public static void main(String[] args) {
         RegistryCreator creator = new RegistryCreator();
-//        Printer printer = new Printer();
-        Controller contr = new Controller(creator/*, printer*/);
+        Printer printer = new Printer();
+        Controller contr = new Controller(creator, printer);
         new View(contr).sampleExecution();
     }
 }

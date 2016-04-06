@@ -34,6 +34,7 @@ package se.kth.ict.rentcar.view;
 import se.kth.ict.rentcar.controller.Controller;
 import se.kth.ict.rentcar.integration.CarDTO;
 import se.kth.ict.rentcar.model.AddressDTO;
+import se.kth.ict.rentcar.model.Amount;
 import se.kth.ict.rentcar.model.CustomerDTO;
 import se.kth.ict.rentcar.model.DrivingLicenseDTO;
 
@@ -57,9 +58,9 @@ public class View {
      * Simulates a user input that generates calls to all system operations.
      */
     public void sampleExecution() {
-        CarDTO unavailableCar = new CarDTO(null, 1000, "nonExistingSize", true,
+        CarDTO unavailableCar = new CarDTO(null, new Amount(1000), "nonExistingSize", true,
                                            true, "red");
-        CarDTO availableCar = new CarDTO(null, 1000, "medium", true, true, "red");
+        CarDTO availableCar = new CarDTO(null, new Amount(1000), "medium", true, true, "red");
 
         CarDTO foundCar = contr.searchMatchingCar(unavailableCar);
         System.out.println(
@@ -80,9 +81,10 @@ public class View {
         System.out.println(
                 "Result of searching for available, but booked, car: " + foundCar);
 
-//        Amount paidAmount = new Amount(100);
-//        contr.pay(paidAmount);
-//        System.out.println("Rental is paid");
+        Amount paidAmount = new Amount(1500);
+        System.out.println("----------------- Receipt follows --------------");
+        contr.pay(paidAmount);
+        System.out.println("-------- End of receipt ----------------------");
     }
 
 }
