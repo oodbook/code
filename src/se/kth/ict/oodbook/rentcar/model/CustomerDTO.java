@@ -26,27 +26,54 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.integration;
-
-import java.util.ArrayList;
-import java.util.List;
-import se.kth.ict.rentcar.model.Rental;
+package se.kth.ict.oodbook.rentcar.model;
 
 /**
- * Contains all calls to the data store with performed rentals.
+ * Represents a customer of the car rental company.
  */
-public class RentalRegistry {
-    private List<Rental> rentals = new ArrayList<>();
-    
-    RentalRegistry() {
+public class CustomerDTO {
+    private final String name;
+    private final AddressDTO address;
+    private final DrivingLicenseDTO drivingLicense;
+
+    /**
+     * Creates a new instance.
+     *
+     * @param name           The customer's name.
+     * @param address        The customer's address.
+     * @param drivingLicense The customer's driving license.
+     */
+    public CustomerDTO(String name, AddressDTO address, DrivingLicenseDTO drivingLicense) {
+        this.name = name;
+        this.address = address;
+        this.drivingLicense = drivingLicense;
     }
 
     /**
-     * Saves the specified rental permanently.
+     * Get the value of drivingLicense
      *
-     * @param rental The rental that will be saved.
+     * @return the value of drivingLicense
      */
-    public void saveRental(Rental rental) {
-        rentals.add(rental);
+    public DrivingLicenseDTO getDrivingLicense() {
+        return drivingLicense;
     }
+
+    /**
+     * Get the value of address
+     *
+     * @return the value of address
+     */
+    public AddressDTO getAddress() {
+        return address;
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return the value of name
+     */
+    public String getName() {
+        return name;
+    }
+
 }

@@ -26,46 +26,58 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.model;
+package se.kth.ict.oodbook.rentcar.model;
+
+import java.util.Date;
 
 /**
- * Represents one specific payment for one specific rental. The rental is payed
- * with cash.
+ * The receipt of a rental
  */
-public class CashPayment {
-    private Amount paidAmt;
-    private Amount totalCost;
+public class Receipt {
+    private final Rental rental;
 
     /**
-     * Creates a new instance. The customer handed over the specified amount.
+     * Creates a new instance.
      *
-     * @param paidAmt The amount of cash that was handed over by the
-     *                   customer.
+     * @param rental The rental proved by this receipt.
      */
-    public CashPayment(Amount paidAmt) {
-        this.paidAmt = paidAmt;
-    }
-    
-    /**
-     * Calculates the total cost of the specified rental.
-     * 
-     * @param paidRental The rental for which the customer is paying.
-     */
-    void calculateTotalCost(Rental paidRental) {
-        totalCost = paidRental.getCost();
-    }
-    
-    /**
-     * @return The total cost of the rental that was paid. 
-     */
-    Amount getTotalCost() {
-        return totalCost;
+    Receipt(Rental rental) {
+        this.rental = rental;
     }
 
     /**
-     * @return The amount of change the customer shall have.
+     * Creates a well-formatted string with the entire content of the receipt.
+     *
+     * @return The well-formatted receipt string.
      */
-    Amount getChange() {
-        return paidAmt.minus(totalCost);
+    public String createReceiptString() {
+        StringBuilder builder = new StringBuilder();
+        appendLine(builder, "Car Rental");
+        endSection(builder);
+
+        Date rentalTime = new Date();
+        builder.append("Rental time: ");
+        appendLine(builder, rentalTime.toString());
+        endSection(builder);
+
+        builder.append("Rented car: ");
+        appendLine(builder, rental.getRegNoOfRentedCar());
+        builder.append("Cost: ");
+        appendLine(builder, rental.getPayment().getTotalCost().toString());
+        builder.append("Change: ");
+        appendLine(builder, rental.getPayment().getChange().toString());
+        endSection(builder);
+        
+        return builder.toString();
     }
+
+    private void appendLine(StringBuilder builder, String line) {
+        builder.append(line);
+        builder.append("\n");
+    }
+
+    private void endSection(StringBuilder builder) {
+        builder.append("\n");
+    }
+
 }

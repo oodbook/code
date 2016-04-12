@@ -26,16 +26,46 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.model;
+package se.kth.ict.oodbook.rentcar.model;
 
 /**
- * Represents a cash register. There shall be one instance of this class for
- * each register.
+ * Represents one specific payment for one specific rental. The rental is payed
+ * with cash.
  */
-public class CashRegister {
-    private Amount balance = new Amount();
+public class CashPayment {
+    private Amount paidAmt;
+    private Amount totalCost;
+
+    /**
+     * Creates a new instance. The customer handed over the specified amount.
+     *
+     * @param paidAmt The amount of cash that was handed over by the
+     *                   customer.
+     */
+    public CashPayment(Amount paidAmt) {
+        this.paidAmt = paidAmt;
+    }
     
-    public void addPayment(CashPayment payment) {
-        balance = balance.plus(payment.getTotalCost());
+    /**
+     * Calculates the total cost of the specified rental.
+     * 
+     * @param paidRental The rental for which the customer is paying.
+     */
+    void calculateTotalCost(Rental paidRental) {
+        totalCost = paidRental.getCost();
+    }
+    
+    /**
+     * @return The total cost of the rental that was paid. 
+     */
+    Amount getTotalCost() {
+        return totalCost;
+    }
+
+    /**
+     * @return The amount of change the customer shall have.
+     */
+    Amount getChange() {
+        return paidAmt.minus(totalCost);
     }
 }

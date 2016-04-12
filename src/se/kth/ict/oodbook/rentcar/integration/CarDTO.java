@@ -29,9 +29,9 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.integration;
+package se.kth.ict.oodbook.rentcar.integration;
 
-import se.kth.ict.rentcar.model.Amount;
+import se.kth.ict.oodbook.rentcar.model.Amount;
 
 /**
  * Contains information about one particular car.

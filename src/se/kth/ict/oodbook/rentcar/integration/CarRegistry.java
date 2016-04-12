@@ -29,11 +29,11 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.integration;
+package se.kth.ict.oodbook.rentcar.integration;
 
 import java.util.ArrayList;
 import java.util.List;
-import se.kth.ict.rentcar.model.Amount;
+import se.kth.ict.oodbook.rentcar.model.Amount;
 
 /**
  * Contains all calls to the data store with cars that may be rented.

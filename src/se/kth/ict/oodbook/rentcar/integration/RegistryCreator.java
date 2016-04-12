@@ -26,58 +26,30 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.model;
-
-import java.util.Date;
+package se.kth.ict.oodbook.rentcar.integration;
 
 /**
- * The receipt of a rental
+ * This class is responsible for instantiating all registries.
  */
-public class Receipt {
-    private final Rental rental;
+public class RegistryCreator {
+    private CarRegistry carRegistry = new CarRegistry();
+    private RentalRegistry rentalRegistry = new RentalRegistry();
 
     /**
-     * Creates a new instance.
+     * Get the value of rentalRegistry
      *
-     * @param rental The rental proved by this receipt.
+     * @return the value of rentalRegistry
      */
-    Receipt(Rental rental) {
-        this.rental = rental;
+    public RentalRegistry getRentalRegistry() {
+        return rentalRegistry;
     }
 
     /**
-     * Creates a well-formatted string with the entire content of the receipt.
+     * Get the value of carRegistry
      *
-     * @return The well-formatted receipt string.
+     * @return the value of carRegistry
      */
-    public String createReceiptString() {
-        StringBuilder builder = new StringBuilder();
-        appendLine(builder, "Car Rental");
-        endSection(builder);
-
-        Date rentalTime = new Date();
-        builder.append("Rental time: ");
-        appendLine(builder, rentalTime.toString());
-        endSection(builder);
-
-        builder.append("Rented car: ");
-        appendLine(builder, rental.getRegNoOfRentedCar());
-        builder.append("Cost: ");
-        appendLine(builder, rental.getPayment().getTotalCost().toString());
-        builder.append("Change: ");
-        appendLine(builder, rental.getPayment().getChange().toString());
-        endSection(builder);
-        
-        return builder.toString();
+    public CarRegistry getCarRegistry() {
+        return carRegistry;
     }
-
-    private void appendLine(StringBuilder builder, String line) {
-        builder.append(line);
-        builder.append("\n");
-    }
-
-    private void endSection(StringBuilder builder) {
-        builder.append("\n");
-    }
-
 }

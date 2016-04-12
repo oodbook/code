@@ -29,14 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.view;
+package se.kth.ict.oodbook.rentcar.view;
 
-import se.kth.ict.rentcar.controller.Controller;
-import se.kth.ict.rentcar.integration.CarDTO;
-import se.kth.ict.rentcar.model.AddressDTO;
-import se.kth.ict.rentcar.model.Amount;
-import se.kth.ict.rentcar.model.CustomerDTO;
-import se.kth.ict.rentcar.model.DrivingLicenseDTO;
+import se.kth.ict.oodbook.rentcar.controller.Controller;
+import se.kth.ict.oodbook.rentcar.integration.CarDTO;
+import se.kth.ict.oodbook.rentcar.model.AddressDTO;
+import se.kth.ict.oodbook.rentcar.model.Amount;
+import se.kth.ict.oodbook.rentcar.model.CustomerDTO;
+import se.kth.ict.oodbook.rentcar.model.DrivingLicenseDTO;
 
 /**
  * This program has no view, instead, this class is a placeholder for the entire

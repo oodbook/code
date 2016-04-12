@@ -29,18 +29,18 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.controller;
+package se.kth.ict.oodbook.rentcar.controller;
 
-import se.kth.ict.rentcar.integration.CarRegistry;
-import se.kth.ict.rentcar.integration.CarDTO;
-import se.kth.ict.rentcar.integration.Printer;
-import se.kth.ict.rentcar.integration.RegistryCreator;
-import se.kth.ict.rentcar.integration.RentalRegistry;
-import se.kth.ict.rentcar.model.Amount;
-import se.kth.ict.rentcar.model.CashPayment;
-import se.kth.ict.rentcar.model.CashRegister;
-import se.kth.ict.rentcar.model.CustomerDTO;
-import se.kth.ict.rentcar.model.Rental;
+import se.kth.ict.oodbook.rentcar.integration.CarRegistry;
+import se.kth.ict.oodbook.rentcar.integration.CarDTO;
+import se.kth.ict.oodbook.rentcar.integration.Printer;
+import se.kth.ict.oodbook.rentcar.integration.RegistryCreator;
+import se.kth.ict.oodbook.rentcar.integration.RentalRegistry;
+import se.kth.ict.oodbook.rentcar.model.Amount;
+import se.kth.ict.oodbook.rentcar.model.CashPayment;
+import se.kth.ict.oodbook.rentcar.model.CashRegister;
+import se.kth.ict.oodbook.rentcar.model.CustomerDTO;
+import se.kth.ict.oodbook.rentcar.model.Rental;
 
 /**
  * This is the application's only controller class. All calls to the model pass

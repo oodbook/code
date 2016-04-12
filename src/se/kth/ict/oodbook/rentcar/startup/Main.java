@@ -29,12 +29,12 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.startup;
+package se.kth.ict.oodbook.rentcar.startup;
 
-import se.kth.ict.rentcar.controller.Controller;
-import se.kth.ict.rentcar.integration.Printer;
-import se.kth.ict.rentcar.integration.RegistryCreator;
-import se.kth.ict.rentcar.view.View;
+import se.kth.ict.oodbook.rentcar.controller.Controller;
+import se.kth.ict.oodbook.rentcar.integration.Printer;
+import se.kth.ict.oodbook.rentcar.integration.RegistryCreator;
+import se.kth.ict.oodbook.rentcar.view.View;
 
 /**
  * Contains the <code>main</code> method. Performs all startup of the

@@ -26,30 +26,16 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.integration;
+package se.kth.ict.oodbook.rentcar.model;
 
 /**
- * This class is responsible for instantiating all registries.
+ * Represents a cash register. There shall be one instance of this class for
+ * each register.
  */
-public class RegistryCreator {
-    private CarRegistry carRegistry = new CarRegistry();
-    private RentalRegistry rentalRegistry = new RentalRegistry();
-
-    /**
-     * Get the value of rentalRegistry
-     *
-     * @return the value of rentalRegistry
-     */
-    public RentalRegistry getRentalRegistry() {
-        return rentalRegistry;
-    }
-
-    /**
-     * Get the value of carRegistry
-     *
-     * @return the value of carRegistry
-     */
-    public CarRegistry getCarRegistry() {
-        return carRegistry;
+public class CashRegister {
+    private Amount balance = new Amount();
+    
+    public void addPayment(CashPayment payment) {
+        balance = balance.plus(payment.getTotalCost());
     }
 }

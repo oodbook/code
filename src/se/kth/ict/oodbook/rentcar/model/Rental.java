@@ -26,11 +26,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.rentcar.model;
+package se.kth.ict.oodbook.rentcar.model;
 
-import se.kth.ict.rentcar.integration.CarDTO;
-import se.kth.ict.rentcar.integration.CarRegistry;
-import se.kth.ict.rentcar.integration.Printer;
+import se.kth.ict.oodbook.rentcar.integration.CarDTO;
+import se.kth.ict.oodbook.rentcar.integration.CarRegistry;
+import se.kth.ict.oodbook.rentcar.integration.Printer;
 
 /**
  * Represents one particular rental transaction, where one particular car is
