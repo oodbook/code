@@ -65,10 +65,10 @@ public class Rental {
     }
     
     /**
-     * @return The registration number of the rented car.
+     * @return The rented car.
      */
-    public String getRegNoOfRentedCar() {
-        return rentedCar.getRegNo();
+    CarDTO getRentedCar() {
+        return rentedCar;
     }
     
     /**
@@ -96,9 +96,5 @@ public class Rental {
     public void printReceipt(Printer printer) {
         Receipt receipt = new Receipt(this);
         printer.printReceipt(receipt);
-    }
-
-    Amount getCost() {
-        return rentedCar.getPrice();
     }
 }

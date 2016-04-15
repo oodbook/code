@@ -52,7 +52,7 @@ public class CashPayment {
      * @param paidRental The rental for which the customer is paying.
      */
     void calculateTotalCost(Rental paidRental) {
-        totalCost = paidRental.getCost();
+        totalCost = paidRental.getRentedCar().getPrice();
     }
     
     /**

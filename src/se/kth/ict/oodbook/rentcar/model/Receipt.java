@@ -61,7 +61,7 @@ public class Receipt {
         endSection(builder);
 
         builder.append("Rented car: ");
-        appendLine(builder, rental.getRegNoOfRentedCar());
+        appendLine(builder, rental.getRentedCar().getRegNo());
         builder.append("Cost: ");
         appendLine(builder, rental.getPayment().getTotalCost().toString());
         builder.append("Change: ");
