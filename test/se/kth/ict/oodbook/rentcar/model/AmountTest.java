@@ -105,4 +105,95 @@ public class AmountTest {
         assertEquals("Amount instances with same states are not equal.",
                      expResult, result);
     }
+
+    @Test
+    public void testMinus() {
+        int amountOfOperand1 = 10;
+        int amountOfOperand2 = 3;
+        Amount operand1 = new Amount(amountOfOperand1);
+        Amount operand2 = new Amount(amountOfOperand2);
+        Amount expResult = new Amount(amountOfOperand1 - amountOfOperand2);
+        Amount result = operand1.minus(operand2);
+        assertEquals("Wrong subtraction result", expResult, result);
+    }
+
+    @Test
+    public void testMinusNegResult() {
+        int amountOfOperand1 = 3;
+        int amountOfOperand2 = 10;
+        Amount operand1 = new Amount(amountOfOperand1);
+        Amount operand2 = new Amount(amountOfOperand2);
+        Amount expResult = new Amount(amountOfOperand1 - amountOfOperand2);
+        Amount result = operand1.minus(operand2);
+        assertEquals("Wrong subtraction result", expResult, result);
+    }
+    @Test
+    public void testMinusZeroResultNegOperand() {
+        int amountOfOperand1 = -3;
+        int amountOfOperand2 = -3;
+        Amount operand1 = new Amount(amountOfOperand1);
+        Amount operand2 = new Amount(amountOfOperand2);
+        Amount expResult = new Amount(amountOfOperand1 - amountOfOperand2);
+        Amount result = operand1.minus(operand2);
+        assertEquals("Wrong subtraction result", expResult, result);
+    }
+    
+    @Test
+    public void testPlus() {
+        int amountOfOperand1 = 10;
+        int amountOfOperand2 = 3;
+        Amount operand1 = new Amount(amountOfOperand1);
+        Amount operand2 = new Amount(amountOfOperand2);
+        Amount expResult = new Amount(amountOfOperand1 + amountOfOperand2);
+        Amount result = operand1.plus(operand2);
+        assertEquals("Wrong subtraction result", expResult, result);
+    }
+
+    @Test
+    public void testPlusNegResult() {
+        int amountOfOperand1 = 3;
+        int amountOfOperand2 = -10;
+        Amount operand1 = new Amount(amountOfOperand1);
+        Amount operand2 = new Amount(amountOfOperand2);
+        Amount expResult = new Amount(amountOfOperand1 + amountOfOperand2);
+        Amount result = operand1.plus(operand2);
+        assertEquals("Wrong subtraction result", expResult, result);
+    }
+    @Test
+    public void testPlusZeroResultNegOperand() {
+        int amountOfOperand1 = -3;
+        int amountOfOperand2 = 3;
+        Amount operand1 = new Amount(amountOfOperand1);
+        Amount operand2 = new Amount(amountOfOperand2);
+        Amount expResult = new Amount(amountOfOperand1 + amountOfOperand2);
+        Amount result = operand1.plus(operand2);
+        assertEquals("Wrong subtraction result", expResult, result);
+    }
+
+    @Test
+    public void toStringPosAmt() {
+        int representedAmt = 10;
+        Amount amount = new Amount(representedAmt);
+        String expResult = Integer.toString(representedAmt);
+        String result = amount.toString();
+        assertEquals("Wrong string returned by toString", expResult, result);
+    }
+
+    @Test
+    public void toStringNegAmt() {
+        int representedAmt = -10;
+        Amount amount = new Amount(representedAmt);
+        String expResult = Integer.toString(representedAmt);
+        String result = amount.toString();
+        assertEquals("Wrong string returned by toString", expResult, result);
+    }
+
+    @Test
+    public void toStringZeroAmt() {
+        int representedAmt = 0;
+        Amount amount = new Amount(representedAmt);
+        String expResult = Integer.toString(representedAmt);
+        String result = amount.toString();
+        assertEquals("Wrong string returned by toString", expResult, result);
+    }
 }

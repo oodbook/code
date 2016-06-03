@@ -52,7 +52,8 @@ public final class Amount {
 
     /**
      * Subtracts the specified <code>Amount</code> from this object and returns
-     * an <code>Amount</code> instance with the result.
+     * an <code>Amount</code> instance with the result. The operation will
+     * overflow if the result is smaller than <code>Integer.MIN_VALUE</code>.
      *
      * @param other The <code>Amount</code> to subtract.
      * @return The result of the subtraction.
@@ -62,8 +63,9 @@ public final class Amount {
     }
 
     /**
-     * Adds the specified <code>Amount</code> to this object and returns
-     * an <code>Amount</code> instance with the result.
+     * Adds the specified <code>Amount</code> to this object and returns an
+     * <code>Amount</code> instance with the result. The operation will
+     * overflow if the result is larger than <code>Integer.MAX_VALUE</code>.
      *
      * @param other The <code>Amount</code> to add.
      * @return The result of the addition.
@@ -87,7 +89,7 @@ public final class Amount {
         Amount otherAmount = (Amount) other;
         return amount == otherAmount.amount;
     }
-    
+
     @Override
     public String toString() {
         return Integer.toString(amount);

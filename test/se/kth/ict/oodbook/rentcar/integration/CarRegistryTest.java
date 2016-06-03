@@ -34,48 +34,82 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import se.kth.ict.oodbook.rentcar.model.Amount;
 
 public class CarRegistryTest {
-    
+
     public CarRegistryTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     @Test
-    public void testFindAvailableCar() {
-        System.out.println("findAvailableCar");
-        CarDTO searchedCar = null;
+    public void testFindAvailableCarMatch() {
+        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "medium",
+                                        true, true, "red");
+        CarRegistry instance = new CarRegistry();
+        CarDTO expResult = searchedCar;
+        CarDTO result = instance.findAvailableCar(searchedCar);
+        assertEquals("Available car was not found", expResult, result);
+    }
+
+    @Test
+    public void testFindAvailableCarRegNoNotChecked() {
+        CarDTO searchedCar = new CarDTO("wrong", new Amount(1000), "medium",
+                                        true, true, "red");
+        CarRegistry instance = new CarRegistry();
+        CarDTO expResult = new CarDTO("abc123", searchedCar.getPrice(),
+                                      searchedCar.getSize(), searchedCar.isAC(),
+                                      searchedCar.isFourWD(), searchedCar.
+                                      getColor());
+        CarDTO result = instance.findAvailableCar(searchedCar);
+        assertEquals("Available car with wrong regNo was not found", expResult,
+                     result);
+    }
+
+    @Test
+    public void testFindAvailableCarNoMatch() {
+        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "wrong",
+                                        true, true, "red");
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = null;
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("Unavailable car was found", expResult, result);
+    }
+
+    @Test
+    public void testFindAvailableCarNullIsIgnored() {
+        CarDTO searchedCar = new CarDTO(null, null, null,
+                                        true, true, null);
+        CarRegistry instance = new CarRegistry();
+        CarDTO expResult = new CarDTO("abc123", new Amount(1000), "medium",
+                                        true, true, "red");
+        CarDTO result = instance.findAvailableCar(searchedCar);
+        assertEquals("Unavailable car was found", expResult, result);
     }
 
     @Test
     public void testBookCar() {
-        System.out.println("bookCar");
-        CarDTO car = null;
+        CarDTO bookedCar = new CarDTO("abc123", new Amount(1000), "medium",
+                                        true, true, "red");
         CarRegistry instance = new CarRegistry();
-        instance.bookCar(car);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.bookCar(bookedCar);
+        CarDTO expResult = null;
+        CarDTO result = instance.findAvailableCar(bookedCar);
+        assertEquals("Booked car was found", expResult, result);
     }
-    
 }

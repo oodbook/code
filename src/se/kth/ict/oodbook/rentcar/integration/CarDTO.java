@@ -31,6 +31,7 @@
  */
 package se.kth.ict.oodbook.rentcar.integration;
 
+import java.util.Objects;
 import se.kth.ict.oodbook.rentcar.model.Amount;
 
 /**
@@ -74,6 +75,45 @@ public final class CarDTO {
         builder.append("4WD: " + fourWD + ", ");
         builder.append("color: " + color);
         return builder.toString();
+    }
+
+    /**
+     * Two <code>CarDTO</code> instances are equal if all fields are equal.
+     *
+     * @param otherObj The <code>CarDTO</code> to compare with this
+     *                 <code>CarDTO</code>.
+     * @return <code>true</code> if all fields in the specified
+     *         <code>CarDTO</code> are equal to corresponding fields in this
+     *         <code>CarDTO</code>, <code>false</code> if they are not.
+     */
+    @Override
+    public boolean equals(Object otherObj) {
+        if (otherObj == null) {
+            return false;
+        }
+        if (getClass() != otherObj.getClass()) {
+            return false;
+        }
+        final CarDTO other = (CarDTO) otherObj;
+        if (AC != other.AC) {
+            return false;
+        }
+        if (fourWD != other.fourWD) {
+            return false;
+        }
+        if (!regNo.equals(other.regNo)) {
+            return false;
+        }
+        if (!size.equals(other.size)) {
+            return false;
+        }
+        if (!color.equals(other.color)) {
+            return false;
+        }
+        if (!Objects.equals(this.price, other.price)) {
+            return false;
+        }
+        return true;
     }
 
     /**
