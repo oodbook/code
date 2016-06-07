@@ -42,9 +42,11 @@ import se.kth.ict.oodbook.rentcar.integration.RegistryCreator;
 
 public class RentalTest {
     ByteArrayOutputStream outContent;
+    PrintStream originalSysOut;
 
     @Before
     public void setUpStreams() {
+        originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
@@ -52,7 +54,7 @@ public class RentalTest {
     @After
     public void cleanUpStreams() {
         outContent = null;
-        System.setOut(null);
+        System.setOut(originalSysOut);
     }
 
     @Test

@@ -26,7 +26,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.rentcar.integration;
+package se.kth.ict.oodbook.rentcar.model;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -35,16 +35,17 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import se.kth.ict.oodbook.rentcar.model.Amount;
-import se.kth.ict.oodbook.rentcar.model.CashPayment;
-import se.kth.ict.oodbook.rentcar.model.Receipt;
-import se.kth.ict.oodbook.rentcar.model.Rental;
+import se.kth.ict.oodbook.rentcar.integration.CarDTO;
+import se.kth.ict.oodbook.rentcar.integration.Printer;
+import se.kth.ict.oodbook.rentcar.integration.RegistryCreator;
 
 public class PrinterTest {
     ByteArrayOutputStream outContent;
-    
+    PrintStream originalSysOut;
+
     @Before
     public void setUpStreams() {
+        originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
@@ -52,7 +53,7 @@ public class PrinterTest {
     @After
     public void cleanUpStreams() {
         outContent = null;
-        System.setOut(null);
+        System.setOut(originalSysOut);
     }
 
     @Test
@@ -70,7 +71,9 @@ public class PrinterTest {
                                        getCarRegistry());
         paidRental.setRentedCar(rentedCar);
         paidRental.pay(payment);
-        paidRental.printReceipt(new Printer());
+        Receipt receipt = new Receipt(paidRental);
+        Printer instance = new Printer();
+        instance.printReceipt(receipt);
         Date rentalTime = new Date();
         String expResult = "Car Rental\n\nRental time: " + rentalTime.toString()
                            + "\n\nRented car: " + regNo + "\nCost: " + price

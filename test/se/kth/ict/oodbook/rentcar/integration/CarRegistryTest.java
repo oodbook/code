@@ -28,35 +28,11 @@
  */
 package se.kth.ict.oodbook.rentcar.integration;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import se.kth.ict.oodbook.rentcar.model.Amount;
 
 public class CarRegistryTest {
-
-    public CarRegistryTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void testFindAvailableCarMatch() {
         CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "medium",

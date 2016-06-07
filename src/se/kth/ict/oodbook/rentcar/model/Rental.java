@@ -37,7 +37,7 @@ import se.kth.ict.oodbook.rentcar.integration.Printer;
  * rented by one particular customer.
  */
 public class Rental {
-    private CustomerDTO customer;
+    private CustomerDTO rentingCustomer;
     private CarDTO rentedCar;
     private CarRegistry carRegistry; 
     private CashPayment payment;
@@ -50,8 +50,15 @@ public class Rental {
 //     * @param carRegistry The data store with information about available cars.
      */
     public Rental(CustomerDTO customer, CarRegistry carRegistry) {
-        this.customer = customer;
+        this.rentingCustomer = customer;
         this.carRegistry = carRegistry;
+    }
+    
+    /**
+     * @return The customer that performed this rental.
+     */
+    public CustomerDTO getRentingCustomer() {
+        return rentingCustomer;
     }
 
     /**

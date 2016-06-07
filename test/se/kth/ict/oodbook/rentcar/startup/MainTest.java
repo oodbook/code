@@ -26,45 +26,27 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.rentcar.integration;
+package se.kth.ict.oodbook.rentcar.startup;
 
-import java.util.ArrayList;
-import java.util.List;
-import se.kth.ict.oodbook.rentcar.model.Rental;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-/**
- * Contains all calls to the data store with performed rentals.
- */
-public class RentalRegistry {
-    private List<Rental> rentals = new ArrayList<>();
-
-    RentalRegistry() {
-    }
-
-    /**
-     * Saves the specified rental permanently.
-     *
-     * @param rental The rental that will be saved.
-     */
-    public void saveRental(Rental rental) {
-        rentals.add(rental);
-    }
-
-    /**
-     * Returns a list containing all rentals made by a customer with the
-     * specified name. If there are no such rentals, the returned list is empty.
-     *
-     * @param custName The name of the customer who's rentals shall be
-     *                 retrieved.
-     * @return A list with all rentals made by the specified customer.
-     */
-    public List<Rental> findRentalByCustomerName(String custName) {
-        List<Rental> rentalsMadeBySpecifiedCust = new ArrayList<>();
-        for (Rental rental : rentals) {
-            if (rental.getRentingCustomer().getName().equals(custName)) {
-                rentalsMadeBySpecifiedCust.add(rental);
-            }
+public class MainTest {
+    @Test
+    public void testMain() {
+        PrintStream originalSysOut = null;
+        try {
+            originalSysOut = System.out;
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String[] args = null;
+            Main.main(args);
+            assertTrue("Wrong output when main is executed", outContent.
+                       toString().contains("Customer is registered"));
+        } finally {
+            System.setOut(originalSysOut);
         }
-        return rentalsMadeBySpecifiedCust;
     }
 }

@@ -28,12 +28,8 @@
  */
 package se.kth.ict.oodbook.rentcar.integration;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import se.kth.ict.oodbook.rentcar.model.AddressDTO;
 import se.kth.ict.oodbook.rentcar.model.CustomerDTO;
 import se.kth.ict.oodbook.rentcar.model.DrivingLicenseDTO;
@@ -41,21 +37,71 @@ import se.kth.ict.oodbook.rentcar.model.Rental;
 
 public class RentalRegistryTest {
     @Test
-    public void testSaveNullRental() {
-        Rental rental = null;
+    public void testSaveOneRental() {
+        String customerName = "custName";
+        CustomerDTO rentingCustomer = new CustomerDTO(customerName,
+                                                      new AddressDTO(
+                                                              "street",
+                                                              "zip",
+                                                              "city"),
+                                                      new DrivingLicenseDTO(
+                                                              "1234567"));
+        Rental rental = new Rental(rentingCustomer, new CarRegistry());
         RentalRegistry instance = new RentalRegistry();
         instance.saveRental(rental);
+        int expectedNoOfFoundRentals = 1;
+        int noOfFoundRentals = instance.findRentalByCustomerName(customerName).
+                size();
+        Assert.assertEquals("Wrong number of rentals in registry",
+                            expectedNoOfFoundRentals, noOfFoundRentals);
+        Rental expectedFoundRental = rental;
+        Rental foundRental = instance.findRentalByCustomerName(customerName).
+                get(0);
+        Assert.assertEquals("Wrong rental in registry",
+                            expectedFoundRental, foundRental);
     }
 
     @Test
-    public void testSaveRental() {
-        Rental rental = new Rental(new CustomerDTO("nisse", new AddressDTO(
-                                                   "storgatan 2", "12345",
-                                                   "staden"),
-                                                   new DrivingLicenseDTO(
-                                                           "1234567")),
-                                   new CarRegistry());
+    public void testRentalsMadeByDifferentCustomers() {
+        String nameOfFirstCustomer = "nameOfFirstCustomer";
+        String nameOfOtherCustomer = "nameOfOtherCustomer";
+        CustomerDTO firstRentingCustomer = new CustomerDTO(nameOfFirstCustomer,
+                                                           new AddressDTO(
+                                                                   "street",
+                                                                   "zip",
+                                                                   "city"),
+                                                           new DrivingLicenseDTO(
+                                                                   "1234567"));
+        CustomerDTO otherRentingCustomer = new CustomerDTO(nameOfOtherCustomer,
+                                                           new AddressDTO(
+                                                                   "street",
+                                                                   "zip",
+                                                                   "city"),
+                                                           new DrivingLicenseDTO(
+                                                                   "1234567"));
+        CarRegistry carReg = new CarRegistry();
         RentalRegistry instance = new RentalRegistry();
+        Rental rental = new Rental(firstRentingCustomer, carReg);
         instance.saveRental(rental);
+        rental = new Rental(otherRentingCustomer, carReg);
+        instance.saveRental(rental);
+        int expectedNoOfFoundRentals = 1;
+        int noOfFoundRentals
+                = instance.findRentalByCustomerName(nameOfFirstCustomer).size();
+        Assert.assertEquals("Wrong number of rentals in registry",
+                            expectedNoOfFoundRentals, noOfFoundRentals);
+        Rental expectedFoundRental = rental;
+        Rental foundRental = instance.findRentalByCustomerName(
+                nameOfOtherCustomer).get(0);
+        Assert.assertEquals("Wrong rental in registry",
+                            expectedFoundRental, foundRental);
+    }
+
+    @Test
+    public void testNoSavedRental() {
+        String custName = "custName";
+        RentalRegistry instance = new RentalRegistry();
+        Assert.assertTrue("Found a rental when none was stored", instance.
+                          findRentalByCustomerName(custName).isEmpty());
     }
 }
