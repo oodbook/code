@@ -28,11 +28,15 @@
  */
 package se.kth.ict.oodbook.rentcar.model;
 
+import se.leiflindback.oodbook.rentcar.model.CashPayment;
+import se.leiflindback.oodbook.rentcar.model.Amount;
+import se.leiflindback.oodbook.rentcar.model.Rental;
+import se.leiflindback.oodbook.rentcar.model.Receipt;
 import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import se.kth.ict.oodbook.rentcar.integration.CarDTO;
-import se.kth.ict.oodbook.rentcar.integration.RegistryCreator;
+import se.leiflindback.oodbook.rentcar.integration.CarDTO;
+import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 
 public class ReceiptTest {
     @Test

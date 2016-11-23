@@ -28,6 +28,7 @@
  */
 package se.kth.ict.oodbook.tests.firstexample;
 
+import se.leiflindback.oodbook.tests.firstexample.Amount;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

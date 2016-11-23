@@ -28,6 +28,7 @@
  */
 package se.kth.ict.oodbook.rentcar.model;
 
+import se.leiflindback.oodbook.rentcar.model.Amount;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

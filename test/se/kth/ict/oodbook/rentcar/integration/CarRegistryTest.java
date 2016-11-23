@@ -28,9 +28,11 @@
  */
 package se.kth.ict.oodbook.rentcar.integration;
 
+import se.leiflindback.oodbook.rentcar.integration.CarDTO;
+import se.leiflindback.oodbook.rentcar.integration.CarRegistry;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import se.kth.ict.oodbook.rentcar.model.Amount;
+import se.leiflindback.oodbook.rentcar.model.Amount;
 
 public class CarRegistryTest {
     @Test

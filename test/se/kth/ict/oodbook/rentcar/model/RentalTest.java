@@ -28,6 +28,9 @@
  */
 package se.kth.ict.oodbook.rentcar.model;
 
+import se.leiflindback.oodbook.rentcar.model.CashPayment;
+import se.leiflindback.oodbook.rentcar.model.Amount;
+import se.leiflindback.oodbook.rentcar.model.Rental;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Date;
@@ -35,10 +38,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import se.kth.ict.oodbook.rentcar.integration.CarDTO;
-import se.kth.ict.oodbook.rentcar.integration.CarRegistry;
-import se.kth.ict.oodbook.rentcar.integration.Printer;
-import se.kth.ict.oodbook.rentcar.integration.RegistryCreator;
+import se.leiflindback.oodbook.rentcar.integration.CarDTO;
+import se.leiflindback.oodbook.rentcar.integration.CarRegistry;
+import se.leiflindback.oodbook.rentcar.integration.Printer;
+import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 
 public class RentalTest {
     ByteArrayOutputStream outContent;
