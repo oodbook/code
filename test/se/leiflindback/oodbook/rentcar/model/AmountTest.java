@@ -26,7 +26,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.rentcar.model;
+package se.leiflindback.oodbook.rentcar.model;
 
 import se.leiflindback.oodbook.rentcar.model.Amount;
 import org.junit.After;

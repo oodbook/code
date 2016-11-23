@@ -26,41 +26,64 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.rentcar.model;
+package se.leiflindback.oodbook.rentcar.model;
 
 import se.leiflindback.oodbook.rentcar.model.CashPayment;
 import se.leiflindback.oodbook.rentcar.model.Amount;
 import se.leiflindback.oodbook.rentcar.model.Rental;
+import se.leiflindback.oodbook.rentcar.model.Receipt;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Date;
+import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import se.leiflindback.oodbook.rentcar.integration.CarDTO;
+import se.leiflindback.oodbook.rentcar.integration.Printer;
 import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 
-public class CashPaymentTest {
-    @Test
-    public void testGetTotalCost() {
-        Amount price = new Amount(100);
-        CashPayment instance = new CashPayment(null);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red");
-        Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
-        paidRental.setRentedCar(rentedCar);
-        instance.calculateTotalCost(paidRental);
-        Amount expResult = price;
-        Amount result = instance.getTotalCost();
-        assertEquals("Wrong total cost.", expResult, result);
+public class PrinterTest {
+    ByteArrayOutputStream outContent;
+    PrintStream originalSysOut;
+
+    @Before
+    public void setUpStreams() {
+        originalSysOut = System.out;
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
     }
-    
+
+    @After
+    public void cleanUpStreams() {
+        outContent = null;
+        System.setOut(originalSysOut);
+    }
+
     @Test
-    public void testGetChange() {
-        Amount price = new Amount(100);
-        Amount paidAmt = new Amount(500);
-        CashPayment instance = new CashPayment(paidAmt);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red");
-        Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
+    public void testCreateReceiptString() {
+        Amount price = new Amount(1000);
+        String regNo = "abc123";
+        String size = "medium";
+        boolean AC = true;
+        boolean fourWD = true;
+        String color = "red";
+        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color);
+        Amount paidAmt = new Amount(5000);
+        CashPayment payment = new CashPayment(paidAmt);
+        Rental paidRental = new Rental(null, new RegistryCreator().
+                                       getCarRegistry());
         paidRental.setRentedCar(rentedCar);
-        instance.calculateTotalCost(paidRental);
-        Amount expResult = paidAmt.minus(price);
-        Amount result = instance.getChange();
-        assertEquals("Wrong total cost.", expResult, result);
-    }    
+        paidRental.pay(payment);
+        Receipt receipt = new Receipt(paidRental);
+        Printer instance = new Printer();
+        instance.printReceipt(receipt);
+        Date rentalTime = new Date();
+        String expResult = "Car Rental\n\nRental time: " + rentalTime.toString()
+                           + "\n\nRented car: " + regNo + "\nCost: " + price
+                           + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
+        String result = outContent.toString();
+        assertEquals("Wrong printout.", expResult, result);
+    }
+
 }

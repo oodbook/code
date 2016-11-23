@@ -26,28 +26,29 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.rentcar.startup;
+package se.leiflindback.oodbook.rentcar.model;
 
-import se.leiflindback.oodbook.rentcar.startup.Main;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import se.leiflindback.oodbook.rentcar.model.CashRegister;
+import se.leiflindback.oodbook.rentcar.model.CashPayment;
+import se.leiflindback.oodbook.rentcar.model.Amount;
+import se.leiflindback.oodbook.rentcar.model.Rental;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import se.leiflindback.oodbook.rentcar.integration.CarDTO;
+import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 
-public class MainTest {
+public class CashRegisterTest {
     @Test
-    public void testMain() {
-        PrintStream originalSysOut = null;
-        try {
-            originalSysOut = System.out;
-            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(outContent));
-            String[] args = null;
-            Main.main(args);
-            assertTrue("Wrong output when main is executed", outContent.
-                       toString().contains("Customer is registered"));
-        } finally {
-            System.setOut(originalSysOut);
-        }
+    public void testAddPayment() {
+        Amount price = new Amount(100);
+        CashPayment payment = new CashPayment(null);
+        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false,
+                                      "red");
+        Rental paidRental = new Rental(null, new RegistryCreator().
+                                       getCarRegistry());
+        paidRental.setRentedCar(rentedCar);
+        paidRental.pay(payment);
+        CashRegister instance = new CashRegister();
+        instance.addPayment(payment);
     }
+
 }

@@ -26,7 +26,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.kth.ict.oodbook.rentcar.controller;
+package se.leiflindback.oodbook.rentcar.controller;
 
 import se.leiflindback.oodbook.rentcar.controller.Controller;
 import java.io.ByteArrayOutputStream;
