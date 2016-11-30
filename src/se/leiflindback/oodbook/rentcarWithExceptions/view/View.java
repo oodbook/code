@@ -31,16 +31,17 @@
  */
 package se.leiflindback.oodbook.rentcarWithExceptions.view;
 
+import se.leiflindback.oodbook.rentcarWithExceptions.controller.OperationFailedException;
 import se.leiflindback.oodbook.rentcarWithExceptions.controller.Controller;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.AddressDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.model.AlreadyBookedException;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.Amount;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.DrivingLicenseDTO;
 
 /**
- * This program has no view, instead, this class is a placeholder for the entire
- * view.
+ * This program has no view, instead, this class is a placeholder for the entire view.
  */
 public class View {
     private Controller contr;
@@ -59,8 +60,8 @@ public class View {
      */
     public void sampleExecution() {
         CarDTO unavailableCar = new CarDTO(null, new Amount(1000), "nonExistingSize", true,
-                                           true, "red");
-        CarDTO availableCar = new CarDTO(null, new Amount(1000), "medium", true, true, "red");
+                                           true, "red", false);
+        CarDTO availableCar = new CarDTO(null, new Amount(1000), "medium", true, true, "red", false);
 
         CarDTO foundCar = contr.searchMatchingCar(unavailableCar);
         System.out.println(
@@ -75,7 +76,31 @@ public class View {
         contr.registerCustomer(customer);
         System.out.println("Customer is registered");
 
-        contr.bookCar(foundCar);
+        try {
+            contr.bookCar(foundCar);
+        } catch (AlreadyBookedException exc) {
+            System.out.println("ERROR: This exception should not occur.");
+            exc.printStackTrace();
+        } catch (OperationFailedException exc) {
+            System.out.println("ERROR: This exception should not occur.");
+        }
+        try {
+            contr.bookCar(foundCar);
+            System.out.println("ERROR: Managed to book a booked car.");
+        } catch (AlreadyBookedException exc) {
+            System.out.println("Correctly failed to book a booked car.");
+        } catch (OperationFailedException exc) {
+            System.out.println("ERROR: Wrong exception type.");
+        }
+        try {
+            CarDTO nonexistingCar = new CarDTO("doesNotExist", null, null, true, true, null, false);
+            contr.bookCar(nonexistingCar);
+            System.out.println("ERROR: Managed to book a nonexisting car.");
+        } catch (OperationFailedException exc) {
+            System.out.println("Correctly failed to book a nonexisting car.");
+        } catch (AlreadyBookedException exc) {
+            System.out.println("ERROR: Wrong exception type.");
+        }
         System.out.println("Car is booked");
         foundCar = contr.searchMatchingCar(availableCar);
         System.out.println(

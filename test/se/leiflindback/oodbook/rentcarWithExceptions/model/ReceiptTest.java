@@ -26,32 +26,42 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
+package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
-import java.sql.SQLException;
+import java.util.Date;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
-/**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
- */
-public class CorrectAbstractionLevel {
-    /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
-     */
-    public void createCustomer(Customer cust) throws OperationFailedException {
+public class ReceiptTest {
+    @Test
+    public void testCreateReceiptString() {
+        Amount price = new Amount(100);
+        String regNo = "abc123";
+        String size = "medium";
+        boolean AC = true;
+        boolean fourWD = true;
+        String color = "red";
+        boolean booked = true;
+        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color, booked);
+        Amount paidAmt = new Amount(500);
+        CashPayment payment = new CashPayment(paidAmt);
+        Rental paidRental = new Rental(null, new RegistryCreator().
+                                       getCarRegistry());
         try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
+            paidRental.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
         }
-    }
-
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
-        }
+        paidRental.pay(payment);
+        Receipt instance = new Receipt(paidRental);
+        Date rentalTime = new Date();
+        String expResult = "Car Rental\n\nRental time: " + rentalTime.toString()
+                           + "\n\nRented car: " + regNo + "\nCost: " + price
+                           + "\nChange: " + paidAmt.minus(price) + "\n\n";
+        String result = instance.createReceiptString();
+        assertEquals("Wrong receipt content.", expResult, result);
     }
 }

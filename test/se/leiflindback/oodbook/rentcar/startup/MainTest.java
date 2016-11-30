@@ -28,7 +28,6 @@
  */
 package se.leiflindback.oodbook.rentcar.startup;
 
-import se.leiflindback.oodbook.rentcar.startup.Main;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.Test;

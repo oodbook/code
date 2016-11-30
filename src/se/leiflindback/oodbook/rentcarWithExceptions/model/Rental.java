@@ -30,30 +30,30 @@ package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistry;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistryException;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.Printer;
 
 /**
- * Represents one particular rental transaction, where one particular car is
- * rented by one particular customer.
+ * Represents one particular rental transaction, where one particular car is rented by one
+ * particular customer.
  */
 public class Rental {
     private CustomerDTO rentingCustomer;
     private CarDTO rentedCar;
-    private CarRegistry carRegistry; 
+    private CarRegistry carRegistry;
     private CashPayment payment;
 
     /**
-     * Creates a new instance, representing a rental made by the specified
-     * customer.
+     * Creates a new instance, representing a rental made by the specified customer.
      *
-     * @param customer The renting customer.
-//     * @param carRegistry The data store with information about available cars.
+     * @param customer The renting customer. // * @param carRegistry The data store with information
+     *                 about available cars.
      */
     public Rental(CustomerDTO customer, CarRegistry carRegistry) {
         this.rentingCustomer = customer;
         this.carRegistry = carRegistry;
     }
-    
+
     /**
      * @return The customer that performed this rental.
      */
@@ -62,42 +62,53 @@ public class Rental {
     }
 
     /**
-     * Specifies the car that was rented.
+     * Specifies the car that was rented. The specified car is also booked, thus becoming
+     * unavailable to other rentals.
      *
      * @param rentedCar The car that was rented.
+     * @throws AlreadyBookedException if the car was already booked.
+     * @throws CarRegistryException if the database call failed.
      */
-    public void setRentedCar(CarDTO rentedCar) {
+    public void setRentedCar(CarDTO rentedCar) throws AlreadyBookedException {
+        bookCar(rentedCar);
         this.rentedCar = rentedCar;
-        carRegistry.bookCar(rentedCar);
     }
-    
+
+    private void bookCar(CarDTO carToBook) throws AlreadyBookedException {
+        CarDTO currentCarState = carRegistry.getCarByRegNo(carToBook);
+        if (currentCarState.isBooked()) {
+            throw new AlreadyBookedException(currentCarState);
+        }
+        carRegistry.setBookedStateOfCar(carToBook, true);
+    }
+
     /**
      * @return The rented car.
      */
     CarDTO getRentedCar() {
         return rentedCar;
     }
-    
+
     /**
      * @return The payment info for this rental.
      */
     public CashPayment getPayment() {
         return payment;
     }
-    
+
     /**
      * This rental is paid using the specified payment.
-     * 
+     *
      * @param payment The payment used to pay this rental.
      */
     public void pay(CashPayment payment) {
         payment.calculateTotalCost(this);
         this.payment = payment;
     }
-    
+
     /**
      * Prints a receipt for the current rental on the specified printer.
-     * 
+     *
      * @param printer The printer where the receipt is printed.
      */
     public void printReceipt(Printer printer) {

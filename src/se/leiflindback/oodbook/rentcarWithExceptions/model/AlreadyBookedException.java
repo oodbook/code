@@ -26,32 +26,31 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
+package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
-import java.sql.SQLException;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 
 /**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
+ * Thrown when trying to book a car which is already booked.
  */
-public class CorrectAbstractionLevel {
+public class AlreadyBookedException extends Exception {
+    private CarDTO carThatCanNotBeBooked;
+
     /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
+     * Creates a new instance with a message specifying for which car the booking failed.
+     *
+     * @param carThatCanNotBeBooked The car that could not be booked.
      */
-    public void createCustomer(Customer cust) throws OperationFailedException {
-        try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
-        }
+    public AlreadyBookedException(CarDTO carThatCanNotBeBooked) {
+        super("Unable to book " + carThatCanNotBeBooked.getRegNo() + ", since it is already booked.");
+        this.carThatCanNotBeBooked = carThatCanNotBeBooked;
     }
 
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
-        }
+    /**
+     * @return The car that could not be booked.
+     */
+    public CarDTO getCarThatCanNotBeBooked() {
+        return carThatCanNotBeBooked;
     }
+
 }

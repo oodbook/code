@@ -26,7 +26,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcar.model;
+package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -35,10 +35,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import se.leiflindback.oodbook.rentcar.integration.CarDTO;
-import se.leiflindback.oodbook.rentcar.integration.CarRegistry;
-import se.leiflindback.oodbook.rentcar.integration.Printer;
-import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistry;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.Printer;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
 public class RentalTest {
     ByteArrayOutputStream outContent;
@@ -62,11 +62,35 @@ public class RentalTest {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
         CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), "medium", true,
-                                      true, "red");
-        instance.setRentedCar(rentedCar);
+                                      true, "red", false);
+        try {
+            instance.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
         CarDTO expResult = null;
         CarDTO result = carReg.findAvailableCar(rentedCar);
         assertEquals("Rented car was available.", expResult, result);
+        boolean expBookedResult = true;
+        boolean bookedResult = carReg.getCarByRegNo(rentedCar).isBooked();
+        assertEquals("Booked state was not changed.", expBookedResult, bookedResult);
+    }
+
+    @Test
+    public void testSetRentedCarWhenCarIsBooked() {
+        CarRegistry carReg = new RegistryCreator().getCarRegistry();
+        Rental instance = new Rental(null, carReg);
+        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), "medium", true,
+                                      true, "red", false);
+        try {
+            carReg.setBookedStateOfCar(rentedCar, true);
+            instance.setRentedCar(rentedCar);
+            fail("Could rent a booked car.");
+        } catch (AlreadyBookedException ex) {
+            assertTrue("Wrong exception message, does not contain specified car: " + ex.getMessage(),
+                       ex.getMessage().contains(rentedCar.getRegNo()));
+        }
     }
 
     @Test
@@ -75,9 +99,14 @@ public class RentalTest {
         Rental instance = new Rental(null, carReg);
         Amount price = new Amount(1000);
         CarDTO rentedCar = new CarDTO("abc123", price, "medium", true,
-                                      true, "red");
+                                      true, "red", false);
         CashPayment payment = new CashPayment(null);
-        instance.setRentedCar(rentedCar);
+        try {
+            instance.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
         instance.pay(payment);
         Amount expResult = price;
         Amount result = instance.getPayment().getTotalCost();
@@ -92,12 +121,18 @@ public class RentalTest {
         boolean AC = true;
         boolean fourWD = true;
         String color = "red";
-        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color);
+        boolean booked = true;
+        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color, booked);
         Amount paidAmt = new Amount(5000);
         CashPayment payment = new CashPayment(paidAmt);
         Rental instance = new Rental(null, new RegistryCreator().
                                      getCarRegistry());
-        instance.setRentedCar(rentedCar);
+        try {
+            instance.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
         instance.pay(payment);
         instance.printReceipt(new Printer());
         Date rentalTime = new Date();

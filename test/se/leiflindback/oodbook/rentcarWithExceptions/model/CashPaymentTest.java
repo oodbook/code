@@ -26,21 +26,26 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcar.model;
+package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import se.leiflindback.oodbook.rentcar.integration.CarDTO;
-import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
 public class CashPaymentTest {
     @Test
     public void testGetTotalCost() {
         Amount price = new Amount(100);
         CashPayment instance = new CashPayment(null);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red");
+        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
-        paidRental.setRentedCar(rentedCar);
+        try {
+            paidRental.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
         instance.calculateTotalCost(paidRental);
         Amount expResult = price;
         Amount result = instance.getTotalCost();
@@ -52,9 +57,14 @@ public class CashPaymentTest {
         Amount price = new Amount(100);
         Amount paidAmt = new Amount(500);
         CashPayment instance = new CashPayment(paidAmt);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red");
+        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
-        paidRental.setRentedCar(rentedCar);
+        try {
+            paidRental.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
         instance.calculateTotalCost(paidRental);
         Amount expResult = paidAmt.minus(price);
         Amount result = instance.getChange();

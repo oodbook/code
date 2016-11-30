@@ -31,8 +31,10 @@
  */
 package se.leiflindback.oodbook.rentcarWithExceptions.controller;
 
+import se.leiflindback.oodbook.rentcarWithExceptions.model.AlreadyBookedException;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistry;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistryException;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.Printer;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.RentalRegistry;
@@ -43,8 +45,7 @@ import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.Rental;
 
 /**
- * This is the application's only controller class. All calls to the model pass
- * through here.
+ * This is the application's only controller class. All calls to the model pass through here.
  */
 public class Controller {
     private CarRegistry carRegistry;
@@ -69,9 +70,8 @@ public class Controller {
     /**
      * Search for a car matching the specified search criteria.
      *
-     * @param searchedCar This object contains the search criteria. Fields in
-     *                    the object that are set to <code>null</code> or
-     *                    <code>0</code> are ignored.
+     * @param searchedCar This object contains the search criteria. Fields in the object that are
+     *                    set to <code>null</code> or <code>0</code> are ignored.
      * @return The best match of the search criteria.
      */
     public CarDTO searchMatchingCar(CarDTO searchedCar) {
@@ -88,20 +88,23 @@ public class Controller {
     }
 
     /**
-     * Books the specified car. After calling this method, the car can not be
-     * booked by any other customer. This method also permanently saves
-     * information about the current rental.
+     * Books the specified car. After calling this method, the car can not be booked by any other
+     * customer. This method also permanently saves information about the current rental.
      *
      * @param car The car that will be booked.
      */
-    public void bookCar(CarDTO car) {
-        rental.setRentedCar(car);
-        rentalRegistry.saveRental(rental);
+    public void bookCar(CarDTO car) throws AlreadyBookedException, OperationFailedException {
+        try {
+            rental.setRentedCar(car);
+            rentalRegistry.saveRental(rental);
+        } catch(CarRegistryException carRegExc) {
+            throw new OperationFailedException("Could not rent the car.", carRegExc);
+        }
     }
 
     /**
-     * Handles rental payment. Updates the balance of the cash register where
-     * the payment was performed. Calculates change. Prints the receipt.
+     * Handles rental payment. Updates the balance of the cash register where the payment was
+     * performed. Calculates change. Prints the receipt.
      *
      * @param paidAmt The paid amount.
      */

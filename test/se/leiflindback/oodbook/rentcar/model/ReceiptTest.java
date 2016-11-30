@@ -28,10 +28,6 @@
  */
 package se.leiflindback.oodbook.rentcar.model;
 
-import se.leiflindback.oodbook.rentcar.model.CashPayment;
-import se.leiflindback.oodbook.rentcar.model.Amount;
-import se.leiflindback.oodbook.rentcar.model.Rental;
-import se.leiflindback.oodbook.rentcar.model.Receipt;
 import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;

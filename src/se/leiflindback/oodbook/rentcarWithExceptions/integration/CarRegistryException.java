@@ -26,32 +26,19 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
-
-import java.sql.SQLException;
+package se.leiflindback.oodbook.rentcarWithExceptions.integration;
 
 /**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
+ * Indicates that something went wrong when performing an operation in the <code>CarRegistry</code>.
  */
-public class CorrectAbstractionLevel {
-    /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
-     */
-    public void createCustomer(Customer cust) throws OperationFailedException {
-        try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
-        }
-    }
+public class CarRegistryException extends RuntimeException {
 
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
-        }
+    /**
+     * Creates a new instance representing the condition described in the specified message.
+     *
+     * @param msg A message the describes what went wrong.
+     */
+    public CarRegistryException(String msg) {
+        super(msg);
     }
 }

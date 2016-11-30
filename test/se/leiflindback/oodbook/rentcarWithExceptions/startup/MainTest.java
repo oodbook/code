@@ -26,32 +26,27 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
+package se.leiflindback.oodbook.rentcarWithExceptions.startup;
 
-import java.sql.SQLException;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-/**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
- */
-public class CorrectAbstractionLevel {
-    /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
-     */
-    public void createCustomer(Customer cust) throws OperationFailedException {
+public class MainTest {
+    @Test
+    public void testMain() {
+        PrintStream originalSysOut = null;
         try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
-        }
-    }
-
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
+            originalSysOut = System.out;
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String[] args = null;
+            Main.main(args);
+            assertTrue("Wrong output when main is executed", outContent.
+                       toString().contains("Customer is registered"));
+        } finally {
+            System.setOut(originalSysOut);
         }
     }
 }

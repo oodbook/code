@@ -44,6 +44,7 @@ public final class CarDTO {
     private final boolean AC;
     private final boolean fourWD;
     private final String color;
+    private boolean booked;
 
     /**
      * Creates a new instance representing a particular car.
@@ -56,13 +57,14 @@ public final class CarDTO {
      * @param color  The color of the car.
      */
     public CarDTO(String regNo, Amount price, String size, boolean AC, boolean fourWD,
-                  String color) {
+                  String color, boolean booked) {
         this.price = price;
         this.size = size;
         this.AC = AC;
         this.fourWD = fourWD;
         this.color = color;
         this.regNo = regNo;
+        this.booked = booked;
     }
 
     @Override
@@ -73,18 +75,17 @@ public final class CarDTO {
         builder.append("price: " + price + ", ");
         builder.append("AC: " + AC + ", ");
         builder.append("4WD: " + fourWD + ", ");
-        builder.append("color: " + color);
+        builder.append("color: " + color + ", ");
+        builder.append("booked: " + booked);
         return builder.toString();
     }
 
     /**
      * Two <code>CarDTO</code> instances are equal if all fields are equal.
      *
-     * @param otherObj The <code>CarDTO</code> to compare with this
-     *                 <code>CarDTO</code>.
-     * @return <code>true</code> if all fields in the specified
-     *         <code>CarDTO</code> are equal to corresponding fields in this
-     *         <code>CarDTO</code>, <code>false</code> if they are not.
+     * @param otherObj The <code>CarDTO</code> to compare with this <code>CarDTO</code>.
+     * @return <code>true</code> if all fields in the specified <code>CarDTO</code> are equal to
+     *         corresponding fields in this <code>CarDTO</code>, <code>false</code> if they are not.
      */
     @Override
     public boolean equals(Object otherObj) {
@@ -111,6 +112,9 @@ public final class CarDTO {
             return false;
         }
         if (!Objects.equals(this.price, other.price)) {
+            return false;
+        }
+        if (booked != other.booked) {
             return false;
         }
         return true;
@@ -168,6 +172,15 @@ public final class CarDTO {
      */
     public Amount getPrice() {
         return price;
+    }
+
+    /**
+     * Tells is this car is booked.
+     *
+     * @return <code>true</code> if this car is booked, <code>false</code> if it is not.
+     */
+    public boolean isBooked() {
+        return booked;
     }
 
 }

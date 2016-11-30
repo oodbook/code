@@ -26,32 +26,31 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
+package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
-import java.sql.SQLException;
+import org.junit.Assert;
+import org.junit.Test;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
-/**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
- */
-public class CorrectAbstractionLevel {
-    /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
-     */
-    public void createCustomer(Customer cust) throws OperationFailedException {
+public class CashRegisterTest {
+    @Test
+    public void testAddPayment() {
+        Amount price = new Amount(100);
+        CashPayment payment = new CashPayment(null);
+        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false,
+                                      "red", false);
+        Rental paidRental = new Rental(null, new RegistryCreator().
+                                       getCarRegistry());
         try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
+            paidRental.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            Assert.fail("Got exception.");
+            ex.printStackTrace();
         }
+        paidRental.pay(payment);
+        CashRegister instance = new CashRegister();
+        instance.addPayment(payment);
     }
 
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
-        }
-    }
 }

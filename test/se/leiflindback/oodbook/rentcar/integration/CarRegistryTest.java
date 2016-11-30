@@ -28,8 +28,6 @@
  */
 package se.leiflindback.oodbook.rentcar.integration;
 
-import se.leiflindback.oodbook.rentcar.integration.CarDTO;
-import se.leiflindback.oodbook.rentcar.integration.CarRegistry;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import se.leiflindback.oodbook.rentcar.model.Amount;

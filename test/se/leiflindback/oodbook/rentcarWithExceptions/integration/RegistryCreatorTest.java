@@ -26,32 +26,23 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
+package se.leiflindback.oodbook.rentcarWithExceptions.integration;
 
-import java.sql.SQLException;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-/**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
- */
-public class CorrectAbstractionLevel {
-    /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
-     */
-    public void createCustomer(Customer cust) throws OperationFailedException {
-        try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
-        }
+public class RegistryCreatorTest {
+    @Test
+    public void testCreateRentalRegistry() {
+        RegistryCreator instance = new RegistryCreator();
+        RentalRegistry result = instance.getRentalRegistry();
+        assertTrue("RegistryCreator did not create RentalRegistry", result instanceof RentalRegistry);
     }
 
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
-        }
+    @Test
+    public void testCreateCarRegistry() {
+        RegistryCreator instance = new RegistryCreator();
+        CarRegistry result = instance.getCarRegistry();
+        assertTrue("RegistryCreator did not create CarRegistry", result instanceof CarRegistry);
     }
 }

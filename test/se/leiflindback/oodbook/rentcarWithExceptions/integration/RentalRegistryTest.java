@@ -26,14 +26,14 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcar.integration;
+package se.leiflindback.oodbook.rentcarWithExceptions.integration;
 
 import org.junit.Assert;
 import org.junit.Test;
-import se.leiflindback.oodbook.rentcar.model.AddressDTO;
-import se.leiflindback.oodbook.rentcar.model.CustomerDTO;
-import se.leiflindback.oodbook.rentcar.model.DrivingLicenseDTO;
-import se.leiflindback.oodbook.rentcar.model.Rental;
+import se.leiflindback.oodbook.rentcarWithExceptions.model.AddressDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.model.DrivingLicenseDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.model.Rental;
 
 public class RentalRegistryTest {
     @Test

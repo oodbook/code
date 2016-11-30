@@ -26,32 +26,20 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.exception.bestpractices;
-
-import java.sql.SQLException;
+package se.leiflindback.oodbook.rentcarWithExceptions.controller;
 
 /**
- * Illustrates catching one exception class and throwing another, thereby adapting the exception to
- * higher layers.
+ * Thrown when an operation fails, and the reason is unknown.
  */
-public class CorrectAbstractionLevel {
-    /**
-     * Stores the specified customer object in persistent storage.
-     * 
-     * @param cust The customer to store.
-     * @throws OperationFailedException If failed to store customer.
-     */
-    public void createCustomer(Customer cust) throws OperationFailedException {
-        try {
-            callTheDatabase(true);
-        } catch (SQLException sqle) {
-            throw new OperationFailedException("Could not update customer " + cust, sqle);
-        }
-    }
+public class OperationFailedException extends Exception {
 
-    private void callTheDatabase(boolean callFails) throws SQLException {
-        if (callFails) {
-            throw new SQLException();
-        }
+    /**
+     * Creates a new instance with the specified message and root cause.
+     *
+     * @param msg   The exception message.
+     * @param cause The exception that caused this exception.
+     */
+    public OperationFailedException(String msg, Exception cause) {
+        super(msg, cause);
     }
 }

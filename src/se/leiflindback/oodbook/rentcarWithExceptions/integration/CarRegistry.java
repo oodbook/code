@@ -46,34 +46,60 @@ public class CarRegistry {
     }
 
     /**
-     * Search for a car matching the specified search criteria.
+     * Searches for a car with the registration number of the specified car.
      *
-     * @param searchedCar This object contains the search criteria. Fields in
-     *                    the object that are set to <code>null</code> or
-     *                    <code>0</code> are ignored.
-     * @return A description matching the searched car's description if a car
-     *         with the same features as <code>searchedCar</code> was found,
-     *         <code>null</code> if no such car was found.
+     * @param searchedCar Searches for a car with registration number of this object.
+     * @return A car with the specified registration number.
+     * @throws CarRegistryException if the database call failed, or if the specified car did not
+     *                              exist.
+     */
+    public CarDTO getCarByRegNo(CarDTO searchedCar) {
+        for (CarData car : cars) {
+            if (car.regNo.equals(searchedCar.getRegNo())) {
+                return new CarDTO(car.regNo, new Amount(car.price), car.size,
+                                  car.AC, car.fourWD, car.color, car.booked);
+            }
+        }
+        throw new CarRegistryException("No such car: " + searchedCar);
+    }
+
+    /**
+     * Search for a car that is not booked, and that matches the specified search criteria.
+     *
+     * @param searchedCar This object contains the search criteria. Fields in the object that are
+     *                    set to <code>null</code> or <code>0</code> are ignored.
+     * @return A description matching the searched car's description if an unbooked car with the
+     *         same features as <code>searchedCar</code> was found, <code>null</code> if no such car
+     *         was found.
      */
     public CarDTO findAvailableCar(CarDTO searchedCar) {
         for (CarData car : cars) {
-            if (matches(car, searchedCar) && !car.booked) {
+            if (matches(car, searchedCar)) {
                 return new CarDTO(car.regNo, new Amount(car.price), car.size,
-                                  car.AC, car.fourWD, car.color);
+                                  car.AC, car.fourWD, car.color, false);
             }
         }
         return null;
     }
 
     /**
-     * Books the specified car. After calling this method, the car can not be
-     * booked by any other customer.
+     * If there is an existing car with the registration number of the specified car, set its booked
+     * property to the specified value. Nothing is changed if the car's booked property already had
+     * the specified value
      *
-     * @param car The car that will be booked.
+     * @param car         The car that shall be marked as booked.
+     * @param bookedState The new value of the booked property.
+     * @throws CarRegistryException if the database call failed, or if the specified car did not
+     *                              exist.
      */
-    public void bookCar(CarDTO car) {
-        CarData carToBook = findCarByRegNo(car);
-        carToBook.booked = true;
+    public void setBookedStateOfCar(CarDTO car, boolean bookedState) {
+        for (CarData carInReg : cars) {
+            if (carInReg.regNo.equals(car.getRegNo())) {
+                carInReg.booked = bookedState;
+                return;
+            }
+        }
+        throw new CarRegistryException("No such car: " + car);
     }
 
     private void addCars() {
@@ -100,16 +126,10 @@ public class CarRegistry {
         if (searched.isFourWD() != found.fourWD) {
             return false;
         }
-        return true;
-    }
-
-    private CarData findCarByRegNo(CarDTO searchedCar) {
-        for (CarData car : cars) {
-            if (car.regNo.equals(searchedCar.getRegNo())) {
-                return car;
-            }
+        if (found.booked) {
+            return false;
         }
-        return null;
+        return true;
     }
 
     private static class CarData {

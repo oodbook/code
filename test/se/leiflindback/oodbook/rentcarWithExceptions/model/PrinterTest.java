@@ -26,18 +26,19 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcar.model;
+package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Date;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import se.leiflindback.oodbook.rentcar.integration.CarDTO;
-import se.leiflindback.oodbook.rentcar.integration.Printer;
-import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.Printer;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
 public class PrinterTest {
     ByteArrayOutputStream outContent;
@@ -64,12 +65,18 @@ public class PrinterTest {
         boolean AC = true;
         boolean fourWD = true;
         String color = "red";
-        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color);
+        boolean booked = true;
+        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color, booked);
         Amount paidAmt = new Amount(5000);
         CashPayment payment = new CashPayment(paidAmt);
         Rental paidRental = new Rental(null, new RegistryCreator().
                                        getCarRegistry());
-        paidRental.setRentedCar(rentedCar);
+        try {
+            paidRental.setRentedCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
         paidRental.pay(payment);
         Receipt receipt = new Receipt(paidRental);
         Printer instance = new Printer();
