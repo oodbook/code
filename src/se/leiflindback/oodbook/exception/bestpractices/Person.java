@@ -26,20 +26,20 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExceptions.integration;
+package se.leiflindback.oodbook.exception.bestpractices;
 
 /**
- * Thrown when something goes wrong while performing an operation in the <code>CarRegistry</code>.
- * The message might contain more information about the error condition.
+ * Objects of this class are immutable, none of the fields can ever change state.
  */
-public class CarRegistryException extends RuntimeException {
+public final class Person {
+    private final String name;
+    private final Address address;
 
     /**
-     * Creates a new instance representing the condition described in the specified message.
-     *
-     * @param msg A message that describes what went wrong.
+     * Creates an instance with the specified name and address.
      */
-    public CarRegistryException(String msg) {
-        super(msg);
+    public Person(String name, Address address) {
+        this.name = name;
+        this.address = new Address(address);
     }
 }

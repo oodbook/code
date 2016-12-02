@@ -79,11 +79,11 @@ public class CarRegistryTest {
     }
 
     @Test
-    public void testBookCar() {
+    public void testSetBookedStateOfCar() {
         CarDTO bookedCar = new CarDTO("abc123", new Amount(1000), "medium",
                                         true, true, "red");
         CarRegistry instance = new CarRegistry();
-        instance.bookCar(bookedCar);
+        instance.setBookedStateOfCar(bookedCar, true);
         CarDTO expResult = null;
         CarDTO result = instance.findAvailableCar(bookedCar);
         assertEquals("Booked car was found", expResult, result);

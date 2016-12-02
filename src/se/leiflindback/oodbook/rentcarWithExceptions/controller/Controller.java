@@ -92,12 +92,15 @@ public class Controller {
      * customer. This method also permanently saves information about the current rental.
      *
      * @param car The car that will be booked.
+     * @throws AlreadyBookedException   if the car was already booked.
+     * @throws OperationFailedException if unable to rent the car for any other reason than it being
+     *                                  already booked.
      */
     public void bookCar(CarDTO car) throws AlreadyBookedException, OperationFailedException {
         try {
-            rental.setRentedCar(car);
+            rental.rentCar(car);
             rentalRegistry.saveRental(rental);
-        } catch(CarRegistryException carRegExc) {
+        } catch (CarRegistryException carRegExc) {
             throw new OperationFailedException("Could not rent the car.", carRegExc);
         }
     }

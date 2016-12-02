@@ -72,7 +72,7 @@ public class PrinterTest {
         Rental paidRental = new Rental(null, new RegistryCreator().
                                        getCarRegistry());
         try {
-            paidRental.setRentedCar(rentedCar);
+            paidRental.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             fail("Got Exception.");
             ex.printStackTrace();

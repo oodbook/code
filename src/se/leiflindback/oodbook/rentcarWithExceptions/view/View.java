@@ -59,57 +59,59 @@ public class View {
      * Simulates a user input that generates calls to all system operations.
      */
     public void sampleExecution() {
-        CarDTO unavailableCar = new CarDTO(null, new Amount(1000), "nonExistingSize", true,
-                                           true, "red", false);
-        CarDTO availableCar = new CarDTO(null, new Amount(1000), "medium", true, true, "red", false);
-
-        CarDTO foundCar = contr.searchMatchingCar(unavailableCar);
-        System.out.println(
-                "Result of searching for unavailable car: " + foundCar);
-        foundCar = contr.searchMatchingCar(availableCar);
-        System.out.println("Result of searching for available car: " + foundCar);
-
-        AddressDTO address = new AddressDTO("Storgatan 2", "12345", "Hemorten");
-        DrivingLicenseDTO drivingLicense = new DrivingLicenseDTO(
-                "982193721937213");
-        CustomerDTO customer = new CustomerDTO("Stina", address, drivingLicense);
-        contr.registerCustomer(customer);
-        System.out.println("Customer is registered");
-
         try {
+            CarDTO unavailableCar = new CarDTO(null, new Amount(1000), "nonExistingSize", true,
+                                               true, "red", false);
+            CarDTO availableCar = new CarDTO(null, new Amount(1000), "medium", true, true, "red",
+                                             false);
+
+            CarDTO foundCar = contr.searchMatchingCar(unavailableCar);
+            System.out.println(
+                    "Result of searching for unavailable car: " + foundCar);
+            foundCar = contr.searchMatchingCar(availableCar);
+            System.out.println("Result of searching for available car: " + foundCar);
+
+            AddressDTO address = new AddressDTO("Storgatan 2", "12345", "Hemorten");
+            DrivingLicenseDTO drivingLicense = new DrivingLicenseDTO(
+                    "982193721937213");
+            CustomerDTO customer = new CustomerDTO("Stina", address, drivingLicense);
+            contr.registerCustomer(customer);
+            System.out.println("Customer is registered");
+
             contr.bookCar(foundCar);
+            try {
+                contr.bookCar(foundCar);
+                System.out.println("ERROR: Managed to book a booked car.");
+            } catch (AlreadyBookedException exc) {
+                System.out.println("Correctly failed to book a booked car.");
+            } catch (OperationFailedException exc) {
+                System.out.println("ERROR: Wrong exception type.");
+            }
+            try {
+                CarDTO nonexistingCar = new CarDTO("doesNotExist", null, null, true, true, null,
+                                                   false);
+                contr.bookCar(nonexistingCar);
+                System.out.println("ERROR: Managed to book a nonexisting car.");
+            } catch (OperationFailedException exc) {
+                System.out.println("Correctly failed to book a nonexisting car.");
+            } catch (AlreadyBookedException exc) {
+                System.out.println("ERROR: Wrong exception type.");
+            }
+            System.out.println("Car is booked");
+            foundCar = contr.searchMatchingCar(availableCar);
+            System.out.println(
+                    "Result of searching for available, but booked, car: " + foundCar);
+
+            Amount paidAmount = new Amount(1500);
+            System.out.println("----------------- Receipt follows --------------");
+            contr.pay(paidAmount);
+            System.out.println("-------- End of receipt ----------------------");
         } catch (AlreadyBookedException exc) {
-            System.out.println("ERROR: This exception should not occur.");
             exc.printStackTrace();
         } catch (OperationFailedException exc) {
-            System.out.println("ERROR: This exception should not occur.");
+            exc.printStackTrace();
+        } catch (Exception exc) {
+            exc.printStackTrace();
         }
-        try {
-            contr.bookCar(foundCar);
-            System.out.println("ERROR: Managed to book a booked car.");
-        } catch (AlreadyBookedException exc) {
-            System.out.println("Correctly failed to book a booked car.");
-        } catch (OperationFailedException exc) {
-            System.out.println("ERROR: Wrong exception type.");
-        }
-        try {
-            CarDTO nonexistingCar = new CarDTO("doesNotExist", null, null, true, true, null, false);
-            contr.bookCar(nonexistingCar);
-            System.out.println("ERROR: Managed to book a nonexisting car.");
-        } catch (OperationFailedException exc) {
-            System.out.println("Correctly failed to book a nonexisting car.");
-        } catch (AlreadyBookedException exc) {
-            System.out.println("ERROR: Wrong exception type.");
-        }
-        System.out.println("Car is booked");
-        foundCar = contr.searchMatchingCar(availableCar);
-        System.out.println(
-                "Result of searching for available, but booked, car: " + foundCar);
-
-        Amount paidAmount = new Amount(1500);
-        System.out.println("----------------- Receipt follows --------------");
-        contr.pay(paidAmount);
-        System.out.println("-------- End of receipt ----------------------");
     }
-
 }

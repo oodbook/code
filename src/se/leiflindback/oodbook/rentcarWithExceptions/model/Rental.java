@@ -69,7 +69,7 @@ public class Rental {
      * @throws AlreadyBookedException if the car was already booked.
      * @throws CarRegistryException if the database call failed.
      */
-    public void setRentedCar(CarDTO rentedCar) throws AlreadyBookedException {
+    public void rentCar(CarDTO rentedCar) throws AlreadyBookedException {
         bookCar(rentedCar);
         this.rentedCar = rentedCar;
     }

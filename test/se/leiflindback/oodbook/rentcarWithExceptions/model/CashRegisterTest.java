@@ -43,7 +43,7 @@ public class CashRegisterTest {
         Rental paidRental = new Rental(null, new RegistryCreator().
                                        getCarRegistry());
         try {
-            paidRental.setRentedCar(rentedCar);
+            paidRental.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             Assert.fail("Got exception.");
             ex.printStackTrace();

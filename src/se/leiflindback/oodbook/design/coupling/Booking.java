@@ -30,8 +30,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package se.lefilindback.oodbook.design.coupling;
+package se.leiflindback.oodbook.design.coupling;
 
-class HighCouplingBooking {
+class Booking {
 
+    private Guest guest;
 }

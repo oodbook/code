@@ -26,20 +26,23 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExceptions.integration;
+package se.leiflindback.oodbook.exception.bestpractices;
 
 /**
- * Thrown when something goes wrong while performing an operation in the <code>CarRegistry</code>.
- * The message might contain more information about the error condition.
+ * Represents a bank account.
  */
-public class CarRegistryException extends RuntimeException {
+public class Account {
+    private int balance;
 
     /**
-     * Creates a new instance representing the condition described in the specified message.
+     * Withdraws the specified amount from this account.
      *
-     * @param msg A message that describes what went wrong.
+     * @param amount The amount to withdraw.
      */
-    public CarRegistryException(String msg) {
-        super(msg);
+    public void withdraw(int amount) throws OverdraftException {
+        if (amount > balance) {
+            throw new OverdraftException(balance, amount);
+        }
+        balance = balance - amount;
     }
 }

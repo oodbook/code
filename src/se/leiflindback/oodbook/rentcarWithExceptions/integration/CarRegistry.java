@@ -54,13 +54,9 @@ public class CarRegistry {
      *                              exist.
      */
     public CarDTO getCarByRegNo(CarDTO searchedCar) {
-        for (CarData car : cars) {
-            if (car.regNo.equals(searchedCar.getRegNo())) {
-                return new CarDTO(car.regNo, new Amount(car.price), car.size,
-                                  car.AC, car.fourWD, car.color, car.booked);
-            }
-        }
-        throw new CarRegistryException("No such car: " + searchedCar);
+        CarData carInReg = doGetCarByRegNo(searchedCar);
+        return new CarDTO(carInReg.regNo, new Amount(carInReg.price), carInReg.size,
+                          carInReg.AC, carInReg.fourWD, carInReg.color, carInReg.booked);
     }
 
     /**
@@ -93,13 +89,17 @@ public class CarRegistry {
      *                              exist.
      */
     public void setBookedStateOfCar(CarDTO car, boolean bookedState) {
+        CarData carInReg = doGetCarByRegNo(car);
+        carInReg.booked = bookedState;
+    }
+
+    private CarData doGetCarByRegNo(CarDTO searchedCar) {
         for (CarData carInReg : cars) {
-            if (carInReg.regNo.equals(car.getRegNo())) {
-                carInReg.booked = bookedState;
-                return;
+            if (carInReg.regNo.equals(searchedCar.getRegNo())) {
+                return carInReg;
             }
         }
-        throw new CarRegistryException("No such car: " + car);
+        throw new CarRegistryException("No such car: " + searchedCar);
     }
 
     private void addCars() {

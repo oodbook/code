@@ -41,7 +41,7 @@ public class CashPaymentTest {
         CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
         try {
-            paidRental.setRentedCar(rentedCar);
+            paidRental.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             fail("Got Exception.");
             ex.printStackTrace();
@@ -60,7 +60,7 @@ public class CashPaymentTest {
         CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
         try {
-            paidRental.setRentedCar(rentedCar);
+            paidRental.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             fail("Got Exception.");
             ex.printStackTrace();

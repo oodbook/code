@@ -64,7 +64,7 @@ public class RentalTest {
         CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), "medium", true,
                                       true, "red", false);
         try {
-            instance.setRentedCar(rentedCar);
+            instance.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             fail("Got Exception.");
             ex.printStackTrace();
@@ -85,7 +85,7 @@ public class RentalTest {
                                       true, "red", false);
         try {
             carReg.setBookedStateOfCar(rentedCar, true);
-            instance.setRentedCar(rentedCar);
+            instance.rentCar(rentedCar);
             fail("Could rent a booked car.");
         } catch (AlreadyBookedException ex) {
             assertTrue("Wrong exception message, does not contain specified car: " + ex.getMessage(),
@@ -102,7 +102,7 @@ public class RentalTest {
                                       true, "red", false);
         CashPayment payment = new CashPayment(null);
         try {
-            instance.setRentedCar(rentedCar);
+            instance.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             fail("Got Exception.");
             ex.printStackTrace();
@@ -128,7 +128,7 @@ public class RentalTest {
         Rental instance = new Rental(null, new RegistryCreator().
                                      getCarRegistry());
         try {
-            instance.setRentedCar(rentedCar);
+            instance.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
             fail("Got Exception.");
             ex.printStackTrace();

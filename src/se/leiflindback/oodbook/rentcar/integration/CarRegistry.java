@@ -66,14 +66,16 @@ public class CarRegistry {
     }
 
     /**
-     * Books the specified car. After calling this method, the car can not be
-     * booked by any other customer.
+     * If there is an existing car with the registration number of the specified car, set its booked
+     * property to the specified value. Nothing is changed if the car's booked property already had
+     * the specified value.
      *
-     * @param car The car that will be booked.
+     * @param car         The car that shall be marked as booked.
+     * @param bookedState The new value of the booked property.
      */
-    public void bookCar(CarDTO car) {
+    public void setBookedStateOfCar(CarDTO car, boolean bookedState) {
         CarData carToBook = findCarByRegNo(car);
-        carToBook.booked = true;
+        carToBook.booked = bookedState;
     }
 
     private void addCars() {

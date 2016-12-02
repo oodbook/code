@@ -26,20 +26,21 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExceptions.integration;
+package se.leiflindback.oodbook.exception.bestpractices;
 
 /**
- * Thrown when something goes wrong while performing an operation in the <code>CarRegistry</code>.
- * The message might contain more information about the error condition.
+ * Represents an address.
  */
-public class CarRegistryException extends RuntimeException {
-
+public class Address {
+    private String street;
+    // More fields.
+    
     /**
-     * Creates a new instance representing the condition described in the specified message.
-     *
-     * @param msg A message that describes what went wrong.
+     * Creates an instance with all fields equal to the fields of the specified address.
+     * @param address The address to copy.
      */
-    public CarRegistryException(String msg) {
-        super(msg);
+    Address(Address address) {
+        this.street = address.street;
+        // Copy all other fields.
     }
 }

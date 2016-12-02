@@ -68,7 +68,7 @@ public class Rental {
      */
     public void setRentedCar(CarDTO rentedCar) {
         this.rentedCar = rentedCar;
-        carRegistry.bookCar(rentedCar);
+        carRegistry.setBookedStateOfCar(rentedCar, true);
     }
     
     /**

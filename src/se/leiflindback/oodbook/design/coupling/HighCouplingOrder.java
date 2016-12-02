@@ -30,10 +30,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package se.lefilindback.oodbook.design.coupling;
+package se.leiflindback.oodbook.design.coupling;
 
-public class Hotel {
-    private Booking booking;
-    private Address address;
-    private Floor floor;
+public class HighCouplingOrder {
+    private HighCouplingCustomer customer;
+    private HighCouplingShippingAddress shippingAddress;
+
 }
