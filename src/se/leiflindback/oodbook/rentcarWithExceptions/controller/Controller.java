@@ -45,7 +45,19 @@ import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.Rental;
 
 /**
- * This is the application's only controller class. All calls to the model pass through here.
+ * This is the application's only controller class, all calls to the model pass through here.
+ * <p>
+ * The rental operations can only be called once each during the same rental, and must be called in
+ * the following order. <code>registerCustomer</code> starts a rental, and <code>pay</code> ends a
+ * rental.
+ * <p>
+ * <ol>
+ * <li><code>registerCustomer</code>
+ * <li><code>bookCar</code>
+ * <li><code>pay</code>
+ * </ol>
+ * <p>
+ * Other methods can be called in any order, and at any time.
  */
 public class Controller {
     private CarRegistry carRegistry;
@@ -82,8 +94,14 @@ public class Controller {
      * Registers a new customer. Only registered customers can rent cars.
      *
      * @param customer The customer that will be registered.
+     * @throws IllegalStateException if this method is called twice during the same rental. A rental
+     *                               is ended when <code>pay</code> is called.
      */
     public void registerCustomer(CustomerDTO customer) {
+        if (rental != null) {
+            throw new IllegalStateException(
+                    "Call to registerCustomer when customer was already set.");
+        }
         rental = new Rental(customer, carRegistry);
     }
 
@@ -95,8 +113,13 @@ public class Controller {
      * @throws AlreadyBookedException   if the car was already booked.
      * @throws OperationFailedException if unable to rent the car for any other reason than it being
      *                                  already booked.
+     * @throws IllegalStateException    if this method is called before
+     *                                  <code>registerCustomer</code>.
      */
     public void bookCar(CarDTO car) throws AlreadyBookedException, OperationFailedException {
+        if (rental == null) {
+            throw new IllegalStateException("Call to bookCar before registering customer.");
+        }
         try {
             rental.rentCar(car);
             rentalRegistry.saveRental(rental);
@@ -110,11 +133,16 @@ public class Controller {
      * performed. Calculates change. Prints the receipt.
      *
      * @param paidAmt The paid amount.
+     * @throws IllegalStateException if this method is called before <code>bookCar</code>.
      */
     public void pay(Amount paidAmt) {
+        if (rental == null || rental.getRentedCar() == null) {
+            throw new IllegalStateException("Call to pay registeraing customer and booking car.");
+        }
         CashPayment payment = new CashPayment(paidAmt);
         rental.pay(payment);
         cashRegister.addPayment(payment);
         rental.printReceipt(printer);
+        rental = null;
     }
 }

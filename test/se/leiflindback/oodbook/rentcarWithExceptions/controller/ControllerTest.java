@@ -267,4 +267,28 @@ public class ControllerTest {
         String result = outContent.toString();
         assertEquals("Wrong printout.", expResult, result);
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void testBookCarWithoutCallToRegisterCustomer() throws AlreadyBookedException,
+                                                                  OperationFailedException {
+        instance.bookCar(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testPayWithoutCallToRegisterCustomer() {
+        instance.pay(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testPayWithoutCallToBookCar() throws AlreadyBookedException,
+                                                     OperationFailedException {
+        instance.bookCar(null);
+        instance.pay(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCallRegisterCustomerTwice() {
+        instance.registerCustomer(null);
+        instance.registerCustomer(null);
+    }
 }

@@ -85,7 +85,7 @@ public class Rental {
     /**
      * @return The rented car.
      */
-    CarDTO getRentedCar() {
+    public CarDTO getRentedCar() {
         return rentedCar;
     }
 
