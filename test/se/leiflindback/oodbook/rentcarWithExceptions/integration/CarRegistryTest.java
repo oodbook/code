@@ -52,7 +52,8 @@ public class CarRegistryTest {
             instance.getCarByRegNo(searchedCar);
             fail("Nonexisting car was found.");
         } catch (CarRegistryException exc) {
-            assertTrue("Wrong exception message, does not contain specified car: " + exc.getMessage(),
+            assertTrue("Wrong exception message, does not contain specified car: " + exc.
+                    getMessage(),
                        exc.getMessage().contains(searchedCar.toString()));
         }
     }
@@ -141,9 +142,8 @@ public class CarRegistryTest {
             instance.setBookedStateOfCar(nonExistingCar, true);
             fail("Could change booked state of nonexisting car.");
         } catch (CarRegistryException exc) {
-            assertTrue("Wrong exception message, does not contain specified car: " + exc.
-                    getMessage(),
-                       exc.getMessage().contains(nonExistingCar.toString()));
+            assertTrue("Wrong exception message, does not contain specified car: "
+                       + exc.getMessage(), exc.getMessage().contains(nonExistingCar.toString()));
         }
     }
 }

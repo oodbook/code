@@ -31,6 +31,7 @@
  */
 package se.leiflindback.oodbook.rentcarWithExceptions.view;
 
+import java.io.IOException;
 import se.leiflindback.oodbook.rentcarWithExceptions.controller.OperationFailedException;
 import se.leiflindback.oodbook.rentcarWithExceptions.controller.Controller;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
@@ -39,20 +40,24 @@ import se.leiflindback.oodbook.rentcarWithExceptions.model.AlreadyBookedExceptio
 import se.leiflindback.oodbook.rentcarWithExceptions.model.Amount;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.DrivingLicenseDTO;
+import se.leiflindback.oodbook.rentcarWithExceptions.util.LogHandler;
 
 /**
  * This program has no view, instead, this class is a placeholder for the entire view.
  */
 public class View {
     private Controller contr;
+    private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
+    private LogHandler logger;
 
     /**
      * Creates a new instance.
      *
      * @param contr The controller that is used for all operations.
      */
-    public View(Controller contr) {
+    public View(Controller contr) throws IOException {
         this.contr = contr;
+        this.logger = new LogHandler();
     }
 
     /**
@@ -80,22 +85,24 @@ public class View {
 
             contr.bookCar(foundCar);
             try {
+                System.out.println("Trying to rebook a booked car, should generate an error.");
                 contr.bookCar(foundCar);
-                System.out.println("ERROR: Managed to book a booked car.");
+                errorMsgHandler.showErrorMsg("Managed to book a booked car.");
             } catch (AlreadyBookedException exc) {
-                System.out.println("Correctly failed to book a booked car.");
+                handleException("Correctly failed to book a booked car.", exc);
             } catch (OperationFailedException exc) {
-                System.out.println("ERROR: Wrong exception type.");
+                handleException("Wrong exception type.", exc);
             }
             try {
                 CarDTO nonexistingCar = new CarDTO("doesNotExist", null, null, true, true, null,
                                                    false);
+                System.out.println("Trying to book a non-existing car, should generate an error.");
                 contr.bookCar(nonexistingCar);
-                System.out.println("ERROR: Managed to book a nonexisting car.");
+                errorMsgHandler.showErrorMsg("Managed to book a nonexisting car.");
             } catch (OperationFailedException exc) {
-                System.out.println("Correctly failed to book a nonexisting car.");
+                handleException("Correctly failed to book a nonexisting car.", exc);
             } catch (AlreadyBookedException exc) {
-                System.out.println("ERROR: Wrong exception type.");
+                handleException("Wrong exception type.", exc);
             }
             System.out.println("Car is booked");
             foundCar = contr.searchMatchingCar(availableCar);
@@ -107,11 +114,14 @@ public class View {
             contr.pay(paidAmount);
             System.out.println("-------- End of receipt ----------------------");
         } catch (AlreadyBookedException exc) {
-            exc.printStackTrace();
-        } catch (OperationFailedException exc) {
-            exc.printStackTrace();
+            handleException(exc.getCarThatCanNotBeBooked().getRegNo() + " is already booked.", exc);
         } catch (Exception exc) {
-            exc.printStackTrace();
+            handleException("Failed to book, please try again.", exc);
         }
+    }
+
+    private void handleException(String uiMsg, Exception exc) {
+        errorMsgHandler.showErrorMsg(uiMsg);
+        logger.logException(exc);
     }
 }

@@ -148,6 +148,8 @@ public class ControllerTest {
         } catch (AlreadyBookedException ex) {
             assertTrue("Wrong exception message, does not contain specified car: " + ex.getMessage(),
                        ex.getMessage().contains(bookedCar.getRegNo()));
+            assertTrue("Wrong car is specified: " + ex.getCarThatCanNotBeBooked(),
+                       ex.getCarThatCanNotBeBooked().getRegNo().equals(bookedCar.getRegNo()));
         }
     }
 

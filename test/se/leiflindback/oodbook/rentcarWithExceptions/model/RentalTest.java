@@ -37,6 +37,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistry;
+import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistryException;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.Printer;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
@@ -90,6 +91,23 @@ public class RentalTest {
         } catch (AlreadyBookedException ex) {
             assertTrue("Wrong exception message, does not contain specified car: " + ex.getMessage(),
                        ex.getMessage().contains(rentedCar.getRegNo()));
+            assertTrue("Wrong car is specified: " + ex.getCarThatCanNotBeBooked(),
+                       ex.getCarThatCanNotBeBooked().getRegNo().equals(rentedCar.getRegNo()));
+        }
+    }
+
+    @Test
+    public void testSetRentedCarWhenCarDoesNotExist() throws AlreadyBookedException {
+        CarRegistry carReg = new RegistryCreator().getCarRegistry();
+        Rental instance = new Rental(null, carReg);
+        CarDTO rentedCar = new CarDTO("wrong", new Amount(1000), "medium", true,
+                                      true, "red", false);
+        try {
+            instance.rentCar(rentedCar);
+            fail("Could rent a non-existing car.");
+        } catch (CarRegistryException exc) {
+            assertTrue("Wrong exception message, does not contain specified car: "
+                       + exc.getMessage(), exc.getMessage().contains(rentedCar.toString()));
         }
     }
 
