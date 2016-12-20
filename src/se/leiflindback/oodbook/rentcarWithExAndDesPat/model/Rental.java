@@ -28,6 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarRegistry;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarRegistryException;
@@ -42,6 +44,7 @@ public class Rental {
     private CarDTO rentedCar;
     private CarRegistry carRegistry;
     private CashPayment payment;
+    private List<RentalObserver> rentalObservers = new ArrayList<>();
 
     /**
      * Creates a new instance, representing a rental made by the specified customer.
@@ -104,6 +107,13 @@ public class Rental {
     public void pay(CashPayment payment) {
         payment.calculateTotalCost(this);
         this.payment = payment;
+        notifyObservers();
+    }
+    
+    private void notifyObservers() {
+        for (RentalObserver obs : rentalObservers) {
+            obs.newRental(rentedCar);
+        }
     }
 
     /**
@@ -114,5 +124,23 @@ public class Rental {
     public void printReceipt(Printer printer) {
         Receipt receipt = new Receipt(this);
         printer.printReceipt(receipt);
+    }
+    
+    /**
+     * The specified observer will be notified when this rental has been paid.
+     * 
+     * @param obs The observer to notify. 
+     */
+    public void addRentalObserver(RentalObserver obs) {
+        rentalObservers.add(obs);
+    }
+
+    /**
+     * All the specified observers will be notified when this rental has been paid.
+     * 
+     * @param observers The observers to notify. 
+     */
+    public void addRentalObservers(List<RentalObserver> observers) {
+        rentalObservers.addAll(observers);
     }
 }

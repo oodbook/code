@@ -31,6 +31,8 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.AlreadyBookedException;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarRegistry;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
@@ -43,6 +45,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.CashPayment;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.CashRegister;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Rental;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.RentalObserver;
 
 /**
  * This is the application's only controller class, all calls to the model pass through here.
@@ -65,6 +68,7 @@ public class Controller {
     private Rental rental;
     private CashRegister cashRegister;
     private Printer printer;
+    private List<RentalObserver> rentalObservers = new ArrayList<>();
 
     /**
      * Creates a new instance.
@@ -103,6 +107,7 @@ public class Controller {
                     "Call to registerCustomer when customer was already set.");
         }
         rental = new Rental(customer, carRegistry);
+        rental.addRentalObservers(rentalObservers);
     }
 
     /**
@@ -145,4 +150,15 @@ public class Controller {
         rental.printReceipt(printer);
         rental = null;
     }
+
+    /**
+     * The specified observer will be notified when a rental has been paid. There will be
+     * notifications only for rentals that are started after this method is called.
+     *
+     * @param obs The observer to notify.
+     */
+    public void addRentalObserver(RentalObserver obs) {
+        rentalObservers.add(obs);
+    }
+
 }

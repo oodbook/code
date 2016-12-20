@@ -39,7 +39,7 @@ public class ReceiptTest {
     public void testCreateReceiptString() {
         Amount price = new Amount(100);
         String regNo = "abc123";
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = true;
         String color = "red";

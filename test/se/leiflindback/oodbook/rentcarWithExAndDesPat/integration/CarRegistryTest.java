@@ -35,7 +35,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 public class CarRegistryTest {
     @Test
     public void testGetCarByRegNo() {
-        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "medium",
+        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
                                         true, true, "red", false);
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = searchedCar;
@@ -45,7 +45,7 @@ public class CarRegistryTest {
 
     @Test
     public void testGetNonExistingCarByRegNo() {
-        CarDTO searchedCar = new CarDTO("wrong", new Amount(1000), "medium",
+        CarDTO searchedCar = new CarDTO("wrong", new Amount(1000), CarDTO.CarType.MEDIUM,
                                         true, true, "red", false);
         CarRegistry instance = new CarRegistry();
         try {
@@ -60,7 +60,7 @@ public class CarRegistryTest {
 
     @Test
     public void testFindAvailableCarMatch() {
-        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "medium",
+        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
                                         true, true, "red", false);
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = searchedCar;
@@ -70,7 +70,7 @@ public class CarRegistryTest {
 
     @Test
     public void testFindAvailableCarRegNoNotChecked() {
-        CarDTO searchedCar = new CarDTO("wrong", new Amount(1000), "medium",
+        CarDTO searchedCar = new CarDTO("wrong", new Amount(1000), CarDTO.CarType.MEDIUM,
                                         true, true, "red", false);
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = new CarDTO("abc123", searchedCar.getPrice(),
@@ -84,7 +84,7 @@ public class CarRegistryTest {
 
     @Test
     public void testFindAvailableCarBookedNotChecked() {
-        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "medium",
+        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
                                         true, true, "red", true);
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = new CarDTO(searchedCar.getRegNo(), searchedCar.getPrice(),
@@ -98,8 +98,8 @@ public class CarRegistryTest {
 
     @Test
     public void testFindAvailableCarNoMatch() {
-        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), "wrong",
-                                        true, true, "red", false);
+        CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
+                                        true, true, "wrong", false);
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = null;
         CarDTO result = instance.findAvailableCar(searchedCar);
@@ -111,7 +111,7 @@ public class CarRegistryTest {
         CarDTO searchedCar = new CarDTO(null, null, null,
                                         true, true, null, false);
         CarRegistry instance = new CarRegistry();
-        CarDTO expResult = new CarDTO("abc123", new Amount(1000), "medium",
+        CarDTO expResult = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
                                       true, true, "red", false);
         CarDTO result = instance.findAvailableCar(searchedCar);
         assertEquals("Unavailable car was found", expResult, result);
@@ -120,7 +120,7 @@ public class CarRegistryTest {
     @Test
     public void testChangeBookedState() {
         boolean unbooked = false;
-        CarDTO car = new CarDTO("abc123", new Amount(1000), "medium",
+        CarDTO car = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
                                 true, true, "red", unbooked);
         CarRegistry instance = new CarRegistry();
         instance.setBookedStateOfCar(car, !unbooked);
@@ -135,7 +135,7 @@ public class CarRegistryTest {
 
     @Test
     public void testChangeBookedStateOfNonExistingCar() {
-        CarDTO nonExistingCar = new CarDTO("wrong", new Amount(1000), "medium",
+        CarDTO nonExistingCar = new CarDTO("wrong", new Amount(1000), CarDTO.CarType.MEDIUM,
                                            true, true, "red", false);
         CarRegistry instance = new CarRegistry();
         try {

@@ -26,67 +26,63 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Date;
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.Printer;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.RegistryCreator;
 
-public class PrinterTest {
+public class RentedCarsViewTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
+    RentedCarsView instance;
 
     @Before
-    public void setUpStreams() {
+    public void setUp() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+        instance = new RentedCarsView();
     }
 
     @After
-    public void cleanUpStreams() {
+    public void tearDown() {
         outContent = null;
         System.setOut(originalSysOut);
+        instance = null;
     }
 
     @Test
-    public void testCreateReceiptString() {
-        Amount price = new Amount(1000);
-        String regNo = "abc123";
-        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
-        boolean AC = true;
-        boolean fourWD = true;
-        String color = "red";
-        boolean booked = true;
-        CarDTO rentedCar = new CarDTO(regNo, price, size, AC, fourWD, color, booked);
-        Amount paidAmt = new Amount(5000);
-        CashPayment payment = new CashPayment(paidAmt);
-        Rental paidRental = new Rental(null, new RegistryCreator().
-                                       getCarRegistry());
-        try {
-            paidRental.rentCar(rentedCar);
-        } catch (AlreadyBookedException ex) {
-            fail("Got Exception.");
-            ex.printStackTrace();
+    public void testNewRental() {
+        int noOfSmallCars = 1;
+        int noOfMediumCars = 2;
+        int noOfLargeCars = 3;
+        callNewRental(CarDTO.CarType.SMALL, noOfSmallCars);
+        callNewRental(CarDTO.CarType.MEDIUM, noOfMediumCars);
+        callNewRental(CarDTO.CarType.LARGE, noOfLargeCars);
+        evaluateViewOutput(CarDTO.CarType.SMALL, noOfSmallCars);
+        evaluateViewOutput(CarDTO.CarType.MEDIUM, noOfMediumCars);
+        evaluateViewOutput(CarDTO.CarType.LARGE, noOfLargeCars);
+    }
+
+    private void callNewRental(CarDTO.CarType type, int noOfCalls) {
+        CarDTO rentedCar = new CarDTO(null, null, type, true,
+                                      true, null, false);
+        for (int i = 0; i < noOfCalls; i++) {
+            instance.newRental(rentedCar);
         }
-        paidRental.pay(payment);
-        Receipt receipt = new Receipt(paidRental);
-        Printer instance = new Printer();
-        instance.printReceipt(receipt);
-        Date rentalTime = new Date();
-        String expResult = "Car Rental\n\nRental time: " + rentalTime.toString()
-                           + "\n\nRented car: " + regNo + "\nCost: " + price
-                           + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
-        String result = outContent.toString();
-        assertEquals("Wrong printout.", expResult, result);
+    }
+
+    private void evaluateViewOutput(CarDTO.CarType type, int noOfCalls) {
+        for (int i = 1; i <= noOfCalls; i++) {
+            String expResult = i + " " + type.toString().toLowerCase() + " cars";
+            String result = outContent.toString();
+            assertTrue("Wrong rented car counter", result.contains(expResult));
+        }
     }
 
 }

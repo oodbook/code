@@ -57,6 +57,7 @@ public class View {
      */
     public View(Controller contr) throws IOException {
         this.contr = contr;
+        contr.addRentalObserver(new RentedCarsView());
         this.logger = new LogHandler();
     }
 
@@ -65,9 +66,9 @@ public class View {
      */
     public void sampleExecution() {
         try {
-            CarDTO unavailableCar = new CarDTO(null, new Amount(1000), "nonExistingSize", true,
-                                               true, "red", false);
-            CarDTO availableCar = new CarDTO(null, new Amount(1000), "medium", true, true, "red",
+            CarDTO unavailableCar = new CarDTO(null, new Amount(1000), CarDTO.CarType.MEDIUM, true,
+                                               true, "nonExistingColor", false);
+            CarDTO availableCar = new CarDTO(null, new Amount(1000), CarDTO.CarType.MEDIUM, true, true, "red",
                                              false);
 
             CarDTO foundCar = contr.searchMatchingCar(unavailableCar);

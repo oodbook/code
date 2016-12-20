@@ -26,23 +26,48 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
+import java.util.HashMap;
+import java.util.Map;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.RentalObserver;
 
 /**
- *
- * A listener interface for receiving notifications about rented cars. The class that is interested
- * in such notifications implements this interface, and the object created with that class is
- * registered with
- * <code>se.leiflindback.oodbook,rentcarWithExAndDesPat.Controller.addRentalObserver</code>. When a
- * car is rented, that object's <code>newRental</code> method is invoked.
+ * Shows a running total of rented cars of each type.
  */
-public interface RentalObserver {
+class RentedCarsView implements RentalObserver {
+    private Map<CarDTO.CarType, Integer> noOfRentedCars = new HashMap<>();
+
     /**
-     * Invoked when a rental has been paid.
-     * 
-     * @param rentedCar The car that was rented.
+     * Creates a new instance, with the all counters of rented cars set to zero.
      */
-    void newRental(CarDTO rentedCar);
+    public RentedCarsView() {
+        for (CarDTO.CarType type : CarDTO.CarType.values()) {
+            noOfRentedCars.put(type, 0);
+        }
+    }
+
+    @Override
+    public void newRental(CarDTO rentedCar) {
+        addNewRental(rentedCar);
+        printCurrentState();
+    }
+
+    private void addNewRental(CarDTO rentedCar) {
+        int noOfRentedCarsOfThisType = noOfRentedCars.get(rentedCar.getSize()) + 1;
+        noOfRentedCars.put(rentedCar.getSize(), noOfRentedCarsOfThisType);
+    }
+
+    private void printCurrentState() {
+        System.out.println("#### We have now rented out ####");
+        for (CarDTO.CarType type : CarDTO.CarType.values()) {
+            System.out.print(noOfRentedCars.get(type));
+            System.out.print(" ");
+            System.out.print(type.toString().toLowerCase());
+            System.out.println(" cars.");
+        }
+        System.out.println("################################");
+    }
+
 }

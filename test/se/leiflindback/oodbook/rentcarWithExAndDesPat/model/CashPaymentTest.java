@@ -38,7 +38,7 @@ public class CashPaymentTest {
     public void testGetTotalCost() {
         Amount price = new Amount(100);
         CashPayment instance = new CashPayment(null);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red", false);
+        CarDTO rentedCar = new CarDTO("abc123", price, CarDTO.CarType.MEDIUM, true, false, "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
         try {
             paidRental.rentCar(rentedCar);
@@ -57,7 +57,7 @@ public class CashPaymentTest {
         Amount price = new Amount(100);
         Amount paidAmt = new Amount(500);
         CashPayment instance = new CashPayment(paidAmt);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false, "red", false);
+        CarDTO rentedCar = new CarDTO("abc123", price, CarDTO.CarType.MEDIUM, true, false, "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().getCarRegistry());
         try {
             paidRental.rentCar(rentedCar);

@@ -37,7 +37,7 @@ public class CarDTOTest {
     public void testToString() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -54,7 +54,7 @@ public class CarDTOTest {
     public void testToStringNullParam() {
         String regNo = null;
         Amount price = null;
-        String size = null;
+        CarDTO.CarType size = null;
         boolean AC = false;
         boolean fourWD = true;
         String color = null;
@@ -71,7 +71,7 @@ public class CarDTOTest {
     public void testToStringEmptyStringParam() {
         String regNo = "";
         Amount price = new Amount(1000);
-        String size = "";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "";
@@ -88,7 +88,7 @@ public class CarDTOTest {
     public void testEquals() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -105,7 +105,7 @@ public class CarDTOTest {
     public void testNotEqualsRegNo() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -122,7 +122,7 @@ public class CarDTOTest {
     public void testNotEqualsPrice() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -139,13 +139,13 @@ public class CarDTOTest {
     public void testNotEqualsSize() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
         boolean booked = false;
         CarDTO instance = new CarDTO(regNo, price, size, AC, fourWD, color, booked);
-        CarDTO notEqualInstance = new CarDTO(regNo, price, "wrong", AC, fourWD, color, booked);
+        CarDTO notEqualInstance = new CarDTO(regNo, price, CarDTO.CarType.SMALL, AC, fourWD, color, booked);
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
         assertEquals("CarDTO instances with different sizes are equal.",
@@ -156,7 +156,7 @@ public class CarDTOTest {
     public void testNotEqualsAC() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -173,7 +173,7 @@ public class CarDTOTest {
     public void testNotEqualsFourWD() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -190,7 +190,7 @@ public class CarDTOTest {
     public void testNotEqualsColor() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -207,7 +207,7 @@ public class CarDTOTest {
     public void testNotEqualsBooked() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -224,7 +224,7 @@ public class CarDTOTest {
     public void testNotEqualsNullParam() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -241,7 +241,7 @@ public class CarDTOTest {
     public void testNotEqualsEmptyStringParam() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -258,7 +258,7 @@ public class CarDTOTest {
     public void testNotEqualToJavaLangObj() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";
@@ -275,7 +275,7 @@ public class CarDTOTest {
     public void testNotEqualToNull() {
         String regNo = "ABC123";
         Amount price = new Amount(1000);
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = false;
         String color = "red";

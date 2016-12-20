@@ -103,9 +103,9 @@ public class CarRegistry {
     }
 
     private void addCars() {
-        cars.add(new CarData("abc123", 1000, "medium", true, true, "red"));
-        cars.add(new CarData("abc124", 2000, "large", false, true, "blue"));
-        cars.add(new CarData("abc125", 500, "medium", false, false, "red"));
+        cars.add(new CarData("abc123", 1000, CarDTO.CarType.MEDIUM, true, true, "red"));
+        cars.add(new CarData("abc124", 2000, CarDTO.CarType.LARGE, false, true, "blue"));
+        cars.add(new CarData("abc125", 500, CarDTO.CarType.MEDIUM, false, false, "red"));
     }
 
     private boolean matches(CarData found, CarDTO searched) {
@@ -135,13 +135,13 @@ public class CarRegistry {
     private static class CarData {
         private String regNo;
         private int price;
-        private String size;
+        private CarDTO.CarType size;
         private boolean AC;
         private boolean fourWD;
         private String color;
         private boolean booked;
 
-        public CarData(String regNo, int price, String size, boolean AC,
+        public CarData(String regNo, int price, CarDTO.CarType size, boolean AC,
                        boolean fourWD, String color) {
             this.regNo = regNo;
             this.price = price;

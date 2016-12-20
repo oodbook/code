@@ -38,7 +38,7 @@ public class CashRegisterTest {
     public void testAddPayment() {
         Amount price = new Amount(100);
         CashPayment payment = new CashPayment(null);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true, false,
+        CarDTO rentedCar = new CarDTO("abc123", price, CarDTO.CarType.MEDIUM, true, false,
                                       "red", false);
         Rental paidRental = new Rental(null, new RegistryCreator().
                                        getCarRegistry());

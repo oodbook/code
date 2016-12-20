@@ -30,7 +30,11 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,9 +48,15 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.RegistryCreato
 public class RentalTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
+    private Map<CarDTO.CarType, Integer> noOfRentedCars;
 
     @Before
-    public void setUpStreams() {
+    public void prepareStreamsAndRentedCounters() {
+        noOfRentedCars = new HashMap<>();
+        for (CarDTO.CarType type : CarDTO.CarType.values()) {
+            noOfRentedCars.put(type, 0);
+        }
+
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -62,7 +72,7 @@ public class RentalTest {
     public void testSetRentedCar() {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
-        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), "medium", true,
+        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM, true,
                                       true, "red", false);
         try {
             instance.rentCar(rentedCar);
@@ -82,7 +92,7 @@ public class RentalTest {
     public void testSetRentedCarWhenCarIsBooked() {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
-        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), "medium", true,
+        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM, true,
                                       true, "red", false);
         try {
             carReg.setBookedStateOfCar(rentedCar, true);
@@ -100,7 +110,7 @@ public class RentalTest {
     public void testSetRentedCarWhenCarDoesNotExist() throws AlreadyBookedException {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
-        CarDTO rentedCar = new CarDTO("wrong", new Amount(1000), "medium", true,
+        CarDTO rentedCar = new CarDTO("wrong", new Amount(1000), CarDTO.CarType.MEDIUM, true,
                                       true, "red", false);
         try {
             instance.rentCar(rentedCar);
@@ -116,7 +126,7 @@ public class RentalTest {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
         Amount price = new Amount(1000);
-        CarDTO rentedCar = new CarDTO("abc123", price, "medium", true,
+        CarDTO rentedCar = new CarDTO("abc123", price, CarDTO.CarType.MEDIUM, true,
                                       true, "red", false);
         CashPayment payment = new CashPayment(null);
         try {
@@ -135,7 +145,7 @@ public class RentalTest {
     public void testPrintReceipt() {
         Amount price = new Amount(1000);
         String regNo = "abc123";
-        String size = "medium";
+        CarDTO.CarType size = CarDTO.CarType.MEDIUM;
         boolean AC = true;
         boolean fourWD = true;
         String color = "red";
@@ -159,5 +169,73 @@ public class RentalTest {
                            + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
         String result = outContent.toString();
         assertEquals("Wrong printout.", expResult, result);
+    }
+
+    @Test
+    public void testAddSingleObservers() {
+        CarRegistry carReg = new RegistryCreator().getCarRegistry();
+        Rental instance = new Rental(null, carReg);
+        int noOfObservers = 3;
+        for (int i = 0; i < noOfObservers; i++) {
+            instance.addRentalObserver(new CountingObserver());
+        }
+        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM, true,
+                                      true, "red", false);
+        CashPayment payment = new CashPayment(null);
+        try {
+            instance.rentCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
+        instance.pay(payment);
+        Map<CarDTO.CarType, Integer> expResult = new HashMap<>();
+        expResult.put(CarDTO.CarType.SMALL, 0);
+        expResult.put(CarDTO.CarType.MEDIUM, noOfObservers);
+        expResult.put(CarDTO.CarType.LARGE, 0);
+        Map<CarDTO.CarType, Integer> result = noOfRentedCars;
+        for (CarDTO.CarType type : CarDTO.CarType.values()) {
+            assertEquals("Observers were not correctly notified.", expResult.get(type),
+                         result.get(type));
+        }
+    }
+
+    @Test
+    public void testAddMultipleObservers() {
+        CarRegistry carReg = new RegistryCreator().getCarRegistry();
+        Rental instance = new Rental(null, carReg);
+        int noOfObservers = 3;
+        List<RentalObserver> observers = new ArrayList<>();
+        for (int i = 0; i < noOfObservers; i++) {
+            observers.add(new CountingObserver());
+        }
+        instance.addRentalObservers(observers);
+        CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.LARGE, true,
+                                      true, "red", false);
+        CashPayment payment = new CashPayment(null);
+        try {
+            instance.rentCar(rentedCar);
+        } catch (AlreadyBookedException ex) {
+            fail("Got Exception.");
+            ex.printStackTrace();
+        }
+        instance.pay(payment);
+        Map<CarDTO.CarType, Integer> expResult = new HashMap<>();
+        expResult.put(CarDTO.CarType.SMALL, 0);
+        expResult.put(CarDTO.CarType.MEDIUM, 0);
+        expResult.put(CarDTO.CarType.LARGE, noOfObservers);
+        Map<CarDTO.CarType, Integer> result = noOfRentedCars;
+        for (CarDTO.CarType type : CarDTO.CarType.values()) {
+            assertEquals("Observers were not correctly notified.", expResult.get(type),
+                         result.get(type));
+        }
+    }
+
+    private class CountingObserver implements RentalObserver {
+        @Override
+        public void newRental(CarDTO rentedCar) {
+            int noOfRentedCarsOfThisType = noOfRentedCars.get(rentedCar.getSize()) + 1;
+            noOfRentedCars.put(rentedCar.getSize(), noOfRentedCarsOfThisType);
+        }
     }
 }

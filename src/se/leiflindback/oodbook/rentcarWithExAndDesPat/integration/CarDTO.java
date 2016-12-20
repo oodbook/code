@@ -40,11 +40,13 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 public final class CarDTO {
     private final String regNo;
     private final Amount price;
-    private final String size;
+    private final CarType size;
     private final boolean AC;
     private final boolean fourWD;
     private final String color;
     private boolean booked;
+    
+    public enum CarType {SMALL, MEDIUM, LARGE};
 
     /**
      * Creates a new instance representing a particular car.
@@ -56,7 +58,7 @@ public final class CarDTO {
      * @param fourWD <code>true</code> if the car has four wheel drive.
      * @param color  The color of the car.
      */
-    public CarDTO(String regNo, Amount price, String size, boolean AC, boolean fourWD,
+    public CarDTO(String regNo, Amount price, CarType size, boolean AC, boolean fourWD,
                   String color, boolean booked) {
         this.price = price;
         this.size = size;
@@ -161,7 +163,7 @@ public final class CarDTO {
      *
      * @return the value of size
      */
-    public String getSize() {
+    public CarType getSize() {
         return size;
     }
 
