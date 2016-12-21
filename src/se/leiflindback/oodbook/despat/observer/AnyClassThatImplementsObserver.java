@@ -26,48 +26,13 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
-
-import java.util.HashMap;
-import java.util.Map;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.RentalObserver;
+package se.leiflindback.oodbook.despat.observer;
 
 /**
- * Shows a running total of rented cars of each type.
+ * The observing class in a general implementation of the observer pattern.
  */
-class RentedCarsView implements RentalObserver {
-    private Map<CarDTO.CarType, Integer> noOfRentedCars = new HashMap<>();
-
-    /**
-     * Creates a new instance, with the all counters of rented cars set to zero.
-     */
-    public RentedCarsView() {
-        for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            noOfRentedCars.put(type, 0);
-        }
-    }
-
+public class AnyClassThatImplementsObserver implements Observer {
     @Override
-    public void newRental(CarDTO rentedCar) {
-        addNewRental(rentedCar);
-        printCurrentState();
+    public void stateHasChanged() {
     }
-
-    private void addNewRental(CarDTO rentedCar) {
-        int noOfRentedCarsOfThisType = noOfRentedCars.get(rentedCar.getSize()) + 1;
-        noOfRentedCars.put(rentedCar.getSize(), noOfRentedCarsOfThisType);
-    }
-
-    private void printCurrentState() {
-        System.out.println("#### We have now rented out ####");
-        for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            System.out.print(noOfRentedCars.get(type));
-            System.out.print(" ");
-            System.out.print(type.toString().toLowerCase());
-            System.out.println(" cars.");
-        }
-        System.out.println("################################");
-    }
-
 }

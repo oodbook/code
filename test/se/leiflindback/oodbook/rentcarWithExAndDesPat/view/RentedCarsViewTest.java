@@ -39,14 +39,14 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 public class RentedCarsViewTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
-    RentedCarsView instance;
+    RentedCarsDisplay instance;
 
     @Before
     public void setUp() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        instance = new RentedCarsView();
+        instance = new RentedCarsDisplay();
     }
 
     @After

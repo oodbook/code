@@ -26,22 +26,31 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
+package se.leiflindback.oodbook.despat.observer;
 
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A listener interface for receiving notifications about rented cars. The class that is interested
- * in such notifications implements this interface, and the object created with that class is
- * registered with
- * <code>se.leiflindback.oodbook,rentcarWithExAndDesPat.Controller.addRentalObserver</code>. When a
- * car is rented, that object's <code>newRental</code> method is invoked.
+ * The observed class in a general implementation of the observer pattern.
  */
-public interface RentalObserver {
+public class ObservedClass {
+    private List<Observer> observers = new ArrayList<>();
+
     /**
-     * Invoked when a rental has been paid.
+     * Registers observers. Any <code>Observer</code> that is passed to this method will be notified
+     * when this object changes state.
      *
-     * @param rentedCar The car that was rented.
+     * @param observer The observer that shall be registered.
      */
-    void newRental(CarDTO rentedCar);
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    // Called by any method in this class that has changed the class' state.
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.stateHasChanged();
+        }
+    }
 }

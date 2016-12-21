@@ -57,7 +57,7 @@ public class View {
      */
     public View(Controller contr) throws IOException {
         this.contr = contr;
-        contr.addRentalObserver(new RentedCarsView());
+        contr.addRentalObserver(new RentedCarsDisplay());
         this.logger = new LogHandler();
     }
 

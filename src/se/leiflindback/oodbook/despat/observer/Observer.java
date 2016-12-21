@@ -26,22 +26,14 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
-
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
+package se.leiflindback.oodbook.despat.observer;
 
 /**
- * A listener interface for receiving notifications about rented cars. The class that is interested
- * in such notifications implements this interface, and the object created with that class is
- * registered with
- * <code>se.leiflindback.oodbook,rentcarWithExAndDesPat.Controller.addRentalObserver</code>. When a
- * car is rented, that object's <code>newRental</code> method is invoked.
+ * The observer interface in a general implementation of the observer pattern.
  */
-public interface RentalObserver {
+public interface Observer {
     /**
-     * Invoked when a rental has been paid.
-     *
-     * @param rentedCar The car that was rented.
+     * Called when the observed class changes state.
      */
-    void newRental(CarDTO rentedCar);
+    void stateHasChanged();
 }
