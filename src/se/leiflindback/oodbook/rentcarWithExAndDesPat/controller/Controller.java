@@ -142,7 +142,8 @@ public class Controller {
      */
     public void pay(Amount paidAmt) {
         if (rental == null || rental.getRentedCar() == null) {
-            throw new IllegalStateException("Call to pay registeraing customer and booking car.");
+            throw new IllegalStateException(
+                    "Call to pay before registering customer and booking car.");
         }
         CashPayment payment = new CashPayment(paidAmt);
         rental.pay(payment);

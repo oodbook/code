@@ -33,6 +33,7 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration;
 
 import java.util.ArrayList;
 import java.util.List;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
 /**
@@ -63,19 +64,20 @@ public class CarRegistry {
      * Search for a car that is not booked, and that matches the specified search criteria.
      *
      * @param searchedCar This object contains the search criteria. Fields in the object that are
-     *                    set to <code>null</code> or <code>0</code> are ignored.
+     *                    set to <code>null</code> or zero are ignored.
      * @return A description matching the searched car's description if an unbooked car with the
      *         same features as <code>searchedCar</code> was found, <code>null</code> if no such car
      *         was found.
      */
     public CarDTO findAvailableCar(CarDTO searchedCar) {
+        List<CarDTO> allCars = new ArrayList<>();
         for (CarData car : cars) {
-            if (matches(car, searchedCar)) {
-                return new CarDTO(car.regNo, new Amount(car.price), car.size,
-                                  car.AC, car.fourWD, car.color, false);
+            if (!car.booked) {
+                allCars.add(new CarDTO(car.regNo, new Amount(car.price), car.size,
+                                       car.AC, car.fourWD, car.color, car.booked));
             }
         }
-        return null;
+        return new WildCardMatch().match(searchedCar, allCars);
     }
 
     /**
@@ -106,30 +108,6 @@ public class CarRegistry {
         cars.add(new CarData("abc123", 1000, CarDTO.CarType.MEDIUM, true, true, "red"));
         cars.add(new CarData("abc124", 2000, CarDTO.CarType.LARGE, false, true, "blue"));
         cars.add(new CarData("abc125", 500, CarDTO.CarType.MEDIUM, false, false, "red"));
-    }
-
-    private boolean matches(CarData found, CarDTO searched) {
-        if (searched.getPrice() != null && !searched.getPrice().
-                equals(new Amount(found.price))) {
-            return false;
-        }
-        if (searched.getSize() != null && !searched.getSize().equals(found.size)) {
-            return false;
-        }
-        if (searched.getColor() != null && !searched.getColor().equals(
-                found.color)) {
-            return false;
-        }
-        if (searched.isAC() != found.AC) {
-            return false;
-        }
-        if (searched.isFourWD() != found.fourWD) {
-            return false;
-        }
-        if (found.booked) {
-            return false;
-        }
-        return true;
     }
 
     private static class CarData {
