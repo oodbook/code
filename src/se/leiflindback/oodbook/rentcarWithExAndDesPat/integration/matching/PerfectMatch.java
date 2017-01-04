@@ -32,7 +32,7 @@ import java.util.List;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
- * A <code>Matcher</code> that finds only cars that have all properties, except <code>regNo</code> and <code>booked</code>,
+ * A <code>Matcher</code> that finds only cars that have all properties, except <code>regNo</code>,
  * equal to the properties of the searched car.
  */
 public class PerfectMatch implements Matcher {

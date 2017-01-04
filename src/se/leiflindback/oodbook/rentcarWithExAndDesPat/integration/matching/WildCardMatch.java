@@ -33,9 +33,9 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
 /**
- * A <code>Matcher</code> that finds only cars that have all properties, except <code>regNo</code>
- * and <code>booked</code>, equal to the properties of the searched car. Searched properties equal
- * to <code>null</code> or zero are ignored.
+ * A <code>Matcher</code> that finds only cars that have all properties, except <code>regNo</code>,
+ * equal to the properties of the searched car. Searched properties equal to <code>null</code> or
+ * zero are ignored.
  */
 public class WildCardMatch implements Matcher {
     @Override

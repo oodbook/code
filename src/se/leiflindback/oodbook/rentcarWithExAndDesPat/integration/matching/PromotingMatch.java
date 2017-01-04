@@ -43,8 +43,7 @@ public class PromotingMatch implements Matcher {
      * Creates a new instance that promotes the specified car.
      *
      * @param regNo The car with this registration number will be found by the matching algorithm if
-     *              it exists and has at least one property, except booked, equal to the search
-     *              criteria.
+     *              it exists and has at least one property, equal to the search criteria.
      */
     public PromotingMatch(String regNo) {
         this.regNoOfCarToPromote = regNo;
@@ -74,5 +73,4 @@ public class PromotingMatch implements Matcher {
         }
         return new PerfectMatch().match(searched, available);
     }
-
 }
