@@ -73,21 +73,24 @@ public class PromotingMatchTest {
 
     @Test
     public void testNoCarToPromoteNoMatch() {
-        PromotingMatch instance = new PromotingMatch(NonExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(NonExistingRegNoToPromote);
         Assert.assertEquals("Nonexisting car was found.", null, instance.match(nonExisting,
                                                                                availableCars));
     }
 
     @Test
     public void testNoCarToPromoteMatch() {
-        PromotingMatch instance = new PromotingMatch(NonExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(NonExistingRegNoToPromote);
         Assert.assertEquals("Wrong car was found.", smallGreen1000Ac4wd, instance.match(
                             smallGreen1000Ac4wd, availableCars));
     }
 
     @Test
     public void testNoCarToPromoteRegNoIsIgnored() {
-        PromotingMatch instance = new PromotingMatch(NonExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(NonExistingRegNoToPromote);
         CarDTO searched = new CarDTO("wrong", smallGreen1000Ac4wd.getPrice(), smallGreen1000Ac4wd.
                                      getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.
                                      isFourWD(), smallGreen1000Ac4wd.getColor(),
@@ -111,7 +114,8 @@ public class PromotingMatchTest {
 
     @Test
     public void testNoCarToPromoteBookedIsIgnored() {
-        PromotingMatch instance = new PromotingMatch(NonExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(NonExistingRegNoToPromote);
         CarDTO result = instance.match(smallGreen1000Ac4wdBooked, availableCars);
         Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.getRegNo(),
                             result.getRegNo());
@@ -131,14 +135,16 @@ public class PromotingMatchTest {
 
     @Test
     public void testCarToPromoteBookedIsIgnored() {
-        PromotingMatch instance = new PromotingMatch(ExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO result = instance.match(smallGreen1000Ac4wdBooked, availableCars);
         Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd, result);
     }
 
     @Test
     public void testCarToPromotePriceMatches() {
-        PromotingMatch instance = new PromotingMatch(ExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), mediumRed2000NoacNo4wd.
                                      getPrice(), smallGreen1000Ac4wd.
                                      getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.
@@ -163,7 +169,8 @@ public class PromotingMatchTest {
 
     @Test
     public void testCarToPromoteSizeMatches() {
-        PromotingMatch instance = new PromotingMatch(ExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), mediumRed2000NoacNo4wd.
                                      getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.
@@ -188,7 +195,8 @@ public class PromotingMatchTest {
 
     @Test
     public void testCarToPromoteACMatches() {
-        PromotingMatch instance = new PromotingMatch(ExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), smallGreen1000Ac4wd.
                                      getSize(), mediumRed2000NoacNo4wd.isAC(), smallGreen1000Ac4wd.
@@ -213,7 +221,8 @@ public class PromotingMatchTest {
 
     @Test
     public void testCarToPromote4wdMatches() {
-        PromotingMatch instance = new PromotingMatch(ExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), smallGreen1000Ac4wd.
                                      getSize(), smallGreen1000Ac4wd.isAC(), mediumRed2000NoacNo4wd.
@@ -238,7 +247,8 @@ public class PromotingMatchTest {
 
     @Test
     public void testCarToPromoteColorMatches() {
-        PromotingMatch instance = new PromotingMatch(ExistingRegNoToPromote);
+        PromotingMatch instance = new PromotingMatch();
+        instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), smallGreen1000Ac4wd.
                                      getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.

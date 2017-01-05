@@ -32,8 +32,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 public class MainTest {
+    @BeforeClass
+    public static void setDefaultMatcher() {
+        System.setProperty("se.leiflindback.rentcar.matcher.classname",
+                           "se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch");
+    }
+
     @Test
     public void testMain() {
         PrintStream originalSysOut = null;

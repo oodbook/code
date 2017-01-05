@@ -30,9 +30,16 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
 public class CarRegistryTest {
+    @BeforeClass
+    public static void setDefaultMatcher() {
+        System.setProperty("se.leiflindback.rentcar.matcher.classname",
+                           "se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch");
+    }
+
     @Test
     public void testGetCarByRegNo() {
         CarDTO searchedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,

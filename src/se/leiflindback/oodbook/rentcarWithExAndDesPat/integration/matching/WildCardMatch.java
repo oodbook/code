@@ -38,6 +38,8 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
  * zero are ignored.
  */
 public class WildCardMatch implements Matcher {
+    WildCardMatch() {}
+    
     @Override
     public CarDTO match(CarDTO searched, List<CarDTO> available) {
         Amount zero = new Amount();

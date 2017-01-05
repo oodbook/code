@@ -40,15 +40,25 @@ import java.time.format.FormatStyle;
  */
 public class LogHandler {
     private static final String LOG_FILE_NAME = "rentcar-log.txt";
+    private static final LogHandler INSTANCE = new LogHandler();
     private PrintWriter logFile;
-    
-    public LogHandler() throws IOException {
-        logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
+
+    public static LogHandler getLogger() {
+        return INSTANCE;
     }
-    
+
+    private LogHandler() {
+        try {
+            logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
+        } catch (IOException ex) {
+            System.out.println("Could not create logger.");
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * Writes log entries.
-     * 
+     *
      * @param entry The log entry.
      */
     public void logException(Exception exception) {

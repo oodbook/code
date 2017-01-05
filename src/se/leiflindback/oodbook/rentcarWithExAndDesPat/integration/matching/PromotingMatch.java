@@ -39,13 +39,16 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 public class PromotingMatch implements Matcher {
     private String regNoOfCarToPromote;
 
+    PromotingMatch() {
+    }
+
     /**
-     * Creates a new instance that promotes the specified car.
+     * Specify which car to promote.
      *
      * @param regNo The car with this registration number will be found by the matching algorithm if
      *              it exists and has at least one property, equal to the search criteria.
      */
-    public PromotingMatch(String regNo) {
+    public void setCarToPromote(String regNo) {
         this.regNoOfCarToPromote = regNo;
     }
 
@@ -55,13 +58,16 @@ public class PromotingMatch implements Matcher {
             if (!regNoOfCarToPromote.equals(carToMatch.getRegNo())) {
                 continue;
             }
-            if (searched.getPrice().equals(carToMatch.getPrice())) {
+            if (carToMatch.getPrice() != null && searched.getPrice() != null
+                && searched.getPrice().equals(carToMatch.getPrice())) {
                 return carToMatch;
             }
-            if (searched.getSize().equals(carToMatch.getSize())) {
+            if (carToMatch.getSize() != null && searched.getSize() != null
+                && searched.getSize().equals(carToMatch.getSize())) {
                 return carToMatch;
             }
-            if (searched.getColor().equals(carToMatch.getColor())) {
+            if (carToMatch.getColor() != null && searched.getColor() != null
+                && searched.getColor().equals(carToMatch.getColor())) {
                 return carToMatch;
             }
             if (searched.isAC() == carToMatch.isAC()) {

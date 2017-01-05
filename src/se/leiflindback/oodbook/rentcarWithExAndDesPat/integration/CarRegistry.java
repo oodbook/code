@@ -33,6 +33,9 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.MatcherFactory;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
@@ -68,6 +71,7 @@ public class CarRegistry {
      * @return A description matching the searched car's description if an unbooked car with the
      *         same features as <code>searchedCar</code> was found, <code>null</code> if no such car
      *         was found.
+     * @throws CarRegistryException If unable to search for a matching car.
      */
     public CarDTO findAvailableCar(CarDTO searchedCar) {
         List<CarDTO> allCars = new ArrayList<>();
@@ -77,7 +81,11 @@ public class CarRegistry {
                                        car.AC, car.fourWD, car.color, car.booked));
             }
         }
-        return new WildCardMatch().match(searchedCar, allCars);
+        try {
+            return MatcherFactory.getFactory().getDefaultMatcher().match(searchedCar, allCars);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            throw new CarRegistryException("Unable to instantiate matcher", ex);
+        }
     }
 
     /**

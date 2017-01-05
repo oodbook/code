@@ -37,7 +37,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import org.junit.After;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
@@ -49,12 +48,7 @@ public class LogHandlerTest {
 
     @Before
     public void createInstance() {
-        try {
-            instance = new LogHandler();
-        } catch (IOException ex) {
-            fail("Could not create log handler");
-            ex.printStackTrace();
-        }
+        instance = LogHandler.getLogger();
     }
 
     @After

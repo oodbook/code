@@ -39,7 +39,17 @@ public class CarRegistryException extends RuntimeException {
      *
      * @param msg A message that describes what went wrong.
      */
-    public CarRegistryException(String msg) {
+    CarRegistryException(String msg) {
         super(msg);
+    }
+
+    /**
+     * Creates a new instance with the specified message and root cause.
+     *
+     * @param msg   The exception message.
+     * @param cause The exception that caused this exception.
+     */
+    CarRegistryException(String msg, Exception cause) {
+        super(msg, cause);
     }
 }

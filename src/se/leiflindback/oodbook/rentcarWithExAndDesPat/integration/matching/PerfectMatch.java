@@ -36,6 +36,8 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
  * equal to the properties of the searched car.
  */
 public class PerfectMatch implements Matcher {
+    PerfectMatch(){};
+    
     @Override
     public CarDTO match(CarDTO searched, List<CarDTO> available) {
         for (CarDTO carToMatch : available) {

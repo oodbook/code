@@ -38,6 +38,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarRegistryException;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.Printer;
@@ -57,6 +58,12 @@ public class ControllerTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
     private Map<CarDTO.CarType, Integer> noOfRentedCars;
+
+    @BeforeClass
+    public static void setDefaultMatcher() {
+        System.setProperty("se.leiflindback.rentcar.matcher.classname",
+                           "se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch");
+    }
 
     @Before
     public void setUp() {

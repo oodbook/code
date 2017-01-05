@@ -48,7 +48,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.util.LogHandler;
 public class View {
     private Controller contr;
     private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
-    private LogHandler logger;
+    private LogHandler logger = LogHandler.getLogger();
 
     /**
      * Creates a new instance.
@@ -58,7 +58,6 @@ public class View {
     public View(Controller contr) throws IOException {
         this.contr = contr;
         contr.addRentalObserver(new RentedCarsDisplay());
-        this.logger = new LogHandler();
     }
 
     /**
