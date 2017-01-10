@@ -33,7 +33,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
  * A <code>Matcher</code> that finds the car that shall be promoted, provided it has at least one
- * property, except <code>booked</code>, matching the search criteria. If it has not, performs a
+ * property, except registration number, matching the search criteria. If it has not, performs a
  * <code>PerfectMatch</code>.
  */
 public class PromotingMatch implements Matcher {
@@ -45,8 +45,8 @@ public class PromotingMatch implements Matcher {
     /**
      * Specify which car to promote.
      *
-     * @param regNo The car with this registration number will be found by the matching algorithm if
-     *              it exists and has at least one property, equal to the search criteria.
+     * @param regNo The car with this registration number will be found by the matching algorithm,
+     *              if it exists and has at least one property equal to the search criteria.
      */
     public void setCarToPromote(String regNo) {
         this.regNoOfCarToPromote = regNo;
