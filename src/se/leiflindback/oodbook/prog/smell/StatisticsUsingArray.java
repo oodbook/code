@@ -34,7 +34,7 @@ package se.leiflindback.oodbook.prog.smell;
  */
 public class StatisticsUsingArray {
     public void someMethod() {
-        String[] stats = new String[3];
+        String[] stats = new String[4];
         stats[0] = "Hammarby";
         stats[1] = "2";
         stats[2] = "1";
