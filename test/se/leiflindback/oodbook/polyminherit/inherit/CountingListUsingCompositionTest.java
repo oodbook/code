@@ -33,11 +33,11 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class CountingListTest {
+public class CountingListUsingCompositionTest {
     @Test
     public void testAddAndGet() {
         Object elemToSave = new Integer(3);
-        CountingList instance = new CountingList();
+        CountingListUsingComposition instance = new CountingListUsingComposition();
         instance.add(elemToSave);
         Object expected = elemToSave;
         Object result = instance.get(0);
@@ -47,11 +47,11 @@ public class CountingListTest {
     @Test
     public void testAddAllAndGet() {
         int noOfElemsToAdd = 10;
-        CountingList elemsToAdd = new CountingList();
+        CountingListUsingComposition elemsToAdd = new CountingListUsingComposition();
         for (int i = 0; i < noOfElemsToAdd; i++) {
             elemsToAdd.add(i);
         }
-        CountingList instance = new CountingList();
+        CountingListUsingComposition instance = new CountingListUsingComposition();
         instance.addAll(elemsToAdd);
         for (int i = 0; i < noOfElemsToAdd; i++) {
             assertEquals("Wrong element read", elemsToAdd.get(i), instance.get(i));
@@ -61,11 +61,11 @@ public class CountingListTest {
     @Test
     public void testSize() {
         int noOfElemsToAdd = 10;
-        CountingList elemsToAdd = new CountingList();
+        CountingListUsingComposition elemsToAdd = new CountingListUsingComposition();
         for (int i = 0; i < noOfElemsToAdd; i++) {
             elemsToAdd.add(i);
         }
-        CountingList instance = new CountingList();
+        CountingListUsingComposition instance = new CountingListUsingComposition();
         instance.addAll(elemsToAdd);
         assertEquals("Wrong number of elements", noOfElemsToAdd, instance.size());
     }
@@ -73,11 +73,11 @@ public class CountingListTest {
     @Test
     public void testAddedElemsCounter() {
         int noOfElemsToAdd = 10;
-        CountingList elemsToAdd = new CountingList();
+        CountingListUsingComposition elemsToAdd = new CountingListUsingComposition();
         for (int i = 0; i < noOfElemsToAdd; i++) {
             elemsToAdd.add(i);
         }
-        CountingList instance = new CountingList();
+        CountingListUsingComposition instance = new CountingListUsingComposition();
         instance.addAll(elemsToAdd);
         assertEquals("Wrong number of elements", noOfElemsToAdd, instance.noOfAddedElems());
     }

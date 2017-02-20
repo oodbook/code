@@ -28,47 +28,37 @@
  */
 package se.leiflindback.oodbook.polyminherit.inherit;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+/**
+ * A list that counts how many elements have ever been added.
+ */
+public class CountingListUsingComposition {
+    private int noOfAddedElems;
+    private List list = new List();
 
-public class ListTest {
-    @Test
-    public void testAddAndGet() {
-        Object elemToSave = new Integer(3);
-        List instance = new List();
-        instance.add(elemToSave);
-        Object expected = elemToSave;
-        Object result = instance.get(0);
-        assertEquals("Wrong element returned", expected, result);
+    public void add(Object elemToAdd) {
+        noOfAddedElems++;
+        list.add(elemToAdd);
     }
 
-    @Test
-    public void testAddAllAndGet() {
-        int noOfElemsToAdd = 10;
-        List elemsToAdd = new List();
-        for (int i=0; i<noOfElemsToAdd; i++) {
-            elemsToAdd.add(i);
-        }
-        List instance = new List();
-        instance.addAll(elemsToAdd);
-        for (int i=0; i<noOfElemsToAdd; i++) {
-            assertEquals("Wrong element read", elemsToAdd.get(i), instance.get(i));
-        }        
+    public void addAll(CountingListUsingComposition elemsToAdd) {
+        noOfAddedElems = noOfAddedElems + elemsToAdd.size();
+        list.addAll(elemsToAdd.list);
     }
 
-    @Test
-    public void testSize() {
-        int noOfElemsToAdd = 10;
-        List elemsToAdd = new List();
-        for (int i=0; i<noOfElemsToAdd; i++) {
-            elemsToAdd.add(i);
-        }
-        List instance = new List();
-        instance.addAll(elemsToAdd);
-        int result = instance.size();
-        assertEquals("Wrong number of elements", noOfElemsToAdd, instance.size());
+    /**
+     * Tells how many elements have ever been added to the list.
+     *
+     * @return the number of elements that have ever been added to the list.
+     */
+    public int noOfAddedElems() {
+        return noOfAddedElems;
     }
 
+    public int size() {
+        return list.size();
+    }
+
+    public Object get(int index) {
+        return list.get(index);
+    }
 }
