@@ -28,43 +28,25 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
-import java.util.HashMap;
 import java.util.Map;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.RentalObserver;
 
 /**
- * Shows a running total of rented cars of each type.
+ * Prints the number of rented cars on the console.
  */
-public abstract class RentedCarsDisplay implements RentalObserver {
-    private Map<CarDTO.CarType, Integer> noOfRentedCars = new HashMap<>();
-
+public class ConsoleRentedCarsDisplay extends RentedCarsDisplay {
     /**
-     * Creates a new instance, with the all counters of rented cars set to zero.
+     * Prints the number of rented cars of each type on the console.
      */
-    protected RentedCarsDisplay() {
-        for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            noOfRentedCars.put(type, 0);
-            printCurrentState(noOfRentedCars);
-        }
-    }
-
     @Override
-    public void newRental(CarDTO rentedCar) {
-        addNewRental(rentedCar);
-        printCurrentState(noOfRentedCars);
+    protected void printCurrentState(Map<CarDTO.CarType, Integer> noOfRentedCars) {
+        System.out.println("#### We have now rented out ####");
+        for (CarDTO.CarType type : CarDTO.CarType.values()) {
+            System.out.print(noOfRentedCars.get(type));
+            System.out.print(" ");
+            System.out.print(type.toString().toLowerCase());
+            System.out.println(" cars.");
+        }
+        System.out.println("################################");
     }
-
-    private void addNewRental(CarDTO rentedCar) {
-        int noOfRentedCarsOfThisType = noOfRentedCars.get(rentedCar.getSize()) + 1;
-        noOfRentedCars.put(rentedCar.getSize(), noOfRentedCarsOfThisType);
-    }
-
-    /**
-     * Shows the number of rented cars.
-     *
-     * @param noOfRentedCars Contains the number of rented cars of each type.
-     */
-    protected abstract void printCurrentState(Map<CarDTO.CarType, Integer> noOfRentedCars);
-
 }

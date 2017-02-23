@@ -28,43 +28,17 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
-import java.util.HashMap;
 import java.util.Map;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.RentalObserver;
 
 /**
- * Shows a running total of rented cars of each type.
+ * Shows a GUI with the number of rented cars.
  */
-public abstract class RentedCarsDisplay implements RentalObserver {
-    private Map<CarDTO.CarType, Integer> noOfRentedCars = new HashMap<>();
-
+public class GuiRentedCarsDisplay extends RentedCarsDisplay {
     /**
-     * Creates a new instance, with the all counters of rented cars set to zero.
+     * Shows a GUI with the number of rented cars of each type.
      */
-    protected RentedCarsDisplay() {
-        for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            noOfRentedCars.put(type, 0);
-            printCurrentState(noOfRentedCars);
-        }
-    }
-
     @Override
-    public void newRental(CarDTO rentedCar) {
-        addNewRental(rentedCar);
-        printCurrentState(noOfRentedCars);
+    protected void printCurrentState(Map<CarDTO.CarType, Integer> noOfRentedCars) {
     }
-
-    private void addNewRental(CarDTO rentedCar) {
-        int noOfRentedCarsOfThisType = noOfRentedCars.get(rentedCar.getSize()) + 1;
-        noOfRentedCars.put(rentedCar.getSize(), noOfRentedCarsOfThisType);
-    }
-
-    /**
-     * Shows the number of rented cars.
-     *
-     * @param noOfRentedCars Contains the number of rented cars of each type.
-     */
-    protected abstract void printCurrentState(Map<CarDTO.CarType, Integer> noOfRentedCars);
-
 }

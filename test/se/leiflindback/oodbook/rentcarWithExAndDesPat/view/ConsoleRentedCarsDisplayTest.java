@@ -35,18 +35,19 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
+import static org.junit.Assert.assertTrue;
 
-public class RentedCarsViewTest {
+public class ConsoleRentedCarsDisplayTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
-    RentedCarsDisplay instance;
+    ConsoleRentedCarsDisplay instance;
 
     @Before
     public void setUp() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        instance = new RentedCarsDisplay();
+        instance = new ConsoleRentedCarsDisplay();
     }
 
     @After

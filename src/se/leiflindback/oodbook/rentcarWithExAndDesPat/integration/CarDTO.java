@@ -45,8 +45,24 @@ public final class CarDTO {
     private final boolean fourWD;
     private final String color;
     private boolean booked;
-    
-    public enum CarType {SMALL, MEDIUM, LARGE};
+
+    /**
+     * Specifies the type of a car.
+     */
+    public enum CarType {
+        /**
+         * A small car.
+         */
+        SMALL,
+        /**
+         * A medium-sized car
+         */
+        MEDIUM,
+        /**
+         * A large car.
+         */
+        LARGE
+    };
 
     /**
      * Creates a new instance representing a particular car.
