@@ -29,16 +29,88 @@
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
 import java.util.Map;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
  * Shows a GUI with the number of rented cars.
  */
 public class GuiRentedCarsDisplay extends RentedCarsDisplay {
+    private Display display;
+
+    /**
+     * Starts the GUI.
+     */
+    public GuiRentedCarsDisplay() {
+        new Thread(() -> {
+            Application.launch(Display.class, null);
+        }).start();
+        this.display = Display.getDisplay();
+    }
+
     /**
      * Shows a GUI with the number of rented cars of each type.
      */
     @Override
     protected void printCurrentState(Map<CarDTO.CarType, Integer> noOfRentedCars) {
+        display.updateStatsList(noOfRentedCars);
+    }
+
+    // ----------------- Code below here is for GUI handling only. -------------------------------
+    public static class Display extends Application {
+        private static Display display;
+        private ObservableList<String> rentalStats = FXCollections.observableArrayList();
+
+        @Override
+        public void start(Stage stage) throws Exception {
+            FlowPane rootNode = new FlowPane(10, 10);
+
+            rootNode.getChildren().add(new ListView<>(rentalStats));
+            Scene scene = new Scene(rootNode, 200, 75);
+
+            stage.setTitle("Rented Cars");
+            stage.setScene(scene);
+            stage.show();
+
+            setDisplay(this);
+        }
+
+        private void updateStatsList(Map<CarDTO.CarType, Integer> noOfRentedCars) {
+            deleteAllStats();
+            for (CarDTO.CarType type : CarDTO.CarType.values()) {
+                rentalStats.add(type.toString().toLowerCase() + ": " + noOfRentedCars.get(type));
+            }
+        }
+
+        private void deleteAllStats() {
+            rentalStats.remove(0, rentalStats.size() - 1);
+        }
+
+        private void setDisplay(Display display) {
+            synchronized (Display.class) {
+                this.display = display;
+                Display.class.notifyAll();
+            }
+        }
+
+        private static Display getDisplay() {
+            synchronized (Display.class) {
+                while (display == null) {
+                    try {
+                        Display.class.wait();
+                    } catch (InterruptedException ignore) {
+                    }
+                }
+                Display lastCreatedDisplay = display;
+                display = null;
+                return lastCreatedDisplay;
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@ package se.leiflindback.oodbook.polyminherit.inherit;
 public class CountingList extends List {
     private int noOfAddedElems;
 
+    @Override
     public void add(Object elemToAdd) {
         noOfAddedElems++;
         super.add(elemToAdd);

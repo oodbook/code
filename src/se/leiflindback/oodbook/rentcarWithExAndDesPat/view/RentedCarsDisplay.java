@@ -45,7 +45,6 @@ public abstract class RentedCarsDisplay implements RentalObserver {
     protected RentedCarsDisplay() {
         for (CarDTO.CarType type : CarDTO.CarType.values()) {
             noOfRentedCars.put(type, 0);
-            printCurrentState(noOfRentedCars);
         }
     }
 
