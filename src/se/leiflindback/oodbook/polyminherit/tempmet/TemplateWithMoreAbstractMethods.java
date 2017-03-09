@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2016, Leif Lindbäck
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this list of
  * conditions and the following disclaimer.
- *
+ * 
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of
  * conditions and the following disclaimer in the documentation and/or other materials provided
  * with the distribution.
- *
+ * 
  * 3. Neither the name of the copyright holder nor the names of its contributors may be used to
  * endorse or promote products derived from this software without specific prior written
  * permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -26,43 +26,26 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
-import java.util.HashMap;
-import java.util.Map;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
-import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.RentalObserver;
+package se.leiflindback.oodbook.polyminherit.tempmet;
 
 /**
- * Shows a running total of rented cars of each type.
+ * An example of a template class with more than one abstract method.
  */
-public abstract class RentedCarsDisplay implements RentalObserver {
-    private Map<CarDTO.CarType, Integer> noOfRentedCars = new HashMap<>();
-
-    /**
-     * Creates a new instance, with the all counters of rented cars set to zero.
-     */
-    protected RentedCarsDisplay() {
-        for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            noOfRentedCars.put(type, 0);
+public abstract class TemplateWithMoreAbstractMethods {
+    public void theTemplateMethod() {
+        try {
+            performSomeTask();
+        } catch (Exception e) {
+            errorHandling();
+        } finally {
+            cleanup();
         }
     }
 
-    @Override
-    public void newRental(CarDTO rentedCar) {
-        addNewRental(rentedCar);
-        printCurrentState(noOfRentedCars);
-    }
+    protected abstract void performSomeTask();
 
-    private void addNewRental(CarDTO rentedCar) {
-        int noOfRentedCarsOfThisType = noOfRentedCars.get(rentedCar.getSize()) + 1;
-        noOfRentedCars.put(rentedCar.getSize(), noOfRentedCarsOfThisType);
-    }
+    protected abstract void errorHandling();
 
-    /**
-     * Shows the number of rented cars.
-     *
-     * @param noOfRentedCars Contains the number of rented cars of each type.
-     */
-    protected abstract void printCurrentState(Map<CarDTO.CarType, Integer> noOfRentedCars);
+    protected abstract void cleanup();
 }
