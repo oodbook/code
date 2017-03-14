@@ -55,8 +55,6 @@ public class ReceiptTest {
         String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n";
         String result = instance.createReceiptString();
-        System.out.println(result);
-        System.out.println(expResult);
         assertTrue("Wrong printout.", result.contains(expResult));
         assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
         assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));

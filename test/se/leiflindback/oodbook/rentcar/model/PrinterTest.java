@@ -85,5 +85,4 @@ public class PrinterTest {
         assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
         assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
     }
-
 }
