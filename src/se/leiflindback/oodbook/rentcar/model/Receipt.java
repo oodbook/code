@@ -28,7 +28,7 @@
  */
 package se.leiflindback.oodbook.rentcar.model;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * The receipt of a rental
@@ -55,7 +55,7 @@ public class Receipt {
         appendLine(builder, "Car Rental");
         endSection(builder);
 
-        Date rentalTime = new Date();
+        Instant rentalTime = Instant.now();
         builder.append("Rental time: ");
         appendLine(builder, rentalTime.toString());
         endSection(builder);

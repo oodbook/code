@@ -28,14 +28,14 @@
  */
 package se.leiflindback.oodbook.prog.smell;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Represents a period in time, with specific start and end time.
  */
 class TimePeriod {
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     
     //More fields and methods.
 }

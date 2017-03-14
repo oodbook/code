@@ -30,7 +30,7 @@ package se.leiflindback.oodbook.rentcar.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -192,12 +192,15 @@ public class ControllerTest {
         instance.registerCustomer(null);
         instance.bookCar(rentedCar);
         instance.pay(paidAmt);
-        Date rentalTime = new Date();
-        String expResult = "Car Rental\n\nRental time: "
-                           + rentalTime.toString()
-                           + "\n\nRented car: " + regNo + "\nCost: " + price
+        LocalDateTime rentalTime = LocalDateTime.now();
+        String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
         String result = outContent.toString();
-        assertEquals("Wrong printout.", expResult, result);
+        assertTrue("Wrong printout.", result.contains(expResult));
+        assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
+        assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
+        assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
+        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
+        assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
     }
 }

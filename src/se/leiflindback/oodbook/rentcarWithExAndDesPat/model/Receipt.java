@@ -28,7 +28,7 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * The receipt of a rental
@@ -55,7 +55,7 @@ public class Receipt {
         appendLine(builder, "Car Rental");
         endSection(builder);
 
-        Date rentalTime = new Date();
+        LocalDateTime rentalTime = LocalDateTime.now();
         builder.append("Rental time: ");
         appendLine(builder, rentalTime.toString());
         endSection(builder);

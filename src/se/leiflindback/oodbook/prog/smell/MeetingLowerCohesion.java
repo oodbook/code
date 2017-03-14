@@ -28,14 +28,14 @@
  */
 package se.leiflindback.oodbook.prog.smell;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * This class represents a meeting in a calendar.
  */
 public class MeetingLowerCohesion {
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String name;
     private boolean alarmIsSet;
     
