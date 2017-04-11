@@ -41,7 +41,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 class CompositeMatcher implements Matcher {
     private List<Matcher> matchingAlgorithms = new ArrayList<>();
 
-    public CompositeMatcher() {
+    CompositeMatcher() {
     }
 
     /**
