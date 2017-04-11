@@ -26,58 +26,48 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExceptions.model;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matchingWithComposite;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
 /**
- * The receipt of a rental
+ * A <code>Matcher</code> that finds only cars that have all properties, except <code>regNo</code>,
+ * equal to the properties of the searched car. Searched properties equal to <code>null</code> or
+ * zero are ignored.
  */
-public class Receipt {
-    private final Rental rental;
-
-    /**
-     * Creates a new instance.
-     *
-     * @param rental The rental proved by this receipt.
-     */
-    Receipt(Rental rental) {
-        this.rental = rental;
+class WildCardMatch implements Matcher {
+    WildCardMatch() {}
+    
+    @Override
+    public CarDTO match(CarDTO searched, List<CarDTO> available) {
+        Amount zero = new Amount();
+        for (CarDTO carToMatch : available) {
+            if (searched.getPrice() != null && !searched.getPrice().equals(zero)
+                && !searched.getPrice().equals(carToMatch.getPrice())) {
+                continue;
+            }
+            if (searched.getSize() != null && !searched.getSize().equals(carToMatch.getSize())) {
+                continue;
+            }
+            if (searched.getColor() != null && !searched.getColor().equals(
+                    carToMatch.getColor())) {
+                continue;
+            }
+            if (searched.isAC() != carToMatch.isAC()) {
+                continue;
+            }
+            if (searched.isFourWD() != carToMatch.isFourWD()) {
+                continue;
+            }
+            return carToMatch;
+        }
+        return null;
     }
 
-    /**
-     * Creates a well-formatted string with the entire content of the receipt.
-     *
-     * @return The well-formatted receipt string.
-     */
-    public String createReceiptString() {
-        StringBuilder builder = new StringBuilder();
-        appendLine(builder, "Car Rental");
-        endSection(builder);
-
-        LocalDateTime rentalTime = LocalDateTime.now();
-        builder.append("Rental time: ");
-        appendLine(builder, rentalTime.toString());
-        endSection(builder);
-
-        builder.append("Rented car: ");
-        appendLine(builder, rental.getRentedCar().getRegNo());
-        builder.append("Cost: ");
-        appendLine(builder, rental.getPayment().getTotalCost().toString());
-        builder.append("Change: ");
-        appendLine(builder, rental.getPayment().getChange().toString());
-        endSection(builder);
-        
-        return builder.toString();
+    @Override
+    public void init(Map<String, String> properties) {
     }
-
-    private void appendLine(StringBuilder builder, String line) {
-        builder.append(line);
-        builder.append("\n");
-    }
-
-    private void endSection(StringBuilder builder) {
-        builder.append("\n");
-    }
-
 }

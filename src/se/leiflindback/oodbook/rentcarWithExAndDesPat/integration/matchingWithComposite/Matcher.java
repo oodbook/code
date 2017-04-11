@@ -26,58 +26,30 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExceptions.model;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matchingWithComposite;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
- * The receipt of a rental
+ * Defines the ability to match existing cars with a searched car. This interface shall be
+ * implemented by a class providing a matching algorithm.
  */
-public class Receipt {
-    private final Rental rental;
-
+public interface Matcher {
     /**
-     * Creates a new instance.
-     *
-     * @param rental The rental proved by this receipt.
+     * Provides configuration properties to the <code>Matcher</code>.
+     * 
+     * @param properties Key-value pairs.
      */
-    Receipt(Rental rental) {
-        this.rental = rental;
-    }
-
+    void init(Map<String, String> properties);
+    
     /**
-     * Creates a well-formatted string with the entire content of the receipt.
+     * Searches the specified available cars for an instance matching the specified search criteria.
      *
-     * @return The well-formatted receipt string.
+     * @param searched  Search criteria
+     * @param available Available cars
+     * @return A matching car, or <code>null</code> if none was found.
      */
-    public String createReceiptString() {
-        StringBuilder builder = new StringBuilder();
-        appendLine(builder, "Car Rental");
-        endSection(builder);
-
-        LocalDateTime rentalTime = LocalDateTime.now();
-        builder.append("Rental time: ");
-        appendLine(builder, rentalTime.toString());
-        endSection(builder);
-
-        builder.append("Rented car: ");
-        appendLine(builder, rental.getRentedCar().getRegNo());
-        builder.append("Cost: ");
-        appendLine(builder, rental.getPayment().getTotalCost().toString());
-        builder.append("Change: ");
-        appendLine(builder, rental.getPayment().getChange().toString());
-        endSection(builder);
-        
-        return builder.toString();
-    }
-
-    private void appendLine(StringBuilder builder, String line) {
-        builder.append(line);
-        builder.append("\n");
-    }
-
-    private void endSection(StringBuilder builder) {
-        builder.append("\n");
-    }
-
+    CarDTO match(CarDTO searched, List<CarDTO> available);
 }

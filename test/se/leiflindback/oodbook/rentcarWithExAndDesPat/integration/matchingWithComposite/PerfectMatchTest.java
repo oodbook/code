@@ -26,7 +26,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matchingWithComposite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
 public class PerfectMatchTest {
     private List<CarDTO> availableCars;
-    private final CarDTO smallGreen1000Ac4wd = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.SMALL, true,
+    private CarDTO smallGreen1000Ac4wd = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.SMALL, true,
                                             true, "green", false);
     private final CarDTO mediumRed2000NoacNo4wd = new CarDTO("abc124", new Amount(2000), CarDTO.CarType.MEDIUM,
                                                false, false, "red", false);

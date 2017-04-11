@@ -33,7 +33,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
  * Defines the ability to match existing cars with a searched car. This interface shall be
- * implemented by a class that provides a matching algorithm.
+ * implemented by a class providing a matching algorithm.
  */
 public interface Matcher {
     /**

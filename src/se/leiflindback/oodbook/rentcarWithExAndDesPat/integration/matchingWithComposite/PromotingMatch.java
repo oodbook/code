@@ -26,30 +26,21 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matchingWithComposite;
 
 import java.util.List;
+import java.util.Map;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
  * A <code>Matcher</code> that finds the car that shall be promoted, provided it has at least one
- * property, except registration number, matching the search criteria. If it has not, performs a
- * <code>PerfectMatch</code>.
+ * property, except registration number, matching the search criteria.
  */
 class PromotingMatch implements Matcher {
+    private static final String REG_NO_KEY = "REG_NO";
     private String regNoOfCarToPromote;
 
     PromotingMatch() {
-    }
-
-    /**
-     * Specify which car to promote.
-     *
-     * @param regNo The car with this registration number will be found by the matching algorithm,
-     *              if it exists and has at least one property equal to the search criteria.
-     */
-    public void setCarToPromote(String regNo) {
-        this.regNoOfCarToPromote = regNo;
     }
 
     @Override
@@ -77,6 +68,11 @@ class PromotingMatch implements Matcher {
                 return carToMatch;
             }
         }
-        return new PerfectMatch().match(searched, available);
+        return null;
+    }
+
+    @Override
+    public void init(Map<String, String> properties) {
+        regNoOfCarToPromote = properties.get(REG_NO_KEY);
     }
 }

@@ -37,7 +37,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
  * equal to the properties of the searched car. Searched properties equal to <code>null</code> or
  * zero are ignored.
  */
-public class WildCardMatch implements Matcher {
+class WildCardMatch implements Matcher {
     WildCardMatch() {}
     
     @Override

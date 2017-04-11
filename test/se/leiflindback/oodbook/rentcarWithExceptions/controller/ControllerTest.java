@@ -267,7 +267,7 @@ public class ControllerTest {
         assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
         assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
         assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
-        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
+        assertTrue("Wrong rental hour. " + rentalTime.getHour() + ":" + LocalDateTime.now().toString() + ":" + result, result.contains(Integer.toString(rentalTime.getHour())));
         assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
     }
 

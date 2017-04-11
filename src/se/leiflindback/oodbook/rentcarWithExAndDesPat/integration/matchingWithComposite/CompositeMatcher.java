@@ -26,57 +26,56 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching;
+package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matchingWithComposite;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 
 /**
- * A <code>Matcher</code> that finds the car that shall be promoted, provided it has at least one
- * property, except registration number, matching the search criteria. If it has not, performs a
- * <code>PerfectMatch</code>.
+ * A <code>Matcher</code>, which performs multiple matching algorithms. All matching algorithms
+ * added to this composite are executed, in the same order they were added, until an algorithm finds
+ * a car. Execution is stopped when an algorithm returns a non-null value.
  */
-class PromotingMatch implements Matcher {
-    private String regNoOfCarToPromote;
+class CompositeMatcher implements Matcher {
+    private List<Matcher> matchingAlgorithms = new ArrayList<>();
 
-    PromotingMatch() {
+    public CompositeMatcher() {
     }
 
     /**
-     * Specify which car to promote.
+     * Invokes all matching algorithms added to this composite, in the same order they were added,
+     * until an algorithm finds a car. When a matching algorithm has found a car, that car is
+     * returned, and no more algorithms are called.
      *
-     * @param regNo The car with this registration number will be found by the matching algorithm,
-     *              if it exists and has at least one property equal to the search criteria.
+     * @param searched  Search criteria
+     * @param available Available cars
+     * @return A matching car, or <code>null</code> if none was found.
      */
-    public void setCarToPromote(String regNo) {
-        this.regNoOfCarToPromote = regNo;
+    @Override
+    public CarDTO match(CarDTO searched, List<CarDTO> available) {
+        for (Matcher matcher : matchingAlgorithms) {
+            CarDTO found = matcher.match(searched, available);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Adds a matching algorithm that will be invoked when this composite is searching for a car.
+     * The newly added algorithm will be called after all previously added algorithms, provided non
+     * of the previous algorithms finds a matching car.
+     *
+     * @param matcher The new <code>Matcher</code> to add.
+     */
+    void addMatcher(Matcher matcher) {
+        matchingAlgorithms.add(matcher);
     }
 
     @Override
-    public CarDTO match(CarDTO searched, List<CarDTO> available) {
-        for (CarDTO carToMatch : available) {
-            if (!regNoOfCarToPromote.equals(carToMatch.getRegNo())) {
-                continue;
-            }
-            if (carToMatch.getPrice() != null && searched.getPrice() != null
-                && searched.getPrice().equals(carToMatch.getPrice())) {
-                return carToMatch;
-            }
-            if (carToMatch.getSize() != null && searched.getSize() != null
-                && searched.getSize().equals(carToMatch.getSize())) {
-                return carToMatch;
-            }
-            if (carToMatch.getColor() != null && searched.getColor() != null
-                && searched.getColor().equals(carToMatch.getColor())) {
-                return carToMatch;
-            }
-            if (searched.isAC() == carToMatch.isAC()) {
-                return carToMatch;
-            }
-            if (searched.isFourWD() == carToMatch.isFourWD()) {
-                return carToMatch;
-            }
-        }
-        return new PerfectMatch().match(searched, available);
+    public void init(Map<String, String> properties) {
     }
 }
