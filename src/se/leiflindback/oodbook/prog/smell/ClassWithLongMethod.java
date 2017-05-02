@@ -29,7 +29,7 @@
 package se.leiflindback.oodbook.prog.smell;
 
 /**
- * This class has a method who's body is not completely easy to understand.
+ * This class has a method who's body is not very easy to understand.
  */
 public class ClassWithLongMethod {
 
@@ -42,7 +42,7 @@ public class ClassWithLongMethod {
     public int countUpperCaseLetters(String source) {
         int noOfUpperCaseLetters = 0;
         for (char letter : source.toCharArray()) {
-            if (letter >= 65 && letter <= 90) {
+            if (letter >= 65 && letter <= 90) { 
                 noOfUpperCaseLetters++;
             }
         }
