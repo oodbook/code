@@ -40,6 +40,7 @@ public class CountingList extends List {
         super.add(elemToAdd);
     }
 
+    @Override
     public void addAll(List elemsToAdd) {
         noOfAddedElems = noOfAddedElems + elemsToAdd.size();
         super.addAll(elemsToAdd);
