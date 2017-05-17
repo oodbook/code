@@ -41,8 +41,8 @@ import se.leiflindback.oodbook.rentcarWithExceptions.integration.Printer;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
 public class PrinterTest {
-    ByteArrayOutputStream outContent;
-    PrintStream originalSysOut;
+    private ByteArrayOutputStream outContent;
+    private PrintStream originalSysOut;
 
     @Before
     public void setUpStreams() {

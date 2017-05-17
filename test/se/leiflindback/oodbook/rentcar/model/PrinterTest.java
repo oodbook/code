@@ -40,8 +40,8 @@ import se.leiflindback.oodbook.rentcar.integration.Printer;
 import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 
 public class PrinterTest {
-    ByteArrayOutputStream outContent;
-    PrintStream originalSysOut;
+    private ByteArrayOutputStream outContent;
+    private PrintStream originalSysOut;
 
     @Before
     public void setUpStreams() {
