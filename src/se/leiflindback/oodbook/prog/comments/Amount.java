@@ -35,17 +35,20 @@ public final class Amount {
     private final int amount;
 
     /**
-     * Creates a new instance, representing the specified amount.
+     * Creates a new instance, representing the specified
+     * amount.
      *
-     * @param amount The amount represented by the newly created instance.
+     * @param amount The amount represented by the newly
+     *               created instance.
      */
     public Amount(int amount) {
         this.amount = amount;
     }
 
     /**
-     * Subtracts the specified <code>Amount</code> from this object and returns
-     * an <code>Amount</code> instance with the result.
+     * Subtracts the specified {@link Amount} from
+     * this object and returns an {@link Amount}
+     * instance with the result.
      *
      * @param other The <code>Amount</code> to subtract.
      * @return The result of the subtraction.
