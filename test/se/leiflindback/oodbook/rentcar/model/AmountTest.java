@@ -50,7 +50,7 @@ public class AmountTest {
     }
 
     @Test
-    public void testEqualsNull() {
+    public void testNotEqualsNull() {
         Object other = null;
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
@@ -58,7 +58,7 @@ public class AmountTest {
     }
 
     @Test
-    public void testEqualsJavaLangObject() {
+    public void testNotEqualsJavaLangObject() {
         Object other = new Object();
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
@@ -67,11 +67,9 @@ public class AmountTest {
     }
 
     @Test
-    public void testNotEqualNoArgConstr() {
-        int amountOfOther = 2;
-        Amount other = new Amount(amountOfOther);
+    public void testNotEqualUsingNoArgConstr() {
         boolean expResult = false;
-        boolean result = amtNoArgConstr.equals(other);
+        boolean result = amtNoArgConstr.equals(amtWithAmtThree);
         assertEquals("Amount instances with different states are equal.",
                      expResult, result);
     }
