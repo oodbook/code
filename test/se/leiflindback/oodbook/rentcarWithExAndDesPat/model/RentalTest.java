@@ -76,7 +76,7 @@ public class RentalTest {
     }
 
     @Test
-    public void testSetRentedCar() {
+    public void testRentCar() {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
         CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM, true,
@@ -96,7 +96,7 @@ public class RentalTest {
     }
 
     @Test
-    public void testSetRentedCarWhenCarIsBooked() {
+    public void testRentBookedCar() {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
         CarDTO rentedCar = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM, true,
@@ -114,7 +114,7 @@ public class RentalTest {
     }
 
     @Test
-    public void testSetRentedCarWhenCarDoesNotExist() throws AlreadyBookedException {
+    public void testRentCarThatDoesNotExist() throws AlreadyBookedException {
         CarRegistry carReg = new RegistryCreator().getCarRegistry();
         Rental instance = new Rental(null, carReg);
         CarDTO rentedCar = new CarDTO("wrong", new Amount(1000), CarDTO.CarType.MEDIUM, true,

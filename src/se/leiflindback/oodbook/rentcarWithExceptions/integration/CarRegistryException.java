@@ -30,7 +30,6 @@ package se.leiflindback.oodbook.rentcarWithExceptions.integration;
 
 /**
  * Thrown when something goes wrong while performing an operation in the <code>CarRegistry</code>.
- * The message might contain more information about the error condition.
  */
 public class CarRegistryException extends RuntimeException {
 

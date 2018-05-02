@@ -67,7 +67,8 @@ public class Rental {
      *
      * @param rentedCar The car that was rented.
      * @throws AlreadyBookedException if the car was already booked.
-     * @throws CarRegistryException if the database call failed.
+     * @throws CarRegistryException if the database call failed, or if the specified car did not
+     *                              exist.
      */
     public void rentCar(CarDTO rentedCar) throws AlreadyBookedException {
         bookCar(rentedCar);
