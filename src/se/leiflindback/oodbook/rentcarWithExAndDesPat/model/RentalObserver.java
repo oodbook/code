@@ -34,8 +34,8 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
  * A listener interface for receiving notifications about rented cars. The class that is interested
  * in such notifications implements this interface, and the object created with that class is
  * registered with
- * <code>se.leiflindback.oodbook,rentcarWithExAndDesPat.Controller.addRentalObserver</code>. When a
- * car is rented, that object's <code>newRental</code> method is invoked.
+ * {@link se.leiflindback.oodbook.rentcarWithExAndDesPat.controller.Controller#addRentalObserver(RentalObserver)}. When a
+ * car is rented, that object's {@link #newRental newRental} method is invoked.
  */
 public interface RentalObserver {
     /**

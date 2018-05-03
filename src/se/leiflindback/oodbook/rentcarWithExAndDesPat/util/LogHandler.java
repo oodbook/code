@@ -57,9 +57,9 @@ public class LogHandler {
     }
 
     /**
-     * Writes log entries.
-     *
-     * @param entry The log entry.
+     * Writes a log entry describing a thrown exception.
+     * 
+     * @param exception The exception that shall be logged.
      */
     public void logException(Exception exception) {
         StringBuilder logMsgBuilder = new StringBuilder();

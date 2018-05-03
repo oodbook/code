@@ -36,8 +36,7 @@ public class AccountWithParameterObject {
     /**
      * Adds the specified amount of the specified currency to the balance.
      *
-     * @param currency The currency of the deposited amount.
-     * @param amount   The amount to deposit.
+     * @param amount The amount to deposit.
      */
     public void deposit(Amount amount) {
     }
