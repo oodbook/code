@@ -51,7 +51,7 @@ public class CarRegistry {
      * @param searchedCar This object contains the search criteria. Fields in
      *                    the object that are set to <code>null</code> or
      *                    <code>0</code> are ignored.
-     * @return A description matching the searched car's description if a car
+     * @return A car matching the searched car's description if a car
      *         with the same features as <code>searchedCar</code> was found,
      *         <code>null</code> if no such car was found.
      */
