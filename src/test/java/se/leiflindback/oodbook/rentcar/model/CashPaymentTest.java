@@ -28,8 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcar.model;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import se.leiflindback.oodbook.rentcar.integration.CarDTO;
 import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 
@@ -44,7 +44,7 @@ public class CashPaymentTest {
         instance.calculateTotalCost(paidRental);
         Amount expResult = price;
         Amount result = instance.getTotalCost();
-        assertEquals("Wrong total cost.", expResult, result);
+        assertEquals(expResult, result, "Wrong total cost.");
     }
     
     @Test
@@ -58,6 +58,6 @@ public class CashPaymentTest {
         instance.calculateTotalCost(paidRental);
         Amount expResult = paidAmt.minus(price);
         Amount result = instance.getChange();
-        assertEquals("Wrong total cost.", expResult, result);
+        assertEquals(expResult, result, "Wrong total cost.");
     }    
 }

@@ -30,10 +30,10 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
@@ -41,23 +41,26 @@ public class PromotingMatchTest {
     private List<CarDTO> availableCars;
     private final String ExistingRegNoToPromote = "abc124";
     private final String NonExistingRegNoToPromote = "wrong";
-    private final CarDTO smallGreen1000Ac4wd = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.SMALL,
-                                                  true,
-                                                  true, "green", false);
+    private final CarDTO smallGreen1000Ac4wd = new CarDTO("abc123", new Amount(1000),
+                                                          CarDTO.CarType.SMALL,
+                                                          true,
+                                                          true, "green", false);
     private final CarDTO mediumRed2000NoacNo4wd = new CarDTO("abc124", new Amount(2000),
-                                                     CarDTO.CarType.MEDIUM,
-                                                     false, false, "red", false);
+                                                             CarDTO.CarType.MEDIUM,
+                                                             false, false, "red", false);
     private final CarDTO smallGreen1000Ac4wdBooked = new CarDTO("abc125", new Amount(1000),
-                                                        CarDTO.CarType.SMALL,
-                                                        true, true, "green", true);
-    private final CarDTO largeGreen1000Ac4wd = new CarDTO("abc126", new Amount(1000), CarDTO.CarType.LARGE,
+                                                                CarDTO.CarType.SMALL,
+                                                                true, true, "green", true);
+    private final CarDTO largeGreen1000Ac4wd = new CarDTO("abc126", new Amount(1000),
+                                                          CarDTO.CarType.LARGE,
+                                                          true,
+                                                          true, "green", true);
+    private final CarDTO nonExisting = new CarDTO("abc127", new Amount(3000), CarDTO.CarType.SMALL,
+                                                  false,
                                                   true,
-                                                  true, "green", true);
-    private final CarDTO nonExisting = new CarDTO("abc127", new Amount(3000), CarDTO.CarType.SMALL, false,
-                                          true,
-                                          "blue", true);
+                                                  "blue", true);
 
-    @Before
+    @BeforeEach
     public void createAvailableCars() {
         availableCars = new ArrayList<>();
         availableCars.add(smallGreen1000Ac4wd);
@@ -66,7 +69,7 @@ public class PromotingMatchTest {
         availableCars.add(largeGreen1000Ac4wd);
     }
 
-    @After
+    @AfterEach
     public void dropAvailableCars() {
         availableCars = null;
     }
@@ -75,16 +78,15 @@ public class PromotingMatchTest {
     public void testNoCarToPromoteNoMatch() {
         PromotingMatch instance = new PromotingMatch();
         instance.setCarToPromote(NonExistingRegNoToPromote);
-        Assert.assertEquals("Nonexisting car was found.", null, instance.match(nonExisting,
-                                                                               availableCars));
+        assertEquals(null, instance.match(nonExisting, availableCars), "Nonexisting car was found.");
     }
 
     @Test
     public void testNoCarToPromoteMatch() {
         PromotingMatch instance = new PromotingMatch();
         instance.setCarToPromote(NonExistingRegNoToPromote);
-        Assert.assertEquals("Wrong car was found.", smallGreen1000Ac4wd, instance.match(
-                            smallGreen1000Ac4wd, availableCars));
+        assertEquals(smallGreen1000Ac4wd, instance.match(smallGreen1000Ac4wd, availableCars),
+                     "Wrong car was found.");
     }
 
     @Test
@@ -96,20 +98,13 @@ public class PromotingMatchTest {
                                      isFourWD(), smallGreen1000Ac4wd.getColor(),
                                      smallGreen1000Ac4wd.isBooked());
         CarDTO result = instance.match(searched, availableCars);
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Reg no was not ignored.", smallGreen1000Ac4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(smallGreen1000Ac4wd.getRegNo(), result.getRegNo(), "Reg no was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.getPrice(), result.getPrice(), "Reg no was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.getSize(), result.getSize(), "Reg no was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.isAC(), result.isAC(), "Reg no was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.isFourWD(), result.isFourWD(), "Reg no was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.getColor(), result.getColor(), "Reg no was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.isBooked(), result.isBooked(), "Reg no was not ignored.");
     }
 
     @Test
@@ -117,20 +112,13 @@ public class PromotingMatchTest {
         PromotingMatch instance = new PromotingMatch();
         instance.setCarToPromote(NonExistingRegNoToPromote);
         CarDTO result = instance.match(smallGreen1000Ac4wdBooked, availableCars);
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(smallGreen1000Ac4wd.getRegNo(), result.getRegNo(), "Booked was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.getPrice(), result.getPrice(), "Booked was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.getSize(), result.getSize(), "Booked was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.isAC(), result.isAC(), "Booked was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.isFourWD(), result.isFourWD(), "Booked was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.getColor(), result.getColor(), "Booked was not ignored.");
+        assertEquals(smallGreen1000Ac4wd.isBooked(), result.isBooked(), "Booked was not ignored.");
     }
 
     @Test
@@ -138,7 +126,7 @@ public class PromotingMatchTest {
         PromotingMatch instance = new PromotingMatch();
         instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO result = instance.match(smallGreen1000Ac4wdBooked, availableCars);
-        Assert.assertEquals("Booked was not ignored.", smallGreen1000Ac4wd, result);
+        assertEquals(smallGreen1000Ac4wd, result, "Booked was not ignored.");
     }
 
     @Test
@@ -147,24 +135,18 @@ public class PromotingMatchTest {
         instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), mediumRed2000NoacNo4wd.
                                      getPrice(), smallGreen1000Ac4wd.
-                                     getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.
-                                     isFourWD(), smallGreen1000Ac4wd.getColor(),
+                                             getSize(), smallGreen1000Ac4wd.isAC(),
+                                     smallGreen1000Ac4wd.
+                                             isFourWD(), smallGreen1000Ac4wd.getColor(),
                                      smallGreen1000Ac4wd.isBooked());
         CarDTO result = instance.match(searched, availableCars);
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(mediumRed2000NoacNo4wd.getRegNo(), result.getRegNo(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getPrice(), result.getPrice(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getSize(), result.getSize(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isAC(), result.isAC(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isFourWD(), result.isFourWD(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getColor(), result.getColor(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isBooked(), result.isBooked(), "Reg no was not ignored.");
     }
 
     @Test
@@ -173,24 +155,18 @@ public class PromotingMatchTest {
         instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), mediumRed2000NoacNo4wd.
-                                     getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.
-                                     isFourWD(), smallGreen1000Ac4wd.getColor(),
+                                             getSize(), smallGreen1000Ac4wd.isAC(),
+                                     smallGreen1000Ac4wd.
+                                             isFourWD(), smallGreen1000Ac4wd.getColor(),
                                      smallGreen1000Ac4wd.isBooked());
         CarDTO result = instance.match(searched, availableCars);
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(mediumRed2000NoacNo4wd.getRegNo(), result.getRegNo(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getPrice(), result.getPrice(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getSize(), result.getSize(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isAC(), result.isAC(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isFourWD(), result.isFourWD(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getColor(), result.getColor(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isBooked(), result.isBooked(), "Reg no was not ignored.");
     }
 
     @Test
@@ -199,24 +175,18 @@ public class PromotingMatchTest {
         instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), smallGreen1000Ac4wd.
-                                     getSize(), mediumRed2000NoacNo4wd.isAC(), smallGreen1000Ac4wd.
-                                     isFourWD(), smallGreen1000Ac4wd.getColor(),
+                                             getSize(), mediumRed2000NoacNo4wd.isAC(),
+                                     smallGreen1000Ac4wd.
+                                             isFourWD(), smallGreen1000Ac4wd.getColor(),
                                      smallGreen1000Ac4wd.isBooked());
         CarDTO result = instance.match(searched, availableCars);
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(mediumRed2000NoacNo4wd.getRegNo(), result.getRegNo(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getPrice(), result.getPrice(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getSize(), result.getSize(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isAC(), result.isAC(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isFourWD(), result.isFourWD(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getColor(), result.getColor(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isBooked(), result.isBooked(), "Reg no was not ignored.");
     }
 
     @Test
@@ -225,24 +195,18 @@ public class PromotingMatchTest {
         instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), smallGreen1000Ac4wd.
-                                     getSize(), smallGreen1000Ac4wd.isAC(), mediumRed2000NoacNo4wd.
-                                     isFourWD(), smallGreen1000Ac4wd.getColor(),
+                                             getSize(), smallGreen1000Ac4wd.isAC(),
+                                     mediumRed2000NoacNo4wd.
+                                             isFourWD(), smallGreen1000Ac4wd.getColor(),
                                      smallGreen1000Ac4wd.isBooked());
         CarDTO result = instance.match(searched, availableCars);
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(mediumRed2000NoacNo4wd.getRegNo(), result.getRegNo(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getPrice(), result.getPrice(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getSize(), result.getSize(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isAC(), result.isAC(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isFourWD(), result.isFourWD(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getColor(), result.getColor(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isBooked(), result.isBooked(), "Reg no was not ignored.");
     }
 
     @Test
@@ -251,24 +215,18 @@ public class PromotingMatchTest {
         instance.setCarToPromote(ExistingRegNoToPromote);
         CarDTO searched = new CarDTO(mediumRed2000NoacNo4wd.getRegNo(), smallGreen1000Ac4wd.
                                      getPrice(), smallGreen1000Ac4wd.
-                                     getSize(), smallGreen1000Ac4wd.isAC(), smallGreen1000Ac4wd.
-                                     isFourWD(), mediumRed2000NoacNo4wd.getColor(),
+                                             getSize(), smallGreen1000Ac4wd.isAC(),
+                                     smallGreen1000Ac4wd.
+                                             isFourWD(), mediumRed2000NoacNo4wd.getColor(),
                                      smallGreen1000Ac4wd.isBooked());
         CarDTO result = instance.match(searched, availableCars);
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getRegNo(),
-                            result.getRegNo());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getPrice(),
-                            result.getPrice());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getSize(),
-                            result.getSize());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isAC(),
-                            result.isAC());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isFourWD(),
-                            result.isFourWD());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.getColor(),
-                            result.getColor());
-        Assert.assertEquals("Reg no was not ignored.", mediumRed2000NoacNo4wd.isBooked(),
-                            result.isBooked());
+        assertEquals(mediumRed2000NoacNo4wd.getRegNo(), result.getRegNo(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getPrice(), result.getPrice(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getSize(), result.getSize(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isAC(), result.isAC(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isFourWD(), result.isFourWD(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.getColor(), result.getColor(), "Reg no was not ignored.");
+        assertEquals(mediumRed2000NoacNo4wd.isBooked(), result.isBooked(), "Reg no was not ignored.");
     }
 
 }

@@ -28,20 +28,18 @@
  */
 package se.leiflindback.oodbook.polyminherit.inherit;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CountingListTest {
     @Test
     public void testAddAndGet() {
-        Object elemToSave = new Integer(3);
+        Object elemToSave = 3;
         CountingList instance = new CountingList();
         instance.add(elemToSave);
         Object expected = elemToSave;
         Object result = instance.get(0);
-        assertEquals("Wrong element returned", expected, result);
+        assertEquals(expected, result, "Wrong element returned");
     }
 
     @Test
@@ -54,7 +52,7 @@ public class CountingListTest {
         CountingList instance = new CountingList();
         instance.addAll(elemsToAdd);
         for (int i = 0; i < noOfElemsToAdd; i++) {
-            assertEquals("Wrong element read", elemsToAdd.get(i), instance.get(i));
+            assertEquals(elemsToAdd.get(i), instance.get(i), "Wrong element read");
         }
     }
 
@@ -67,7 +65,7 @@ public class CountingListTest {
         }
         CountingList instance = new CountingList();
         instance.addAll(elemsToAdd);
-        assertEquals("Wrong number of elements", noOfElemsToAdd, instance.size());
+        assertEquals(noOfElemsToAdd, instance.size(), "Wrong number of elements");
     }
 
     @Test
@@ -79,7 +77,7 @@ public class CountingListTest {
         }
         CountingList instance = new CountingList();
         instance.addAll(elemsToAdd);
-        assertEquals("Wrong number of elements", noOfElemsToAdd, instance.noOfAddedElems());
+        assertEquals(noOfElemsToAdd, instance.noOfAddedElems(), "Wrong number of elements");
     }
 
 }

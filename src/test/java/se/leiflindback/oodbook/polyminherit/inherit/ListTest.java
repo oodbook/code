@@ -28,10 +28,8 @@
  */
 package se.leiflindback.oodbook.polyminherit.inherit;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ListTest {
     @Test
@@ -41,7 +39,7 @@ public class ListTest {
         instance.add(elemToSave);
         Object expected = elemToSave;
         Object result = instance.get(0);
-        assertEquals("Wrong element returned", expected, result);
+        assertEquals(expected, result, "Wrong element returned");
     }
 
     @Test
@@ -54,7 +52,7 @@ public class ListTest {
         List instance = new List();
         instance.addAll(elemsToAdd);
         for (int i=0; i<noOfElemsToAdd; i++) {
-            assertEquals("Wrong element read", elemsToAdd.get(i), instance.get(i));
+            assertEquals(elemsToAdd.get(i), instance.get(i), "Wrong element read");
         }        
     }
 
@@ -68,7 +66,7 @@ public class ListTest {
         List instance = new List();
         instance.addAll(elemsToAdd);
         int result = instance.size();
-        assertEquals("Wrong number of elements", noOfElemsToAdd, instance.size());
+        assertEquals(noOfElemsToAdd, instance.size(), "Wrong number of elements");
     }
 
 }

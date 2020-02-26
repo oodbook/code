@@ -30,18 +30,18 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ConsoleRentedCarsDisplayTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
     ConsoleRentedCarsDisplay instance;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
@@ -49,7 +49,7 @@ public class ConsoleRentedCarsDisplayTest {
         instance = new ConsoleRentedCarsDisplay();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         outContent = null;
         System.setOut(originalSysOut);
@@ -81,7 +81,7 @@ public class ConsoleRentedCarsDisplayTest {
         for (int i = 1; i <= noOfCalls; i++) {
             String expResult = i + " " + type.toString().toLowerCase() + " cars";
             String result = outContent.toString();
-            assertTrue("Wrong rented car counter", result.contains(expResult));
+            assertTrue(result.contains(expResult), "Wrong rented car counter");
         }
     }
 

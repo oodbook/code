@@ -28,8 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcar.integration;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcar.model.Amount;
 
 public class CarRegistryTest {
@@ -40,7 +40,7 @@ public class CarRegistryTest {
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = searchedCar;
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Available car was not found", expResult, result);
+        assertEquals(expResult, result, "Available car was not found");
     }
 
     @Test
@@ -53,8 +53,7 @@ public class CarRegistryTest {
                                       searchedCar.isFourWD(), searchedCar.
                                       getColor());
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Available car with wrong regNo was not found", expResult,
-                     result);
+        assertEquals(expResult, result, "Available car with wrong regNo was not found");
     }
 
     @Test
@@ -64,7 +63,7 @@ public class CarRegistryTest {
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = null;
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Unavailable car was found", expResult, result);
+        assertEquals(expResult, result, "Unavailable car was found");
     }
 
     @Test
@@ -75,7 +74,7 @@ public class CarRegistryTest {
         CarDTO expResult = new CarDTO("abc123", new Amount(1000), "medium",
                                         true, true, "red");
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Unavailable car was found", expResult, result);
+        assertEquals(expResult, result, "Unavailable car was found");
     }
 
     @Test
@@ -86,6 +85,6 @@ public class CarRegistryTest {
         instance.setBookedStateOfCar(bookedCar, true);
         CarDTO expResult = null;
         CarDTO result = instance.findAvailableCar(bookedCar);
-        assertEquals("Booked car was found", expResult, result);
+        assertEquals(expResult, result, "Booked car was found");
     }
 }

@@ -28,7 +28,7 @@
  */
 package se.leiflindback.oodbook.rentcar.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import se.leiflindback.oodbook.rentcar.integration.CarDTO;
 import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
 

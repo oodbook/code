@@ -28,22 +28,22 @@
  */
 package se.leiflindback.oodbook.tests.firstexample;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AmountTest {
     private Amount amtNoArgConstr;
     private Amount amtWithAmtThree;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         amtNoArgConstr = new Amount();
         amtWithAmtThree = new Amount(3);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         amtNoArgConstr = null;
         amtWithAmtThree = null;
@@ -54,8 +54,7 @@ public class AmountTest {
         Object other = null;
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
-        assertEquals("Amount instance equal to null.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instance equal to null.");
     }
 
     @Test
@@ -63,9 +62,7 @@ public class AmountTest {
         Object other = new Object();
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
-        assertEquals("Amount instance equal to "
-                     + "java.lang.Object instance.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instance equal to java.lang.Object instance.");
     }
 
     @Test
@@ -74,9 +71,7 @@ public class AmountTest {
         Amount other = new Amount(amountOfOther);
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
-        assertEquals("Amount instances with different "
-                     + "states are equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with different states are equal.");
     }
 
     @Test
@@ -85,9 +80,7 @@ public class AmountTest {
         Amount other = new Amount(amountOfOther);
         boolean expResult = false;
         boolean result = amtWithAmtThree.equals(other);
-        assertEquals("Amount instances with different "
-                     + "states are equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with different states are equal.");
     }
 
     @Test
@@ -96,9 +89,7 @@ public class AmountTest {
         Amount other = new Amount(amountOfOther);
         boolean expResult = true;
         boolean result = amtWithAmtThree.equals(other);
-        assertEquals("Amount instances with same states "
-                     + "are not equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with same states are not equal.");
     }
 
 }

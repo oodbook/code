@@ -35,11 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarRegistry;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarRegistryException;
@@ -51,13 +51,13 @@ public class RentalTest {
     PrintStream originalSysOut;
     private Map<CarDTO.CarType, Integer> noOfRentedCars;
 
-    @BeforeClass
+    @BeforeAll
     public static void setDefaultMatcher() {
         System.setProperty("se.leiflindback.rentcar.matcher.classname",
                            "se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch");
     }
 
-    @Before
+    @BeforeEach
     public void prepareStreamsAndRentedCounters() {
         noOfRentedCars = new HashMap<>();
         for (CarDTO.CarType type : CarDTO.CarType.values()) {
@@ -69,7 +69,7 @@ public class RentalTest {
         System.setOut(new PrintStream(outContent));
     }
 
-    @After
+    @AfterEach
     public void cleanUpStreams() {
         outContent = null;
         System.setOut(originalSysOut);
@@ -89,10 +89,10 @@ public class RentalTest {
         }
         CarDTO expResult = null;
         CarDTO result = carReg.findAvailableCar(rentedCar);
-        assertEquals("Rented car was available.", expResult, result);
+        assertEquals(expResult, result, "Rented car was available.");
         boolean expBookedResult = true;
         boolean bookedResult = carReg.getCarByRegNo(rentedCar).isBooked();
-        assertEquals("Booked state was not changed.", expBookedResult, bookedResult);
+        assertEquals(expBookedResult, bookedResult, "Booked state was not changed.");
     }
 
     @Test
@@ -106,10 +106,10 @@ public class RentalTest {
             instance.rentCar(rentedCar);
             fail("Could rent a booked car.");
         } catch (AlreadyBookedException ex) {
-            assertTrue("Wrong exception message, does not contain specified car: " + ex.getMessage(),
-                       ex.getMessage().contains(rentedCar.getRegNo()));
-            assertTrue("Wrong car is specified: " + ex.getCarThatCanNotBeBooked(),
-                       ex.getCarThatCanNotBeBooked().getRegNo().equals(rentedCar.getRegNo()));
+            assertTrue(ex.getMessage().contains(rentedCar.getRegNo()),
+                       "Wrong exception message, does not contain specified car: " + ex.getMessage());
+            assertTrue(ex.getCarThatCanNotBeBooked().getRegNo().equals(rentedCar.getRegNo()),
+                       "Wrong car is specified: " + ex.getCarThatCanNotBeBooked());
         }
     }
 
@@ -123,8 +123,9 @@ public class RentalTest {
             instance.rentCar(rentedCar);
             fail("Could rent a non-existing car.");
         } catch (CarRegistryException exc) {
-            assertTrue("Wrong exception message, does not contain specified car: "
-                       + exc.getMessage(), exc.getMessage().contains(rentedCar.toString()));
+            assertTrue(exc.getMessage().contains(rentedCar.toString()),
+                       "Wrong exception message, does not contain specified car: " + exc.
+                               getMessage());
         }
     }
 
@@ -145,7 +146,7 @@ public class RentalTest {
         instance.pay(payment);
         Amount expResult = price;
         Amount result = instance.getPayment().getTotalCost();
-        assertEquals("Wrong rental cost", expResult, result);
+        assertEquals(expResult, result, "Wrong rental cost");
     }
 
     @Test
@@ -174,12 +175,14 @@ public class RentalTest {
         String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
         String result = outContent.toString();
-        assertTrue("Wrong printout.", result.contains(expResult));
-        assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
-        assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
-        assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
-        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
-        assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
+        assertTrue(result.contains(expResult), "Wrong printout.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getYear())), "Wrong rental year.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMonthValue())),
+                   "Wrong rental month.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getDayOfMonth())),
+                   "Wrong rental day.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getHour())), "Wrong rental hour.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMinute())), "Wrong rental minute.");
     }
 
     @Test
@@ -206,8 +209,8 @@ public class RentalTest {
         expResult.put(CarDTO.CarType.LARGE, 0);
         Map<CarDTO.CarType, Integer> result = noOfRentedCars;
         for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            assertEquals("Observers were not correctly notified.", expResult.get(type),
-                         result.get(type));
+            assertEquals(expResult.get(type), result.get(type),
+                         "Observers were not correctly notified.");
         }
     }
 
@@ -237,8 +240,8 @@ public class RentalTest {
         expResult.put(CarDTO.CarType.LARGE, noOfObservers);
         Map<CarDTO.CarType, Integer> result = noOfRentedCars;
         for (CarDTO.CarType type : CarDTO.CarType.values()) {
-            assertEquals("Observers were not correctly notified.", expResult.get(type),
-                         result.get(type));
+            assertEquals(expResult.get(type), result.get(type),
+                         "Observers were not correctly notified.");
         }
     }
 

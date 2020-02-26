@@ -28,21 +28,21 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class RegistryCreatorTest {
     @Test
     public void testCreateRentalRegistry() {
         RegistryCreator instance = new RegistryCreator();
         RentalRegistry result = instance.getRentalRegistry();
-        assertTrue("RegistryCreator did not create RentalRegistry", result instanceof RentalRegistry);
+        assertTrue(result instanceof RentalRegistry, "RegistryCreator did not create RentalRegistry");
     }
 
     @Test
     public void testCreateCarRegistry() {
         RegistryCreator instance = new RegistryCreator();
         CarRegistry result = instance.getCarRegistry();
-        assertTrue("RegistryCreator did not create CarRegistry", result instanceof CarRegistry);
+        assertTrue(result instanceof CarRegistry, "RegistryCreator did not create CarRegistry");
     }
 }

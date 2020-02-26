@@ -33,11 +33,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
@@ -101,14 +100,14 @@ public class CompositeMatcherTest {
         availableCars.add(largeGreen1000Ac4wd);
     }
 
-    @Before
+    @BeforeEach
     public void createObjs() {
         createAvailableCars();
         createConfProps();
         createMatchers();
     }
 
-    @After
+    @AfterEach
     public void dropObjs() {
         availableCars = null;
         instanceWithPromoteMatch = null;
@@ -119,25 +118,28 @@ public class CompositeMatcherTest {
 
     @Test
     public void testNoCarToPromoteNoPerfectMatch() {
-        Assert.assertEquals("Nonexisting car was found.", null,
-                            instanceWithNoPromoteMatch.match(nonExisting, availableCars));
+        assertEquals(null, instanceWithNoPromoteMatch.match(nonExisting, availableCars),
+                     "Nonexisting car was found.");
     }
 
     @Test
     public void testNoCarToPromoteButPerfectMatch() {
-        Assert.assertEquals("Wrong composite matching.", smallGreen1000Ac4wd,
-                            instanceWithNoPromoteMatch.match(smallGreen1000Ac4wd, availableCars));
+        assertEquals(smallGreen1000Ac4wd, instanceWithNoPromoteMatch.match(smallGreen1000Ac4wd,
+                                                                           availableCars),
+                     "Wrong composite matching.");
     }
 
     @Test
     public void testCarToPromoteButNoPerfectMatch() {
-        Assert.assertEquals("Wrong composite matching.", mediumRed2000NoacNo4wd,
-                            instanceWithPromoteMatch.match(nonExisting, availableCars));
+        assertEquals(mediumRed2000NoacNo4wd, instanceWithPromoteMatch.match(nonExisting,
+                                                                            availableCars),
+                     "Wrong composite matching.");
     }
 
     @Test
     public void testCarToPromoteAndPerfectMatch() {
-        Assert.assertEquals("Wrong composite matching.", mediumRed2000NoacNo4wd,
-                            instanceWithPromoteMatch.match(mediumRed2000NoacNo4wd, availableCars));
+        assertEquals(mediumRed2000NoacNo4wd, instanceWithPromoteMatch.match(mediumRed2000NoacNo4wd,
+                                                                            availableCars),
+                     "Wrong composite matching.");
     }
 }

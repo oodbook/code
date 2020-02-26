@@ -30,10 +30,10 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
@@ -48,11 +48,11 @@ public class MatcherFactoryTest {
     public MatcherFactoryTest() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -63,16 +63,17 @@ public class MatcherFactoryTest {
         System.setProperty(MATCHER_CLASS_NAME_KEY, className);
         String expResult = className;
         String result = instance.getDefaultMatcher().getClass().getCanonicalName();
-        assertEquals("Wrong matcher class was loaded", expResult, result);
+        assertEquals(expResult, result, "Wrong matcher class was loaded");
     }
 
-    @Test(expected = java.lang.ClassNotFoundException.class)
+    @Test
     public void testMatcherDoesNotExist() throws Exception {
-        String className = "wrong";
-        MatcherFactory instance = MatcherFactory.getFactory();
-        System.setProperty(MATCHER_CLASS_NAME_KEY, className);
-        instance.getDefaultMatcher();
-        fail("Managed to load non-existing class");
+        assertThrows(java.lang.ClassNotFoundException.class, () -> {
+                 String className = "wrong";
+                 MatcherFactory instance = MatcherFactory.getFactory();
+                 System.setProperty(MATCHER_CLASS_NAME_KEY, className);
+                 instance.getDefaultMatcher();
+             });
     }
 
     @Test
@@ -86,14 +87,15 @@ public class MatcherFactoryTest {
         String expResult = className;
         Matcher matcher = instance.getDefaultMatcher();
         String result = matcher.getClass().getCanonicalName();
-        assertEquals("Wrong matcher class was loaded", expResult, result);
+        assertEquals(expResult, result, "Wrong matcher class was loaded");
 
         CarDTO availableCar = new CarDTO(carToPromote, new Amount(1000), CarDTO.CarType.SMALL, true,
                                          true, "green", false);
         List<CarDTO> availableCars = new ArrayList<>();
         availableCars.add(availableCar);
         CarDTO searchedCar = new CarDTO(carToPromote, null, CarDTO.CarType.SMALL, false,
-                                         false, null, false);
-        assertEquals("Could not set additional data.", availableCar, matcher.match(searchedCar, availableCars));
+                                        false, null, false);
+        assertEquals(availableCar, matcher.match(searchedCar, availableCars),
+                     "Could not set additional data.");
     }
 }

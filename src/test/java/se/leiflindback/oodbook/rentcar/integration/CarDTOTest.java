@@ -28,8 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcar.integration;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcar.model.Amount;
 
 public class CarDTOTest {
@@ -44,7 +44,7 @@ public class CarDTOTest {
         CarDTO instance = new CarDTO(regNo, price, size, AC, fourWD, color);
         String expResult = "regNo: " + regNo + ", size: " + size + ", price: " + price + ", AC: " + AC + ", 4WD: " + fourWD + ", color: " + color;
         String result = instance.toString();
-        assertEquals("Wrong string returned by toString", expResult, result);
+        assertEquals(expResult, result, "Wrong string returned by toString");
     }
 
     @Test
@@ -58,7 +58,7 @@ public class CarDTOTest {
         CarDTO instance = new CarDTO(regNo, price, size, AC, fourWD, color);
         String expResult = "regNo: " + regNo + ", size: " + size + ", price: " + price + ", AC: " + AC + ", 4WD: " + fourWD + ", color: " + color;
         String result = instance.toString();
-        assertEquals("Wrong string returned by toString", expResult, result);
+        assertEquals(expResult, result, "Wrong string returned by toString");
     }
 
     @Test
@@ -72,7 +72,7 @@ public class CarDTOTest {
         CarDTO instance = new CarDTO(regNo, price, size, AC, fourWD, color);
         String expResult = "regNo: " + regNo + ", size: " + size + ", price: " + price + ", AC: " + AC + ", 4WD: " + fourWD + ", color: " + color;
         String result = instance.toString();
-        assertEquals("Wrong string returned by toString", expResult, result);
+        assertEquals(expResult, result, "Wrong string returned by toString");
     }
     
     @Test
@@ -87,8 +87,7 @@ public class CarDTOTest {
         CarDTO equalInstance = new CarDTO(regNo, price, size, AC, fourWD, color);  
         boolean expResult = true;
         boolean result = instance.equals(equalInstance);
-        assertEquals("CarDTO instances with same states are not equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with same states are not equal.");
     }
     
     @Test
@@ -103,8 +102,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, size, AC, fourWD, color);  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different regNos are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different regNos are equal.");        
     }
     
     @Test
@@ -119,8 +117,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, new Amount(), size, AC, fourWD, color);  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different prices are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different prices are equal.");        
     }
     
     @Test
@@ -135,8 +132,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, "wrong", AC, fourWD, color);  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different sizes are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different sizes are equal.");        
     }
     
     @Test
@@ -151,8 +147,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, size, !AC, fourWD, color);  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different AC values are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different AC values are equal.");        
     }
     
     @Test
@@ -167,8 +162,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, size, AC, !fourWD, color);  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different fourWD values are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different fourWD values are equal.");        
     }
     
     @Test
@@ -183,8 +177,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, size, AC, fourWD, "wrong");  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different colors are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different colors are equal.");        
     }
     
     @Test
@@ -199,8 +192,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, size, AC, fourWD, null);  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different colors are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different colors are equal.");        
     }
     
     @Test
@@ -215,8 +207,7 @@ public class CarDTOTest {
         CarDTO notEqualInstance = new CarDTO(regNo, price, size, AC, fourWD, "");  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instances with different colors are equal.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instances with different colors are equal.");        
     }
     
     @Test
@@ -231,8 +222,7 @@ public class CarDTOTest {
         Object notEqualInstance = new Object();  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instance equal to instance of java.lang.Object.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instance equal to instance of java.lang.Object.");        
     }
     
     @Test
@@ -247,7 +237,6 @@ public class CarDTOTest {
         Object notEqualInstance = null;  
         boolean expResult = false;
         boolean result = instance.equals(notEqualInstance);
-        assertEquals("CarDTO instance equal to null.",
-                     expResult, result);        
+        assertEquals(expResult, result, "CarDTO instance equal to null.");        
     }
 }

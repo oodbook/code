@@ -30,8 +30,8 @@ package se.leiflindback.oodbook.rentcarWithExceptions.startup;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
     @Test
@@ -43,8 +43,8 @@ public class MainTest {
             System.setOut(new PrintStream(outContent));
             String[] args = null;
             Main.main(args);
-            assertTrue("Wrong output when main is executed", outContent.
-                       toString().contains("Customer is registered"));
+            assertTrue(outContent.toString().contains("Customer is registered"),
+                       "Wrong output when main is executed");
         } finally {
             System.setOut(originalSysOut);
         }

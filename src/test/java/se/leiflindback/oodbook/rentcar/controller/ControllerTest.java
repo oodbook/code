@@ -32,10 +32,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcar.integration.CarDTO;
 import se.leiflindback.oodbook.rentcar.integration.Printer;
 import se.leiflindback.oodbook.rentcar.integration.RegistryCreator;
@@ -52,7 +52,7 @@ public class ControllerTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
@@ -62,7 +62,7 @@ public class ControllerTest {
         instance = new Controller(regCreator, printer);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         outContent = null;
         System.setOut(originalSysOut);
@@ -76,7 +76,7 @@ public class ControllerTest {
                                         true, true, "red");
         CarDTO expResult = searchedCar;
         CarDTO result = instance.searchMatchingCar(searchedCar);
-        assertEquals("Available car was not found", expResult, result);
+        assertEquals(expResult, result, "Available car was not found");
     }
 
     @Test
@@ -88,8 +88,7 @@ public class ControllerTest {
                                       searchedCar.isFourWD(), searchedCar.
                                       getColor());
         CarDTO result = instance.searchMatchingCar(searchedCar);
-        assertEquals("Available car with wrong regNo was not found", expResult,
-                     result);
+        assertEquals(expResult, result, "Available car with wrong regNo was not found");
     }
 
     @Test
@@ -98,7 +97,7 @@ public class ControllerTest {
                                         true, true, "red");
         CarDTO expResult = null;
         CarDTO result = instance.searchMatchingCar(searchedCar);
-        assertEquals("Unavailable car was found", expResult, result);
+        assertEquals(expResult, result, "Unavailable car was found");
     }
 
     @Test
@@ -108,7 +107,7 @@ public class ControllerTest {
         CarDTO expResult = new CarDTO("abc123", new Amount(1000), "medium",
                                       true, true, "red");
         CarDTO result = instance.searchMatchingCar(searchedCar);
-        assertEquals("Unavailable car was found", expResult, result);
+        assertEquals(expResult, result, "Unavailable car was found");
     }
 
     @Test
@@ -118,7 +117,7 @@ public class ControllerTest {
         instance.registerCustomer(null);
         instance.bookCar(bookedCar);
         CarDTO result = instance.searchMatchingCar(bookedCar);
-        assertNull("Booked car was found", result);
+        assertNull(result, "Booked car was found");
     }
 
     @Test
@@ -140,16 +139,16 @@ public class ControllerTest {
                 findRentalByCustomerName(customerName);
         int expectedNoOfStoredRentals = 1;
         int noOfStoredRentals = savedRentals.size();
-        assertEquals("Wrong number of stored rentals.",
-                     expectedNoOfStoredRentals, noOfStoredRentals);
+        assertEquals(expectedNoOfStoredRentals,
+                     noOfStoredRentals,
+                     "Wrong number of stored rentals.");
         Rental savedRental = savedRentals.get(0);
         Amount paidAmt = new Amount(5000);
         CashPayment payment = new CashPayment(paidAmt);
         savedRental.pay(payment);
         savedRental.printReceipt(new Printer());
         String result = outContent.toString();
-        assertTrue("Saved rental does not contain rented car", result.contains(
-                   regNo));
+        assertTrue(result.contains(regNo), "Saved rental does not contain rented car");
     }
 
     @Test
@@ -171,12 +170,13 @@ public class ControllerTest {
                 findRentalByCustomerName(rentingCustomer.getName());
         int expectedNoOfStoredRentals = 1;
         int noOfStoredRentals = savedRentals.size();
-        assertEquals("Wrong number of stored rentals.",
-                     expectedNoOfStoredRentals, noOfStoredRentals);
+        assertEquals(expectedNoOfStoredRentals,
+                     noOfStoredRentals,
+                     "Wrong number of stored rentals.");
         Rental savedRental = savedRentals.get(0);
         String expCustName = customerName;
-        assertEquals("Saved rental does not contain renting customer",
-                     expCustName, savedRental.getRentingCustomer().getName());
+        assertEquals(expCustName, savedRental.getRentingCustomer().getName(),
+                     "Saved rental does not contain renting customer");
     }
 
     @Test
@@ -196,11 +196,14 @@ public class ControllerTest {
         String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
         String result = outContent.toString();
-        assertTrue("Wrong printout.", result.contains(expResult));
-        assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
-        assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
-        assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
-        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
-        assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
+        assertTrue(result.contains(expResult), "Wrong printout.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getYear())), "Wrong rental year.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMonthValue())),
+                   "Wrong rental month.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getDayOfMonth())),
+                   "Wrong rental day.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getHour())), "Wrong rental hour.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMinute())),
+                   "Wrong rental minute.");
     }
 }

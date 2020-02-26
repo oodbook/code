@@ -30,12 +30,12 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.startup;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
-    @BeforeClass
+    @BeforeAll
     public static void setDefaultMatcher() {
         System.setProperty("se.leiflindback.rentcar.matcher.classname",
                            "se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch");
@@ -50,8 +50,8 @@ public class MainTest {
             System.setOut(new PrintStream(outContent));
             String[] args = null;
             Main.main(args);
-            assertTrue("Wrong output when main is executed", outContent.
-                       toString().contains("Customer is registered"));
+            assertTrue(outContent.toString().contains("Customer is registered"),
+                       "Wrong output when main is executed");
         } finally {
             System.setOut(originalSysOut);
         }

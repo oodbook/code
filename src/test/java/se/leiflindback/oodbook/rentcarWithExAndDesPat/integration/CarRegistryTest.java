@@ -28,13 +28,13 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
 
 public class CarRegistryTest {
-    @BeforeClass
+    @BeforeAll
     public static void setDefaultMatcher() {
         System.setProperty("se.leiflindback.rentcar.matcher.classname",
                            "se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.WildCardMatch");
@@ -47,7 +47,7 @@ public class CarRegistryTest {
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = searchedCar;
         CarDTO result = instance.getCarByRegNo(searchedCar);
-        assertEquals("Existing car was not found", expResult, result);
+        assertEquals(expResult, result, "Existing car was not found");
     }
 
     @Test
@@ -59,9 +59,9 @@ public class CarRegistryTest {
             instance.getCarByRegNo(searchedCar);
             fail("Nonexisting car was found.");
         } catch (CarRegistryException exc) {
-            assertTrue("Wrong exception message, does not contain specified car: " + exc.
-                    getMessage(),
-                       exc.getMessage().contains(searchedCar.toString()));
+            assertTrue(exc.getMessage().contains(searchedCar.toString()),
+                       "Wrong exception message, does not contain specified car: " + exc.
+                               getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class CarRegistryTest {
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = searchedCar;
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Available car was not found", expResult, result);
+        assertEquals(expResult, result, "Available car was not found");
     }
 
     @Test
@@ -85,8 +85,7 @@ public class CarRegistryTest {
                                       searchedCar.isFourWD(), searchedCar.getColor(),
                                       searchedCar.isBooked());
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Available car with wrong regNo was not found", expResult,
-                     result);
+        assertEquals(expResult, result, "Available car with wrong regNo was not found");
     }
 
     @Test
@@ -99,8 +98,8 @@ public class CarRegistryTest {
                                       searchedCar.isFourWD(), searchedCar.getColor(),
                                       false);
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Available car with wrong booked property value was not found", expResult,
-                     result);
+        assertEquals(expResult, result,
+                     "Available car with wrong booked property value was not found");
     }
 
     @Test
@@ -110,7 +109,7 @@ public class CarRegistryTest {
         CarRegistry instance = new CarRegistry();
         CarDTO expResult = null;
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Unavailable car was found", expResult, result);
+        assertEquals(expResult, result, "Unavailable car was found");
     }
 
     @Test
@@ -121,7 +120,7 @@ public class CarRegistryTest {
         CarDTO expResult = new CarDTO("abc123", new Amount(1000), CarDTO.CarType.MEDIUM,
                                       true, true, "red", false);
         CarDTO result = instance.findAvailableCar(searchedCar);
-        assertEquals("Unavailable car was found", expResult, result);
+        assertEquals(expResult, result, "Unavailable car was found");
     }
 
     @Test
@@ -133,11 +132,11 @@ public class CarRegistryTest {
         instance.setBookedStateOfCar(car, !unbooked);
         boolean expResult = !unbooked;
         boolean result = instance.getCarByRegNo(car).isBooked();
-        assertEquals("Booked state was not changed.", expResult, result);
+        assertEquals(expResult, result, "Booked state was not changed.");
         instance.setBookedStateOfCar(car, unbooked);
         expResult = unbooked;
         result = instance.getCarByRegNo(car).isBooked();
-        assertEquals("Booked state was not changed.", expResult, result);
+        assertEquals(expResult, result, "Booked state was not changed.");
     }
 
     @Test
@@ -149,8 +148,9 @@ public class CarRegistryTest {
             instance.setBookedStateOfCar(nonExistingCar, true);
             fail("Could change booked state of nonexisting car.");
         } catch (CarRegistryException exc) {
-            assertTrue("Wrong exception message, does not contain specified car: "
-                       + exc.getMessage(), exc.getMessage().contains(nonExistingCar.toString()));
+            assertTrue(exc.getMessage().contains(nonExistingCar.toString()),
+                       "Wrong exception message, does not contain specified car: "
+                       + exc.getMessage());
         }
     }
 }

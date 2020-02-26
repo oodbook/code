@@ -29,8 +29,8 @@
 package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
 import java.time.LocalDateTime;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
@@ -61,12 +61,12 @@ public class ReceiptTest {
         String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n";
         String result = instance.createReceiptString();
-        assertTrue("Wrong printout.", result.contains(expResult));
-        assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
-        assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
-        assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
-        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
-        assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
-        assertTrue("Wrong receipt content.", result.contains(expResult));
+        assertTrue(result.contains(expResult), "Wrong printout.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getYear())), "Wrong rental year.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMonthValue())), "Wrong rental month.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getDayOfMonth())), "Wrong rental day.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getHour())), "Wrong rental hour.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMinute())), "Wrong rental minute.");
+        assertTrue(result.contains(expResult), "Wrong receipt content.");
     }
 }

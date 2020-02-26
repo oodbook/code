@@ -28,22 +28,22 @@
  */
 package se.leiflindback.oodbook.rentcar.model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AmountTest {
     private Amount amtNoArgConstr;
     private Amount amtWithAmtThree;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         amtNoArgConstr = new Amount();
         amtWithAmtThree = new Amount(3);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         amtNoArgConstr = null;
         amtWithAmtThree = null;
@@ -54,7 +54,7 @@ public class AmountTest {
         Object other = null;
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
-        assertEquals("Amount instance equal to null.", expResult, result);
+        assertEquals(expResult, result, "Amount instance equal to null.");
     }
 
     @Test
@@ -62,16 +62,14 @@ public class AmountTest {
         Object other = new Object();
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(other);
-        assertEquals("Amount instance equal to java.lang.Object instance.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instance equal to java.lang.Object instance.");
     }
 
     @Test
     public void testNotEqualUsingNoArgConstr() {
         boolean expResult = false;
         boolean result = amtNoArgConstr.equals(amtWithAmtThree);
-        assertEquals("Amount instances with different states are equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with different states are equal.");
     }
 
     @Test
@@ -80,8 +78,7 @@ public class AmountTest {
         Amount other = new Amount(amountOfOther);
         boolean expResult = false;
         boolean result = amtWithAmtThree.equals(other);
-        assertEquals("Amount instances with different states are equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with different states are equal.");
     }
 
     @Test
@@ -90,8 +87,7 @@ public class AmountTest {
         Amount other = new Amount(amountOfOther);
         boolean expResult = true;
         boolean result = amtWithAmtThree.equals(other);
-        assertEquals("Amount instances with same states are not equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with same states are not equal.");
     }
 
     @Test
@@ -100,8 +96,7 @@ public class AmountTest {
         Amount other = new Amount(amountOfOther);
         boolean expResult = true;
         boolean result = amtNoArgConstr.equals(other);
-        assertEquals("Amount instances with same states are not equal.",
-                     expResult, result);
+        assertEquals(expResult, result, "Amount instances with same states are not equal.");
     }
 
     @Test
@@ -112,7 +107,7 @@ public class AmountTest {
         Amount operand2 = new Amount(amountOfOperand2);
         Amount expResult = new Amount(amountOfOperand1 - amountOfOperand2);
         Amount result = operand1.minus(operand2);
-        assertEquals("Wrong subtraction result", expResult, result);
+        assertEquals(expResult, result, "Wrong subtraction result");
     }
 
     @Test
@@ -123,7 +118,7 @@ public class AmountTest {
         Amount operand2 = new Amount(amountOfOperand2);
         Amount expResult = new Amount(amountOfOperand1 - amountOfOperand2);
         Amount result = operand1.minus(operand2);
-        assertEquals("Wrong subtraction result", expResult, result);
+        assertEquals(expResult, result, "Wrong subtraction result");
     }
     @Test
     public void testMinusZeroResultNegOperand() {
@@ -133,7 +128,7 @@ public class AmountTest {
         Amount operand2 = new Amount(amountOfOperand2);
         Amount expResult = new Amount(amountOfOperand1 - amountOfOperand2);
         Amount result = operand1.minus(operand2);
-        assertEquals("Wrong subtraction result", expResult, result);
+        assertEquals(expResult, result, "Wrong subtraction result");
     }
     
     @Test
@@ -144,7 +139,7 @@ public class AmountTest {
         Amount operand2 = new Amount(amountOfOperand2);
         Amount expResult = new Amount(amountOfOperand1 + amountOfOperand2);
         Amount result = operand1.plus(operand2);
-        assertEquals("Wrong subtraction result", expResult, result);
+        assertEquals(expResult, result, "Wrong subtraction result");
     }
 
     @Test
@@ -155,8 +150,9 @@ public class AmountTest {
         Amount operand2 = new Amount(amountOfOperand2);
         Amount expResult = new Amount(amountOfOperand1 + amountOfOperand2);
         Amount result = operand1.plus(operand2);
-        assertEquals("Wrong subtraction result", expResult, result);
+        assertEquals(expResult, result, "Wrong subtraction result");
     }
+    
     @Test
     public void testPlusZeroResultNegOperand() {
         int amountOfOperand1 = -3;
@@ -165,7 +161,7 @@ public class AmountTest {
         Amount operand2 = new Amount(amountOfOperand2);
         Amount expResult = new Amount(amountOfOperand1 + amountOfOperand2);
         Amount result = operand1.plus(operand2);
-        assertEquals("Wrong subtraction result", expResult, result);
+        assertEquals(expResult, result, "Wrong subtraction result");
     }
 
     @Test
@@ -174,7 +170,7 @@ public class AmountTest {
         Amount amount = new Amount(representedAmt);
         String expResult = Integer.toString(representedAmt);
         String result = amount.toString();
-        assertEquals("Wrong string returned by toString", expResult, result);
+        assertEquals(expResult, result, "Wrong string returned by toString");
     }
 
     @Test
@@ -183,7 +179,7 @@ public class AmountTest {
         Amount amount = new Amount(representedAmt);
         String expResult = Integer.toString(representedAmt);
         String result = amount.toString();
-        assertEquals("Wrong string returned by toString", expResult, result);
+        assertEquals(expResult, result, "Wrong string returned by toString");
     }
 
     @Test
@@ -192,6 +188,6 @@ public class AmountTest {
         Amount amount = new Amount(representedAmt);
         String expResult = Integer.toString(representedAmt);
         String result = amount.toString();
-        assertEquals("Wrong string returned by toString", expResult, result);
+        assertEquals(expResult, result, "Wrong string returned by toString");
     }
 }

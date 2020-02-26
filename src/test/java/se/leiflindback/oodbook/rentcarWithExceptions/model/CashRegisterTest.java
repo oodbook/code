@@ -28,8 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcarWithExceptions.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.RegistryCreator;
 
@@ -45,7 +45,7 @@ public class CashRegisterTest {
         try {
             paidRental.rentCar(rentedCar);
         } catch (AlreadyBookedException ex) {
-            Assert.fail("Got exception.");
+            fail("Got exception.");
             ex.printStackTrace();
         }
         paidRental.pay(payment);

@@ -31,10 +31,11 @@ package se.leiflindback.oodbook.rentcar.model;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import se.leiflindback.oodbook.rentcar.integration.CarDTO;
 import se.leiflindback.oodbook.rentcar.integration.CarRegistry;
 import se.leiflindback.oodbook.rentcar.integration.Printer;
@@ -44,14 +45,14 @@ public class RentalTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
 
-    @Before
+    @BeforeEach
     public void setUpStreams() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
 
-    @After
+    @AfterEach
     public void cleanUpStreams() {
         outContent = null;
         System.setOut(originalSysOut);
@@ -66,7 +67,7 @@ public class RentalTest {
         instance.setRentedCar(rentedCar);
         CarDTO expResult = null;
         CarDTO result = carReg.findAvailableCar(rentedCar);
-        assertEquals("Rented car was available.", expResult, result);
+        assertEquals(expResult, result, "Rented car was available.");
     }
 
     @Test
@@ -81,7 +82,7 @@ public class RentalTest {
         instance.pay(payment);
         Amount expResult = price;
         Amount result = instance.getPayment().getTotalCost();
-        assertEquals("Wrong rental cost", expResult, result);
+        assertEquals(expResult, result, "Wrong rental cost");
     }
 
     @Test
@@ -104,11 +105,11 @@ public class RentalTest {
         String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
         String result = outContent.toString();
-        assertTrue("Wrong printout.", result.contains(expResult));
-        assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
-        assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
-        assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
-        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
-        assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
+        assertTrue(result.contains(expResult), "Wrong printout.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getYear())), "Wrong rental year.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMonthValue())), "Wrong rental month.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getDayOfMonth())), "Wrong rental day.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getHour())), "Wrong rental hour.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMinute())), "Wrong rental minute.");
     }
 }

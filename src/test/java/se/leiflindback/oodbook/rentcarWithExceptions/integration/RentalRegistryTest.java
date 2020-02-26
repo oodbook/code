@@ -28,8 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcarWithExceptions.integration;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.AddressDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.DrivingLicenseDTO;
@@ -52,13 +52,11 @@ public class RentalRegistryTest {
         int expectedNoOfFoundRentals = 1;
         int noOfFoundRentals = instance.findRentalByCustomerName(customerName).
                 size();
-        Assert.assertEquals("Wrong number of rentals in registry",
-                            expectedNoOfFoundRentals, noOfFoundRentals);
+        assertEquals(expectedNoOfFoundRentals, noOfFoundRentals, "Wrong number of rentals in registry");
         Rental expectedFoundRental = rental;
         Rental foundRental = instance.findRentalByCustomerName(customerName).
                 get(0);
-        Assert.assertEquals("Wrong rental in registry",
-                            expectedFoundRental, foundRental);
+        assertEquals(expectedFoundRental, foundRental, "Wrong rental in registry");
     }
 
     @Test
@@ -88,20 +86,17 @@ public class RentalRegistryTest {
         int expectedNoOfFoundRentals = 1;
         int noOfFoundRentals
                 = instance.findRentalByCustomerName(nameOfFirstCustomer).size();
-        Assert.assertEquals("Wrong number of rentals in registry",
-                            expectedNoOfFoundRentals, noOfFoundRentals);
+        assertEquals(expectedNoOfFoundRentals, noOfFoundRentals, "Wrong number of rentals in registry");
         Rental expectedFoundRental = rental;
         Rental foundRental = instance.findRentalByCustomerName(
                 nameOfOtherCustomer).get(0);
-        Assert.assertEquals("Wrong rental in registry",
-                            expectedFoundRental, foundRental);
+        assertEquals(expectedFoundRental, foundRental, "Wrong rental in registry");
     }
 
     @Test
     public void testNoSavedRental() {
         String custName = "custName";
         RentalRegistry instance = new RentalRegistry();
-        Assert.assertTrue("Found a rental when none was stored", instance.
-                          findRentalByCustomerName(custName).isEmpty());
+        assertTrue(instance.findRentalByCustomerName(custName).isEmpty(), "Found a rental when none was stored");
     }
 }

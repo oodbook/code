@@ -31,11 +31,10 @@ package se.leiflindback.oodbook.rentcarWithExAndDesPat.model;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
-import org.junit.After;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.Printer;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.RegistryCreator;
@@ -44,14 +43,14 @@ public class PrinterTest {
     private ByteArrayOutputStream outContent;
     private PrintStream originalSysOut;
 
-    @Before
+    @BeforeEach
     public void setUpStreams() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
 
-    @After
+    @AfterEach
     public void cleanUpStreams() {
         outContent = null;
         System.setOut(originalSysOut);
@@ -85,12 +84,14 @@ public class PrinterTest {
         String expResult = "\n\nRented car: " + regNo + "\nCost: " + price
                            + "\nChange: " + paidAmt.minus(price) + "\n\n\n";
         String result = outContent.toString();
-        assertTrue("Wrong printout.", result.contains(expResult));
-        assertTrue("Wrong rental year.", result.contains(Integer.toString(rentalTime.getYear())));
-        assertTrue("Wrong rental month.", result.contains(Integer.toString(rentalTime.getMonthValue())));
-        assertTrue("Wrong rental day.", result.contains(Integer.toString(rentalTime.getDayOfMonth())));
-        assertTrue("Wrong rental hour.", result.contains(Integer.toString(rentalTime.getHour())));
-        assertTrue("Wrong rental minute.", result.contains(Integer.toString(rentalTime.getMinute())));
+        assertTrue(result.contains(expResult), "Wrong printout.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getYear())), "Wrong rental year.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMonthValue())),
+                   "Wrong rental month.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getDayOfMonth())),
+                   "Wrong rental day.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getHour())), "Wrong rental hour.");
+        assertTrue(result.contains(Integer.toString(rentalTime.getMinute())), "Wrong rental minute.");
     }
 
 }

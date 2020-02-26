@@ -33,23 +33,23 @@ import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import org.junit.After;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ErrorMessageHandlerTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
 
-    @Before
+    @BeforeEach
     public void setUpStreams() {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
 
-    @After
+    @AfterEach
     public void cleanUpStreams() {
         outContent = null;
         System.setOut(originalSysOut);
@@ -65,7 +65,7 @@ public class ErrorMessageHandlerTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
         String expResultTime = now.format(formatter);
         String result = outContent.toString();
-        assertTrue("Wrong printout.", result.contains(expResultMsg));
-        assertTrue("Wrong printout.", result.contains(expResultTime));
+        assertTrue(result.contains(expResultMsg), "Wrong printout.");
+        assertTrue(result.contains(expResultTime), "Wrong printout.");
     }
 }

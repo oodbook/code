@@ -35,11 +35,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import org.junit.After;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.AlreadyBookedException;
 
@@ -47,7 +46,7 @@ public class LogHandlerTest {
     private LogHandler instance;
     private String logFileName = "rentcar-log.txt";
 
-    @Before
+    @BeforeEach
     public void createInstance() {
         try {
             instance = new LogHandler();
@@ -57,7 +56,7 @@ public class LogHandlerTest {
         }
     }
 
-    @After
+    @AfterEach
     public void deleteFile() {
         instance = null;
         File logFile = new File(logFileName);
@@ -75,9 +74,9 @@ public class LogHandlerTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
         String expResultTime = now.format(formatter);
         String expResultStack = "at se.leiflindback.oodbook.rentcarWithExceptions.util.LogHandlerTest.testLogException";
-        assertTrue("Wrong printout.", fileContains(expResultMsg));
-        assertTrue("Wrong printout.", fileContains(expResultTime));
-        assertTrue("Wrong printout.", fileContains(expResultStack));
+        assertTrue(fileContains(expResultMsg), "Wrong printout.");
+        assertTrue(fileContains(expResultTime), "Wrong printout.");
+        assertTrue(fileContains(expResultStack), "Wrong printout.");
     }
 
     private boolean fileContains(String searchedString) throws IOException {
