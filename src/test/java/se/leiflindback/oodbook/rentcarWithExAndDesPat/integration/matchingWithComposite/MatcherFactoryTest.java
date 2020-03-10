@@ -69,12 +69,16 @@ public class MatcherFactoryTest {
 
     @Test
     public void testMatcherDoesNotExist() throws Exception {
-        assertThrows(ClassNotFoundException.class, () -> {
-                 String className = "wrong";
-                 MatcherFactory instance = MatcherFactory.getFactory();
-                 System.setProperty(MATCHER_CLASS_NAME_KEY, className);
-                 instance.getDefaultMatcher();
-             });
+        String className = "wrong";
+        try {
+            MatcherFactory instance = MatcherFactory.getFactory();
+            System.setProperty(MATCHER_CLASS_NAME_KEY, className);
+            instance.getDefaultMatcher();
+            fail("managed to load non-existing class.");
+        } catch (ClassNotFoundException ex) {
+            assertTrue(ex.getMessage().contains(className),
+                       "Wrong exception message: " + ex.getMessage());
+        }
     }
 
     @Test

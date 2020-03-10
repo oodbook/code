@@ -274,17 +274,46 @@ public class ControllerTest {
     @Test
     public void testBookCarWithoutCallToRegisterCustomer() throws AlreadyBookedException,
                                                                   OperationFailedException {
-        assertThrows(IllegalStateException.class, () -> instance.bookCar(null));
+        try {
+            instance.bookCar(null);
+            fail("Managed to call bookCar before registerCustomer.");
+        } catch (IllegalStateException ex) {
+            assertTrue(ex.getMessage().contains("before registering customer"),
+                       "Wrong exception message: " + ex.getMessage());
+        }
     }
 
     @Test()
     public void testPayWithoutCallToRegisterCustomer() {
-        assertThrows(IllegalStateException.class, () -> instance.pay(null));
+        try {
+            instance.pay(null);
+            fail("Managed to call pay before registerCustomer.");
+        } catch (IllegalStateException ex) {
+            assertTrue(ex.getMessage().contains("before registering customer"),
+                       "Wrong exception message: " + ex.getMessage());
+        }
+    }
+
+    @Test()
+    public void testPayWithoutCallToBookCar() {
+        try {
+            instance.registerCustomer(null);
+            instance.pay(null);
+            fail("Managed to call pay before bookCar.");
+        } catch (IllegalStateException ex) {
+            assertTrue(ex.getMessage().contains("booking car"),
+                       "Wrong exception message: " + ex.getMessage());
+        }
     }
 
     @Test()
     public void testCallRegisterCustomerTwice() {
         instance.registerCustomer(null);
-        assertThrows(IllegalStateException.class, () -> instance.registerCustomer(null));
+        try {
+        instance.registerCustomer(null);
+        } catch (IllegalStateException ex) {
+            assertTrue(ex.getMessage().contains("customer was already set"),
+                       "Wrong exception message: " + ex.getMessage());
+        }
     }
 }

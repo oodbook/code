@@ -120,6 +120,7 @@ public class AmountTest {
         Amount result = operand1.minus(operand2);
         assertEquals(expResult, result, "Wrong subtraction result");
     }
+    
     @Test
     public void testMinusZeroResultNegOperand() {
         int amountOfOperand1 = -3;
