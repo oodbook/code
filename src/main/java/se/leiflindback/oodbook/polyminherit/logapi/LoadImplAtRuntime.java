@@ -28,36 +28,44 @@
  */
 package se.leiflindback.oodbook.polyminherit.logapi;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
- * Contains a main method of the log API client, which loads new <code>Logger</code> implementations
- * at runtime.
+ * Contains a main method of the log API client, which loads new
+ * <code>Logger</code> implementations at runtime.
  */
 public class LoadImplAtRuntime {
+
     private int msgNo = 1;
     private AnyClassThatNeedsToLogSomething client = new AnyClassThatNeedsToLogSomething();
 
     /**
-     * @param args Each command line parameter shall be the fully qualified class name of a class
-     *             implementing <code>Logger</code>. This class will be loaded and used.
+     * @param args Each command line parameter shall be the fully qualified
+     * class name of a class implementing <code>Logger</code>. This class will
+     * be loaded and used.
      * @throws java.lang.InstantiationException If failed to load log classes.
      * @throws java.lang.IllegalAccessException If failed to load log classes.
      * @throws java.lang.ClassNotFoundException If failed to load log classes.
+     * @throws java.lang.NoSuchMethodException If failed to load log classes.
+     * @throws java.lang.reflect.InvocationTargetException If failed to load log classes.
      */
     public static void main(String[] args) throws InstantiationException, IllegalAccessException,
-                                                  ClassNotFoundException {
+            ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
         LoadImplAtRuntime main = new LoadImplAtRuntime();
-        for (String logger : args) {
-            main.loadAndUseLogger(logger);
+        for (String loggerClassName : args) {
+            main.loadAndUseLogger(loggerClassName);
         }
     }
 
-    private void loadAndUseLogger(String logger) throws
+    private void loadAndUseLogger(String loggerClassName) throws
             InstantiationException,
             IllegalAccessException,
-            ClassNotFoundException {
-        Class logClass = Class.forName(logger);
-        Logger logInstance = (Logger)logClass.newInstance();
-        client.setLogger(logInstance);
+            ClassNotFoundException,
+            NoSuchMethodException,
+            InvocationTargetException {
+        Class logClass = Class.forName(loggerClassName);
+        Logger logger = (Logger) logClass.getDeclaredConstructor().newInstance();
+        client.setLogger(logger);
         client.anyMethod(msgNo++);
     }
 }

@@ -31,6 +31,7 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching.MatcherFactory;
@@ -40,6 +41,7 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.Amount;
  * Contains all calls to the data store with cars that may be rented.
  */
 public class CarRegistry {
+
     private List<CarData> cars = new ArrayList<>();
 
     CarRegistry() {
@@ -49,25 +51,27 @@ public class CarRegistry {
     /**
      * Searches for a car with the registration number of the specified car.
      *
-     * @param searchedCar Searches for a car with registration number of this object.
+     * @param searchedCar Searches for a car with registration number of this
+     * object.
      * @return A car with the specified registration number.
-     * @throws CarRegistryException if the database call failed, or if the specified car did not
-     *                              exist.
+     * @throws CarRegistryException if the database call failed, or if the
+     * specified car did not exist.
      */
     public CarDTO getCarByRegNo(CarDTO searchedCar) {
         CarData carInReg = doGetCarByRegNo(searchedCar);
         return new CarDTO(carInReg.regNo, new Amount(carInReg.price), carInReg.size,
-                          carInReg.AC, carInReg.fourWD, carInReg.color, carInReg.booked);
+                carInReg.AC, carInReg.fourWD, carInReg.color, carInReg.booked);
     }
 
     /**
-     * Search for a car that is not booked, and that matches the specified search criteria.
+     * Search for a car that is not booked, and that matches the specified
+     * search criteria.
      *
-     * @param searchedCar This object contains the search criteria. Fields in the object that are
-     *                    set to <code>null</code> or zero are ignored.
-     * @return A description matching the searched car's description if an unbooked car with the
-     *         same features as <code>searchedCar</code> was found, <code>null</code> if no such car
-     *         was found.
+     * @param searchedCar This object contains the search criteria. Fields in
+     * the object that are set to <code>null</code> or zero are ignored.
+     * @return A description matching the searched car's description if an
+     * unbooked car with the same features as <code>searchedCar</code> was
+     * found, <code>null</code> if no such car was found.
      * @throws CarRegistryException If unable to search for a matching car.
      */
     public CarDTO findAvailableCar(CarDTO searchedCar) {
@@ -75,25 +79,26 @@ public class CarRegistry {
         for (CarData car : cars) {
             if (!car.booked) {
                 allCars.add(new CarDTO(car.regNo, new Amount(car.price), car.size,
-                                       car.AC, car.fourWD, car.color, car.booked));
+                        car.AC, car.fourWD, car.color, car.booked));
             }
         }
         try {
             return MatcherFactory.getFactory().getDefaultMatcher().match(searchedCar, allCars);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | NoSuchMethodException | InvocationTargetException ex) {
             throw new CarRegistryException("Unable to instantiate matcher", ex);
         }
     }
 
     /**
-     * If there is an existing car with the registration number of the specified car, set its booked
-     * property to the specified value. Nothing is changed if the car's booked property already had
-     * the specified value
+     * If there is an existing car with the registration number of the specified
+     * car, set its booked property to the specified value. Nothing is changed
+     * if the car's booked property already had the specified value
      *
-     * @param car         The car that shall be marked as booked.
+     * @param car The car that shall be marked as booked.
      * @param bookedState The new value of the booked property.
-     * @throws CarRegistryException if the database call failed, or if the specified car did not
-     *                              exist.
+     * @throws CarRegistryException if the database call failed, or if the
+     * specified car did not exist.
      */
     public void setBookedStateOfCar(CarDTO car, boolean bookedState) {
         CarData carInReg = doGetCarByRegNo(car);
@@ -116,6 +121,7 @@ public class CarRegistry {
     }
 
     private static class CarData {
+
         private String regNo;
         private int price;
         private CarDTO.CarType size;
@@ -125,7 +131,7 @@ public class CarRegistry {
         private boolean booked;
 
         public CarData(String regNo, int price, CarDTO.CarType size, boolean AC,
-                       boolean fourWD, String color) {
+                boolean fourWD, String color) {
             this.regNo = regNo;
             this.price = price;
             this.size = size;

@@ -28,6 +28,7 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matchingWithComposite;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,14 +53,14 @@ public class MatcherFactory {
 
     /**
      * <p>
-     * Returns a <code>Matcher</code> performing the default matching algorithm. The class name of
-     * the default <code>Matcher</code> implementation is read from the system property
-     * <code>se.leiflindback.rentcar.matcher.classname</code>. It is possible to specify more than
-     * one matcher, by setting this system property to a comma-separated string with class names of
-     * all desired matchers. When this is the case, all specified matching algorithms are executed,
-     * in the same order they were added, until an algorithm finds a car. Execution is stopped when
-     * an algorithm returns a non-null value.
-     * </p>
+     * Returns a <code>Matcher</code> performing the default matching algorithm.The class name of
+ the default <code>Matcher</code> implementation is read from the system property
+    <code>se.leiflindback.rentcar.matcher.classname</code>.It is possible to specify more than
+ one matcher, by setting this system property to a comma-separated string with class names of
+ all desired matchers. When this is the case, all specified matching algorithms are executed,
+ in the same order they were added, until an algorithm finds a car. Execution is stopped when
+ an algorithm returns a non-null value.
+ </p>
      *
      * <p>
      * It is possible to send key-value pairs to the matchers, by specifying these as a
@@ -72,9 +73,11 @@ public class MatcherFactory {
      * @throws ClassNotFoundException If unable to load the default matcher class.
      * @throws InstantiationException If unable to instantiate the default matcher class.
      * @throws IllegalAccessException If unable to instantiate the default matcher class.
+     * @throws java.lang.NoSuchMethodException If unable to instantiate the default matcher class.
+     * @throws java.lang.reflect.InvocationTargetException If unable to instantiate the default matcher class.
      */
     public Matcher getDefaultMatcher() throws ClassNotFoundException, InstantiationException,
-                                              IllegalAccessException {
+                                              IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         String[] classNames = parseSystemProperty(MATCHER_CLASS_NAME_KEY);
         if (classNames.length > 1) {
             return createComposite(classNames);
@@ -88,7 +91,9 @@ public class MatcherFactory {
 
     private Matcher createComposite(String[] classNames) throws ClassNotFoundException,
                                                                 InstantiationException,
-                                                                IllegalAccessException {
+                                                                IllegalAccessException,
+                                                                NoSuchMethodException,
+                                                                InvocationTargetException {
         CompositeMatcher composite = new CompositeMatcher();
         for (String className : classNames) {
             composite.addMatcher(instantiateMatcher(className));
@@ -98,8 +103,11 @@ public class MatcherFactory {
 
     private Matcher instantiateMatcher(String className) throws ClassNotFoundException,
                                                                 InstantiationException,
-                                                                IllegalAccessException {
-        Matcher matcher = (Matcher) Class.forName(className).newInstance();
+                                                                IllegalAccessException,
+                                                                NoSuchMethodException,
+                                                                InvocationTargetException {
+        Class matcherClass = Class.forName(className);
+        Matcher matcher = (Matcher) matcherClass.getDeclaredConstructor().newInstance();
         String[] initSysProps = parseSystemProperty(MATCHER_INIT_DATA_KEY);
         Map<String, String> props = new HashMap<>();
         for (String initSysProp : initSysProps) {

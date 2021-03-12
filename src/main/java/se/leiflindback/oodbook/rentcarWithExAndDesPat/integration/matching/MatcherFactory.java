@@ -28,6 +28,8 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.matching;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * A Singleton that creates instances of the algorithm used for matching a customer's wishes against
  * available cars. All such instances must implement <code>Matcher</code>.
@@ -48,19 +50,22 @@ public class MatcherFactory {
     }
 
     /**
-     * Returns a <code>Matcher</code> performing the default matching algorithm. The class name of
-     * the default <code>Matcher</code> implementation is read from the system property
-     * <code>se.leiflindback.rentcar.matcher.classname</code>
+     * Returns a <code>Matcher</code> performing the default matching algorithm.The class name of
+ the default <code>Matcher</code> implementation is read from the system property
+    <code>se.leiflindback.rentcar.matcher.classname</code>
      *
      * @return The default matcher
      * @throws ClassNotFoundException If unable to load the default matcher class.
      * @throws InstantiationException If unable to instantiate the default matcher class.
      * @throws IllegalAccessException If unable to instantiate the default matcher class.
+     * @throws java.lang.NoSuchMethodException If unable to instantiate the default matcher class.
+     * @throws java.lang.reflect.InvocationTargetException If unable to instantiate the default matcher class.
      */
     public Matcher getDefaultMatcher() throws ClassNotFoundException, InstantiationException,
-                                              IllegalAccessException {
+                                              IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         String className = System.getProperty(MATCHER_CLASS_NAME_KEY);
-        Matcher matcher = (Matcher) Class.forName(className).newInstance();
+        Class matcherClass = Class.forName(className);
+        Matcher matcher = (Matcher) matcherClass.getDeclaredConstructor().newInstance();
         if (matcher instanceof PromotingMatch) {
             ((PromotingMatch) matcher).setCarToPromote(System.getProperty(CAR_TO_PROMOTE_KEY));
         }
