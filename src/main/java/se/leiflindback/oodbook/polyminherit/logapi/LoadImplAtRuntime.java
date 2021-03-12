@@ -39,6 +39,9 @@ public class LoadImplAtRuntime {
     /**
      * @param args Each command line parameter shall be the fully qualified class name of a class
      *             implementing <code>Logger</code>. This class will be loaded and used.
+     * @throws java.lang.InstantiationException If failed to load log classes.
+     * @throws java.lang.IllegalAccessException If failed to load log classes.
+     * @throws java.lang.ClassNotFoundException If failed to load log classes.
      */
     public static void main(String[] args) throws InstantiationException, IllegalAccessException,
                                                   ClassNotFoundException {
