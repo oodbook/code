@@ -90,9 +90,9 @@ public class View {
                 contr.bookCar(foundCar);
                 errorMsgHandler.showErrorMsg("Managed to book a booked car.");
             } catch (AlreadyBookedException exc) {
-                handleException("Correctly failed to book a booked car.", exc);
+                errorMsgHandler.showErrorMsg("Correctly failed to book a booked car.");
             } catch (OperationFailedException exc) {
-                handleException("Wrong exception type.", exc);
+                writeToLogAndUI("Wrong exception type.", exc);
             }
             try {
                 CarDTO nonexistingCar = new CarDTO("doesNotExist", null, null, true, true, null,
@@ -101,9 +101,9 @@ public class View {
                 contr.bookCar(nonexistingCar);
                 errorMsgHandler.showErrorMsg("Managed to book a nonexisting car.");
             } catch (OperationFailedException exc) {
-                handleException("Correctly failed to book a nonexisting car.", exc);
+                errorMsgHandler.showErrorMsg("Correctly failed to book a nonexisting car.");
             } catch (AlreadyBookedException exc) {
-                handleException("Wrong exception type.", exc);
+                writeToLogAndUI("Wrong exception type.", exc);
             }
             System.out.println("Car is booked");
             foundCar = contr.searchMatchingCar(availableCar);
@@ -115,13 +115,13 @@ public class View {
             contr.pay(paidAmount);
             System.out.println("-------- End of receipt ----------------------");
         } catch (AlreadyBookedException exc) {
-            handleException(exc.getCarThatCanNotBeBooked().getRegNo() + " is already booked.", exc);
+            errorMsgHandler.showErrorMsg(exc.getCarThatCanNotBeBooked().getRegNo() + " is already booked.");
         } catch (Exception exc) {
-            handleException("Failed to book, please try again.", exc);
+            writeToLogAndUI("Failed to book, please try again.", exc);
         }
     }
 
-    private void handleException(String uiMsg, Exception exc) {
+    private void writeToLogAndUI(String uiMsg, Exception exc) {
         errorMsgHandler.showErrorMsg(uiMsg);
         logger.logException(exc);
     }
