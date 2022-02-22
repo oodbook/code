@@ -49,7 +49,7 @@ public class LogHandler {
 
     private LogHandler() {
         try {
-            logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
+            logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME, true), true);
         } catch (IOException ex) {
             System.out.println("Could not create logger.");
             ex.printStackTrace();
@@ -68,6 +68,7 @@ public class LogHandler {
         logMsgBuilder.append(exception.getMessage());
         logFile.println(logMsgBuilder);
         exception.printStackTrace(logFile);
+        logFile.println("\n");
     }
 
     private String createTime() {

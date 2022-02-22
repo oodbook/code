@@ -31,7 +31,6 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.view;
 
-import java.io.IOException;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.controller.OperationFailedException;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.controller.Controller;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.CarDTO;
@@ -43,9 +42,11 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.model.DrivingLicenseDTO;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.util.LogHandler;
 
 /**
- * This program has no view, instead, this class is a placeholder for the entire view.
+ * This program has no view, instead, this class is a placeholder for the entire
+ * view.
  */
 public class View {
+
     private Controller contr;
     private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
     private LogHandler logger = LogHandler.getLogger();
@@ -55,7 +56,7 @@ public class View {
      *
      * @param contr The controller that is used for all operations.
      */
-    public View(Controller contr) throws IOException {
+    public View(Controller contr) {
         this.contr = contr;
         contr.addRentalObserver(new ConsoleRentedCarsDisplay());
         contr.addRentalObserver(new GuiRentedCarsDisplay());
@@ -67,9 +68,9 @@ public class View {
     public void sampleExecution() {
         try {
             CarDTO unavailableCar = new CarDTO(null, new Amount(1000), CarDTO.CarType.MEDIUM, true,
-                                               true, "nonExistingColor", false);
+                    true, "nonExistingColor", false);
             CarDTO availableCar = new CarDTO(null, new Amount(1000), CarDTO.CarType.MEDIUM, true, true, "red",
-                                             false);
+                    false);
 
             CarDTO foundCar = contr.searchMatchingCar(unavailableCar);
             System.out.println(
@@ -85,6 +86,8 @@ public class View {
             System.out.println("Customer is registered");
 
             contr.bookCar(foundCar);
+            System.out.println("Car is booked");
+
             try {
                 System.out.println("Trying to rebook a booked car, should generate an error.");
                 contr.bookCar(foundCar);
@@ -96,7 +99,7 @@ public class View {
             }
             try {
                 CarDTO nonexistingCar = new CarDTO("doesNotExist", null, null, true, true, null,
-                                                   false);
+                        false);
                 System.out.println("Trying to book a non-existing car, should generate an error.");
                 contr.bookCar(nonexistingCar);
                 errorMsgHandler.showErrorMsg("Managed to book a nonexisting car.");
@@ -105,7 +108,7 @@ public class View {
             } catch (AlreadyBookedException exc) {
                 writeToLogAndUI("Wrong exception type.", exc);
             }
-            System.out.println("Car is booked");
+
             foundCar = contr.searchMatchingCar(availableCar);
             System.out.println(
                     "Result of searching for available, but booked, car: " + foundCar);

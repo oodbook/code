@@ -31,7 +31,6 @@
  */
 package se.leiflindback.oodbook.rentcarWithExAndDesPat.startup;
 
-import java.io.IOException;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.controller.Controller;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.Printer;
 import se.leiflindback.oodbook.rentcarWithExAndDesPat.integration.RegistryCreator;
@@ -42,20 +41,16 @@ import se.leiflindback.oodbook.rentcarWithExAndDesPat.view.View;
  * application.
  */
 public class Main {
+
     /**
      * Starts the application.
      *
      * @param args The application does not take any command line parameters.
      */
     public static void main(String[] args) {
-        try {
-            RegistryCreator creator = new RegistryCreator();
-            Printer printer = new Printer();
-            Controller contr = new Controller(creator, printer);
-            new View(contr).sampleExecution();
-        } catch (IOException ex) {
-            System.out.println("Unable to start the application");
-            ex.printStackTrace();
-        }
+        RegistryCreator creator = new RegistryCreator();
+        Printer printer = new Printer();
+        Controller contr = new Controller(creator, printer);
+        new View(contr).sampleExecution();
     }
 }

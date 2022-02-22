@@ -31,6 +31,7 @@
  */
 package se.leiflindback.oodbook.rentcarWithExceptions.controller;
 
+import java.io.IOException;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.AlreadyBookedException;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarRegistry;
 import se.leiflindback.oodbook.rentcarWithExceptions.integration.CarDTO;
@@ -43,13 +44,15 @@ import se.leiflindback.oodbook.rentcarWithExceptions.model.CashPayment;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.CashRegister;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.CustomerDTO;
 import se.leiflindback.oodbook.rentcarWithExceptions.model.Rental;
+import se.leiflindback.oodbook.rentcarWithExceptions.util.LogHandler;
 
 /**
- * This is the application's only controller class, all calls to the model pass through here.
+ * This is the application's only controller class, all calls to the model pass
+ * through here.
  * <p>
- * The rental operations can only be called once each during the same rental, and must be called in
- * the following order. <code>registerCustomer</code> starts a rental, and <code>pay</code> ends a
- * rental.
+ * The rental operations can only be called once each during the same rental,
+ * and must be called in the following order. <code>registerCustomer</code>
+ * starts a rental, and <code>pay</code> ends a rental.
  * <p>
  * <ol>
  * <li><code>registerCustomer</code>
@@ -60,30 +63,35 @@ import se.leiflindback.oodbook.rentcarWithExceptions.model.Rental;
  * Other methods can be called in any order, and at any time.
  */
 public class Controller {
+
     private CarRegistry carRegistry;
     private RentalRegistry rentalRegistry;
     private Rental rental;
     private CashRegister cashRegister;
     private Printer printer;
+    private LogHandler logger;
 
     /**
      * Creates a new instance.
      *
      * @param regCreator Used to get all classes that handle database calls.
-     * @param printer    Interface to printer.
+     * @param printer Interface to printer.
+     * @throws IOException if unable to start logger.
      */
-    public Controller(RegistryCreator regCreator, Printer printer) {
+    public Controller(RegistryCreator regCreator, Printer printer) throws IOException {
         this.carRegistry = regCreator.getCarRegistry();
         this.rentalRegistry = regCreator.getRentalRegistry();
         this.printer = printer;
         this.cashRegister = new CashRegister();
+        this.logger = new LogHandler();
     }
 
     /**
      * Search for a car matching the specified search criteria.
      *
-     * @param searchedCar This object contains the search criteria. Fields in the object that are
-     *                    set to <code>null</code> or <code>0</code> are ignored.
+     * @param searchedCar This object contains the search criteria. Fields in
+     * the object that are set to <code>null</code> or <code>0</code> are
+     * ignored.
      * @return The best match of the search criteria.
      */
     public CarDTO searchMatchingCar(CarDTO searchedCar) {
@@ -94,8 +102,8 @@ public class Controller {
      * Registers a new customer. Only registered customers can rent cars.
      *
      * @param customer The customer that will be registered.
-     * @throws IllegalStateException if this method is called twice during the same rental. A rental
-     *                               is ended when <code>pay</code> is called.
+     * @throws IllegalStateException if this method is called twice during the
+     * same rental. A rental is ended when <code>pay</code> is called.
      */
     public void registerCustomer(CustomerDTO customer) {
         if (rental != null) {
@@ -106,15 +114,16 @@ public class Controller {
     }
 
     /**
-     * Books the specified car. After calling this method, the car can not be booked by any other
-     * customer. This method also permanently saves information about the current rental.
+     * Books the specified car. After calling this method, the car can not be
+     * booked by any other customer. This method also permanently saves
+     * information about the current rental.
      *
      * @param car The car that will be booked.
-     * @throws AlreadyBookedException   if the car was already booked.
-     * @throws OperationFailedException if unable to rent the car for any other reason than it being
-     *                                  already booked.
-     * @throws IllegalStateException    if this method is called before
-     *                                  <code>registerCustomer</code>.
+     * @throws AlreadyBookedException if the car was already booked.
+     * @throws OperationFailedException if unable to rent the car for any other
+     * reason than it being already booked.
+     * @throws IllegalStateException if this method is called before
+     * <code>registerCustomer</code>.
      */
     public void bookCar(CarDTO car) throws AlreadyBookedException, OperationFailedException {
         if (rental == null) {
@@ -124,16 +133,18 @@ public class Controller {
             rental.rentCar(car);
             rentalRegistry.saveRental(rental);
         } catch (CarRegistryException carRegExc) {
+            logger.logException(carRegExc);
             throw new OperationFailedException("Could not rent the car.", carRegExc);
         }
     }
 
     /**
-     * Handles rental payment. Updates the balance of the cash register where the payment was
-     * performed. Calculates change. Prints the receipt.
+     * Handles rental payment. Updates the balance of the cash register where
+     * the payment was performed. Calculates change. Prints the receipt.
      *
      * @param paidAmt The paid amount.
-     * @throws IllegalStateException if this method is called before <code>bookCar</code>.
+     * @throws IllegalStateException if this method is called before
+     * <code>bookCar</code>.
      */
     public void pay(Amount paidAmt) {
         if (rental == null || rental.getRentedCar() == null) {

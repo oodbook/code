@@ -54,6 +54,7 @@ public class View {
      * Creates a new instance.
      *
      * @param contr The controller that is used for all operations.
+     * @throws IOException if unable to start logger.
      */
     public View(Controller contr) throws IOException {
         this.contr = contr;
@@ -84,6 +85,8 @@ public class View {
             System.out.println("Customer is registered");
 
             contr.bookCar(foundCar);
+            System.out.println("Car is booked");
+
             try {
                 System.out.println("Trying to rebook a booked car, should generate an error.");
                 contr.bookCar(foundCar);
@@ -104,7 +107,7 @@ public class View {
             } catch (AlreadyBookedException exc) {
                 writeToLogAndUI("Wrong exception was thrown.", exc);
             }
-            System.out.println("Car is booked");
+
             foundCar = contr.searchMatchingCar(availableCar);
             System.out.println(
                     "Result of searching for available, but booked, car: " + foundCar);

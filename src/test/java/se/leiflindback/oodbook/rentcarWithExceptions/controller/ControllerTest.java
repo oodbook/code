@@ -29,6 +29,7 @@
 package se.leiflindback.oodbook.rentcarWithExceptions.controller;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,7 +56,7 @@ public class ControllerTest {
     PrintStream originalSysOut;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         originalSysOut = System.out;
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));

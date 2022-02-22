@@ -43,7 +43,7 @@ public class LogHandler {
     private PrintWriter logFile;
     
     public LogHandler() throws IOException {
-        logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
+        logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME, true), true);
     }
     
     /**
@@ -58,6 +58,7 @@ public class LogHandler {
         logMsgBuilder.append(exception.getMessage());
         logFile.println(logMsgBuilder);
         exception.printStackTrace(logFile);
+        logFile.println("\n");
     }
 
     private String createTime() {
