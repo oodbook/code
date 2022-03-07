@@ -49,7 +49,7 @@ public class AccountTest {
         Account instance = new Account(holderFia);
         int expResult = 0;
         int result = instance.getBalance();
-        assertEquals(expResult, result, "Wrong balance returned when acct created with no-bakance constructor");
+        assertEquals(expResult, result, "Wrong balance returned when acct created with no-balance constructor");
     }
 
     @Test

@@ -23,10 +23,8 @@
  */
 package se.leiflindback.oodbook.tests.exercises.acct;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
 
 public class IllegalBankTransactionExceptionTest {
 
@@ -36,5 +34,4 @@ public class IllegalBankTransactionExceptionTest {
         IllegalBankTransactionException instance = new IllegalBankTransactionException(msg);
         assertEquals(msg, instance.getMessage(), "Message wasn't stored correctly.");
     }
-
 }
