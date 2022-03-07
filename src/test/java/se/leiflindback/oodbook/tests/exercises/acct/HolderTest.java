@@ -109,6 +109,7 @@ public class HolderTest {
         int noOfAcctsOwnedByNisse = 7;
         Set<Account> acctsOwnedByNisse = addAcctsToHolderNisse(noOfAcctsOwnedByNisse);
         String strRep = holderNisse.toString();
+        assertTrue(strRep.contains("Holder"), "wrong class name in string representation");
         assertTrue(strRep.contains(holderNameNisse), "wrong holder name in string representation");
         assertTrue(strRep.contains(Long.toString(holderNisse.getHolderNo())), "wrong holder no in string representation");
         for (Account acct : acctsOwnedByNisse) {
