@@ -186,6 +186,7 @@ public class AccountTest {
     @Test
     public void testStringRepContainsState() {
         String strRep = acctFia10.toString();
+        assertTrue(strRep.contains("Account"), "wrong class name in string representation");
         assertTrue(strRep.contains(Long.toString(holderFia.getHolderNo())), "wrong holder no in string representation");
         assertTrue(strRep.contains(Integer.toString(initBalance10)), "wrong balance in string representation");
         assertTrue(strRep.contains(Long.toString(acctFia10.getAcctNo())), "wrong acct no in string representation");

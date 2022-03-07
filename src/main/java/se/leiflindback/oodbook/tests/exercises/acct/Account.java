@@ -132,7 +132,7 @@ public class Account {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("Holder");
+        StringBuilder builder = new StringBuilder("Account");
         builder.append("[");
         addFieldToStringRep(builder, "acctNo", Long.toString(acctNo));
         addFieldSeparatorToStringRep(builder);
