@@ -101,6 +101,17 @@ public class AccountTest {
     }
 
     @Test
+    public void testWithdrawZero() {
+        int amtToWithdraw = 0;
+        try {
+            acctFia10.withdraw(amtToWithdraw);
+            fail("Managed to withdraw zero");
+        } catch (IllegalBankTransactionException ex) {
+            assertTrue(ex.getMessage().contains(Integer.toString(amtToWithdraw)), "Wrong error message");
+        }
+    }
+
+    @Test
     public void testOverdraft() {
         int amtToWithdraw = 11;
         try {
@@ -131,6 +142,17 @@ public class AccountTest {
         try {
             acctFia10.deposit(amtToDeposit);
             fail("Managed to deposit neg amount");
+        } catch (IllegalBankTransactionException ex) {
+            assertTrue(ex.getMessage().contains(Integer.toString(amtToDeposit)), "Wrong error message");
+        }
+    }
+
+    @Test
+    public void testDepositZero() {
+        int amtToDeposit = 0;
+        try {
+            acctFia10.deposit(amtToDeposit);
+            fail("Managed to deposit zero");
         } catch (IllegalBankTransactionException ex) {
             assertTrue(ex.getMessage().contains(Integer.toString(amtToDeposit)), "Wrong error message");
         }
