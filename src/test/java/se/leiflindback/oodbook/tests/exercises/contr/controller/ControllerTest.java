@@ -54,7 +54,7 @@ public class ControllerTest {
     public void testAddingToZero() {
         instance.createObjInModel();
         int expResult = 2;
-        int result = instance.addTwo(0);
+        int result = instance.addTwo(expResult - 2);
         assertEquals(expResult, result, "Wrong result when adding to zero.");
     }
     
@@ -62,7 +62,7 @@ public class ControllerTest {
     public void testAddingToNegOperand() {
         instance.createObjInModel();
         int expResult = -2;
-        int result = instance.addTwo(-4);
+        int result = instance.addTwo(expResult - 2);
         assertEquals(expResult, result, "Wrong result when adding to negative operand.");
     }
     
@@ -70,7 +70,7 @@ public class ControllerTest {
     public void testAdditionThatGivesResultZero() {
         instance.createObjInModel();
         int expResult = 0;
-        int result = instance.addTwo(-2);
+        int result = instance.addTwo(expResult - 2);
         assertEquals(expResult, result, "Wrong result when result is supposed to be zero.");
     }
 }

@@ -44,21 +44,21 @@ public class ClassInModelTest {
     @Test
     public void testAddingToZero() {
         int expResult = 2;
-        int result = instance.addTwo(0);
+        int result = instance.addTwo(expResult - 2);
         assertEquals(expResult, result, "Wrong result when adding to zero.");
     }
     
     @Test
     public void testAddingToNegOperand() {
         int expResult = -2;
-        int result = instance.addTwo(-4);
+        int result = instance.addTwo(expResult - 2);
         assertEquals(expResult, result, "Wrong result when adding to negative operand.");
     }
     
     @Test
     public void testAdditionThatGivesResultZero() {
         int expResult = 0;
-        int result = instance.addTwo(-2);
+        int result = instance.addTwo(expResult - 2);
         assertEquals(expResult, result, "Wrong result when result is supposed to be zero.");
     }
 }
