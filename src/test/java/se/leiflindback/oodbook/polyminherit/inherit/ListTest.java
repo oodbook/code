@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ListTest {
     @Test
     public void testAddAndGet() {
-        Object elemToSave = new Integer(3);
+        Object elemToSave = 3;
         List instance = new List();
         instance.add(elemToSave);
         Object expected = elemToSave;
@@ -65,7 +65,6 @@ public class ListTest {
         }
         List instance = new List();
         instance.addAll(elemsToAdd);
-        int result = instance.size();
         assertEquals(noOfElemsToAdd, instance.size(), "Wrong number of elements");
     }
 
